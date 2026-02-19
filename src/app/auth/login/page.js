@@ -11,6 +11,7 @@ import {
   Loader2,
   LogOut,
   ArrowRight,
+  CheckCircle,
 } from "lucide-react";
 import { FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
@@ -19,14 +20,17 @@ import {
   loginWithEmail,
   signInWithGoogle,
   logOut,
-} from "../../lib/firebaseActions"; // logOut ইম্পোর্ট করুন
+  resetPassword, // ইম্পোর্ট করুন
+} from "../../lib/firebaseActions";
 import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const { user, loading: authLoading, mongoUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false); // রিসেট লোডিং
   const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState(""); // সাকসেস মেসেজ
   const [formData, setFormData] = useState({ email: "", password: "" });
   const router = useRouter();
 
@@ -44,9 +48,9 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setSuccessMsg("");
     try {
       await loginWithEmail(formData.email, formData.password);
-      // router.push("/assets");
     } catch (err) {
       setError("Invalid email or password. Please try again.");
       console.error(err.message);
@@ -55,24 +59,49 @@ const Login = () => {
     }
   };
 
+  // পাসওয়ার্ড রিসেট লজিক
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      setError("Please enter your email address first to reset password.");
+      return;
+    }
+
+    setResetLoading(true);
+    setError("");
+    setSuccessMsg("");
+
+    try {
+      await resetPassword(formData.email);
+      setSuccessMsg(
+        "Password reset link sent to your email! Check your inbox.",
+      );
+    } catch (err) {
+      setError("Could not send reset email. Make sure the email is correct.");
+      console.error(err.message);
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
   const handleGoogleLogin = async () => {
     try {
       const res = await signInWithGoogle();
       const firebaseUser = res.user;
 
-      await fetch("https://uefn-maps-server.vercel.app/api/v1/users/create-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: firebaseUser.displayName,
-          email: firebaseUser.email,
-          firebaseUid: firebaseUser.uid,
-          image: firebaseUser.photoURL || "",
-          role: "user",
-        }),
-      });
-
-      // router.push("/assets");
+      await fetch(
+        "https://uefn-maps-server.vercel.app/api/v1/users/create-user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: firebaseUser.displayName,
+            email: firebaseUser.email,
+            firebaseUid: firebaseUser.uid,
+            image: firebaseUser.photoURL || "",
+            role: "user",
+          }),
+        },
+      );
     } catch (err) {
       setError("Google Sign-In failed.");
       console.error(err.message);
@@ -112,7 +141,7 @@ const Login = () => {
           </div>
 
           {user ? (
-            /* --- ইউজার লগইন থাকলে সাইনআউট সেকশন --- */
+            /* --- সাইনআউট সেকশন --- */
             <div className="space-y-6">
               <div className="p-6 bg-white/5 border border-white/10 rounded-3xl text-center">
                 <p className="text-gray-400 text-sm mb-6 leading-relaxed">
@@ -160,6 +189,16 @@ const Login = () => {
                 </motion.div>
               )}
 
+              {successMsg && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-500 text-xs font-bold text-center flex items-center justify-center gap-2"
+                >
+                  <CheckCircle size={14} /> {successMsg}
+                </motion.div>
+              )}
+
               <form onSubmit={handleLogin} className="space-y-5">
                 <div className="relative group">
                   <Mail
@@ -169,6 +208,7 @@ const Login = () => {
                   <input
                     required
                     type="email"
+                    value={formData.email}
                     placeholder="Email Address"
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
@@ -201,12 +241,14 @@ const Login = () => {
                 </div>
 
                 <div className="text-right">
-                  <Link
-                    href="#"
-                    className="text-[10px] font-black text-gray-600 hover:text-purple-400 transition-colors uppercase tracking-widest"
+                  <button
+                    type="button"
+                    disabled={resetLoading}
+                    onClick={handleForgotPassword}
+                    className="text-[10px] font-black text-gray-600 hover:text-purple-400 transition-colors uppercase tracking-widest disabled:opacity-50"
                   >
-                    Forgot Password?
-                  </Link>
+                    {resetLoading ? "Sending Link..." : "Forgot Password?"}
+                  </button>
                 </div>
 
                 <motion.button
