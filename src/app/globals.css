@@ -32,3 +32,16 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
 }
+
+@keyframes gridMove {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(60px);
+  }
+}
+
+.animate-gridMove {
+  animation: gridMove 12s linear infinite;
+}

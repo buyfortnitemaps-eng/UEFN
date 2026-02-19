@@ -73,7 +73,7 @@ const Login = () => {
     try {
       await resetPassword(formData.email);
       setSuccessMsg(
-        "Password reset link sent to your email! Check your inbox.",
+        "Password reset link sent to your email! Check your inbox and spam folder.",
       );
     } catch (err) {
       setError("Could not send reset email. Make sure the email is correct.");

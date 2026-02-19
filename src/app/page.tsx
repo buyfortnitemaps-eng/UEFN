@@ -1,48 +1,164 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import { motion } from "framer-motion";
-import { ShoppingCart, Zap, ShieldCheck, Download } from "lucide-react";
+import {
+  ShoppingCart,
+  Zap,
+  ShieldCheck,
+  Download,
+  Sparkles,
+} from "lucide-react";
 
 const HomePage = () => {
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-white selection:bg-purple-500">
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
-        {/* Animated Background Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-150 bg-purple-600/20 blur-[120px] rounded-full" />
+      <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-[#07070a]">
+        {/* GRID BACKGROUND */}
+        <div className="absolute inset-0 opacity-[0.07] bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] bg-size-[28px_28px]" />
 
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent"
-          >
-            Premium UEFN Assets <br /> For Pro Creators
-          </motion.h1>
+        {/* GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-purple-600/25 blur-[180px] rounded-full" />
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10"
-          >
-            High-quality maps, Verse scripts, and 3D assets up to 5GB. Securely
-            delivered and ready for your next Fortnite masterpiece.
-          </motion.p>
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+          {/* LEFT CONTENT */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm text-gray-300 mb-6"
+            >
+              <Sparkles size={16} className="text-purple-400" />
+              Built for Fortnite UEFN Creators
+            </motion.div>
 
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6"
+            >
+              Create Better Maps <br />
+              <span className="bg-gradient-to-r from-purple-400 to-fuchsia-500 bg-clip-text text-transparent">
+                10x Faster
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-gray-400 text-lg md:text-xl max-w-xl mb-8"
+            >
+              Download professional UEFN maps, Verse systems, and optimized 3D
+              assets. Instant delivery, secure files, and ready-to-use inside
+              Unreal Editor for Fortnite.
+            </motion.p>
+
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="flex flex-col sm:flex-row gap-4 mb-10"
+            >
+              <button className="px-8 py-4 bg-purple-600 hover:bg-purple-500 rounded-xl font-semibold transition-all shadow-xl shadow-purple-500/25 flex items-center justify-center gap-2">
+                <ShoppingCart size={20} />
+                Browse Marketplace
+              </button>
+
+              <button className="px-8 py-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 font-semibold transition-all">
+                View Showcase
+              </button>
+            </motion.div>
+
+            {/* TRUST BADGES */}
+            <div className="flex flex-wrap gap-6 text-sm text-gray-400">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="text-green-400" size={18} />
+                Secure Download
+              </div>
+              <div>5,000+ Creators</div>
+              <div>200+ Assets</div>
+              <div>Up to 5GB Files</div>
+            </div>
+          </div>
+
+          {/* RIGHT SIDE PREVIEW */}
+          {/* RIGHT SIDE MARKETPLACE PREVIEW */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.25, duration: 0.6 }}
+            className="relative hidden lg:block"
           >
-            <button className="px-8 py-4 bg-purple-600 hover:bg-purple-500 rounded-xl font-bold transition-all shadow-lg shadow-purple-500/20 flex items-center gap-2">
-              <ShoppingCart size={20} /> Browse Assets
-            </button>
-            <button className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-bold transition-all">
-              View Portfolio
-            </button>
+            {/* Dashboard Frame */}
+            <div className="relative rounded-3xl border border-white/10 bg-linear-to-b from-white/10 to-white/2 backdrop-blur-2xl p-5 shadow-[0_40px_120px_-20px_rgba(168,85,247,0.35)]">
+              {/* Top Bar */}
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/70" />
+                </div>
+
+                <div className="text-xs text-gray-400">Marketplace Preview</div>
+              </div>
+
+              {/* Asset Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {/* CARD 1 - MAP */}
+                <div className="group rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition overflow-hidden">
+                  <img
+                    src="/map.jfif"
+                    className="h-28 w-full object-cover group-hover:scale-105 transition duration-500"
+                  />
+                  <div className="p-3">
+                    <h4 className="text-sm font-semibold">Cyber Arena</h4>
+                    <p className="text-xs text-gray-400">UEFN Map • 1.8GB</p>
+                  </div>
+                </div>
+
+                {/* CARD 2 - VERSE */}
+                <div className="group rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition overflow-hidden">
+                  <img
+                    src="/props.jfif"
+                    className="h-28 w-full object-cover group-hover:scale-105 transition duration-500"
+                  />
+                  <div className="p-3">
+                    <h4 className="text-sm font-semibold">Inventory System</h4>
+                    <p className="text-xs text-gray-400">Verse Script</p>
+                  </div>
+                </div>
+
+                {/* CARD 3 - PROPS */}
+                <div className="group rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition overflow-hidden col-span-2">
+                  <img
+                    src="/verce.jfif"
+                    className="h-32 w-full object-cover group-hover:scale-105 transition duration-500"
+                  />
+                  <div className="p-3 flex justify-between items-center">
+                    <div>
+                      <h4 className="text-sm font-semibold">
+                        Sci-Fi Props Pack
+                      </h4>
+                      <p className="text-xs text-gray-400">
+                        320 Optimized Meshes
+                      </p>
+                    </div>
+
+                    <span className="px-3 py-1 text-xs rounded-lg bg-purple-500/20 text-purple-300">
+                      Popular
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Background Glow Accent */}
+            <div className="absolute -z-10 -right-10 top-1/2 -translate-y-1/2 w-72 h-72 bg-purple-600/30 blur-[120px] rounded-full" />
           </motion.div>
         </div>
       </section>
