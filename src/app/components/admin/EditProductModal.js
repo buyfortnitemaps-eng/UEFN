@@ -2,7 +2,7 @@
 "use client";
 import { useState } from "react";
 import { X, ImageIcon, Loader2, Save } from "lucide-react";
-import { uploadImageToCloudinary } from "../../middleware/page";
+import { uploadImageToCloudinary } from "../../middleware/upload";
 import { auth } from "../../../../firebase"
 
 const EditProductModal = ({ product, onClose, refresh, categories }) => {

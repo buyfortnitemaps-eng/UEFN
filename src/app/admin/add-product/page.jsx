@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ImageIcon, Loader2, Tag, Percent, X } from "lucide-react";
-import { uploadImageToCloudinary } from "../../middleware/page";
+import { uploadImageToCloudinary } from "../../middleware/upload";
 import { useAuth } from "../../context/AuthContext";
 import AdminOnly from "../../components/admin/OnlyAdmin";
 import { auth } from "../../../../firebase";
