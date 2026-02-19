@@ -1,71 +1,243 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Lock, User, ShieldCheck } from 'lucide-react';
-import Link from 'next/link';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Lock, User, Eye, EyeOff, Gamepad2, LogOut } from "lucide-react"; // LogOut আইকন যোগ করা হয়েছে
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  signUpWithEmail,
+  updateUserProfile,
+  signInWithGoogle,
+  logOut, // logOut ফাংশনটি ইম্পোর্ট করুন
+} from "../../lib/firebaseActions";
+import { useAuth } from "../../../app/context/AuthContext"; // AuthContext ব্যবহার করুন
 
 const SignUp = () => {
+  const { user, loading: authLoading } = useAuth(); // গ্লোবাল ইউজার স্টেট নিন
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const router = useRouter();
+
+  const saveUserIntoDB = async (firebaseUser, name) => {
+    try {
+      const response = await fetch(
+        "https://uefn-maps-server.vercel.app/api/v1/users/sync-user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name || firebaseUser.displayName,
+            email: firebaseUser.email,
+            firebaseUid: firebaseUser.uid,
+            image: firebaseUser.photoURL || "",
+            role: "user",
+          }),
+        },
+      );
+
+      const result = await response.json();
+      return result; // এটি success: true অথবা false পাঠাবে
+    } catch (error) {
+      console.error("Backend Error:", error);
+      return { success: false };
+    }
+  };
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    let firebaseUser = null;
+
+    try {
+      const res = await signUpWithEmail(formData.email, formData.password);
+      firebaseUser = res.user;
+
+      await updateUserProfile(formData.name);
+      const dbResponse = await saveUserIntoDB(firebaseUser, formData.name);
+
+      if (dbResponse && dbResponse.success) {
+        router.push("/assets");
+      } else {
+        throw new Error("Database sync failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Signup Error:", error.message);
+      if (firebaseUser) {
+        await firebaseUser.delete(); 
+      }
+
+      alert(error.message || "Something went wrong during signup.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleAction = async () => {
+    try {
+      const res = await signInWithGoogle();
+      await saveUserIntoDB(res.user);
+      router.push("/assets");
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+      router.push("/auth/login");
+    } catch (error) {
+      console.error("Signout Error:", error.message);
+    }
+  };
+
+  if (authLoading) return null; // অথেন্টিকেশন চেক হওয়া পর্যন্ত অপেক্ষা করুন
+
   return (
-    <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center px-6 py-20 relative overflow-hidden text-white font-sans">
+    <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center px-6 py-20 relative overflow-hidden text-white">
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full" />
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-lg relative z-10"
       >
         <div className="bg-white/2 border border-white/10 rounded-[3rem] p-8 md:p-14 backdrop-blur-xl">
           <div className="text-center mb-10">
-            <h1 className="text-4xl font-black uppercase tracking-tighter italic">Create <span className="text-purple-500">Account</span></h1>
-            <p className="text-gray-500 mt-3 font-medium">Join the elite community of UEFN creators.</p>
+            <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-purple-600/20">
+              <Gamepad2 className="text-white" size={32} />
+            </div>
+            <h1 className="text-4xl font-black uppercase tracking-tighter italic">
+              {user ? "Account" : "Join"}{" "}
+              <span className="text-purple-500">
+                {user ? "Active" : "UEFN"}
+              </span>
+            </h1>
+            <p className="text-gray-500 mt-2">
+              {user
+                ? `Logged in as ${user.email}`
+                : "Start your creative journey today."}
+            </p>
           </div>
 
-          <form className="space-y-6">
-            <div className="relative group">
-              <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-purple-500 transition-colors" size={20} />
-              <input 
-                type="text" 
-                placeholder="Full Name" 
-                className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium"
-              />
+          {user ? (
+            /* --- ইউজার লগইন থাকলে এই বাটনটি দেখাবে --- */
+            <div className="space-y-6">
+              <div className="p-6 bg-white/5 border border-white/10 rounded-2xl text-center">
+                <p className="text-gray-400 text-sm mb-4 font-medium italic">
+                  You are already signed in. To create a new account, please
+                  sign out first.
+                </p>
+                <button
+                  onClick={handleSignOut}
+                  className="w-full bg-red-600/20 text-red-500 border border-red-500/30 py-4 rounded-2xl font-black text-lg hover:bg-red-600 hover:text-white transition-all flex items-center justify-center gap-2 active:scale-95"
+                >
+                  <LogOut size={20} /> Sign Out
+                </button>
+              </div>
+              <Link
+                href="/assets"
+                className="block text-center text-purple-500 font-bold hover:underline"
+              >
+                Go to My Assets →
+              </Link>
             </div>
+          ) : (
+            /* --- ইউজার লগইন না থাকলে ফর্ম দেখাবে --- */
+            <>
+              <form onSubmit={handleSignUp} className="space-y-5">
+                <div className="relative group">
+                  <User
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-purple-500 transition-colors"
+                    size={18}
+                  />
+                  <input
+                    required
+                    type="text"
+                    placeholder="Full Name"
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                  />
+                </div>
 
-            <div className="relative group">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-purple-500 transition-colors" size={20} />
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium"
-              />
-            </div>
+                <div className="relative group">
+                  <Mail
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-purple-500 transition-colors"
+                    size={18}
+                  />
+                  <input
+                    required
+                    type="email"
+                    placeholder="Email Address"
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                  />
+                </div>
 
-            <div className="relative group">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-purple-500 transition-colors" size={20} />
-              <input 
-                type="password" 
-                placeholder="Create Password" 
-                className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium"
-              />
-            </div>
+                <div className="relative group">
+                  <Lock
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-purple-500 transition-colors"
+                    size={18}
+                  />
+                  <input
+                    required
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-white transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
 
-            <div className="flex items-center gap-3 px-2">
-               <ShieldCheck size={18} className="text-green-500" />
-               <p className="text-xs text-gray-600 font-medium">I agree to the <Link href="#" className="text-purple-400 hover:underline">Terms of Service</Link> and Privacy Policy.</p>
-            </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-purple-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-purple-500 transition-all shadow-xl shadow-purple-600/20 active:scale-95 disabled:opacity-50"
+                >
+                  {loading ? "Creating..." : "Create Account"}
+                </button>
+              </form>
 
-            <motion.button 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-purple-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-purple-500 transition-all shadow-xl shadow-purple-600/20"
-            >
-              Get Started
-            </motion.button>
-          </form>
+              <div className="mt-8">
+                <button
+                  onClick={handleGoogleAction}
+                  className="w-full bg-white/5 border border-white/10 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95"
+                >
+                  <img src="/google.svg" className="w-5 h-5" alt="Google" />{" "}
+                  Sign up with Google
+                </button>
+              </div>
 
-          <p className="text-center mt-10 text-gray-500 text-sm">
-            Already a member? <Link href="/auth/login" className="text-white font-black hover:text-purple-500 transition-colors">Login Here</Link>
-          </p>
+              <p className="text-center mt-10 text-gray-500 text-sm">
+                Already have an account?{" "}
+                <Link
+                  href="/auth/login"
+                  className="text-white font-black hover:text-purple-500 transition-colors"
+                >
+                  Login
+                </Link>
+              </p>
+            </>
+          )}
         </div>
       </motion.div>
     </div>

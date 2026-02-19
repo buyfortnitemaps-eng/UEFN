@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "./shared/navber/page";
 import Footer from "./shared/footer/page";
+import { AuthProvider } from "../app/context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -10,9 +11,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

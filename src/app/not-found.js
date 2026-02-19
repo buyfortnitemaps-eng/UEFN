@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Home, ArrowLeft, Gamepad2 } from 'lucide-react';
 import Link from 'next/link';
@@ -15,7 +14,7 @@ const NotFound = () => {
           opacity: [0.1, 0.2, 0.1] 
         }}
         transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600 rounded-full blur-[150px] z-0" 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-purple-600 rounded-full blur-[150px] z-0" 
       />
 
       <div className="text-center relative z-10">
