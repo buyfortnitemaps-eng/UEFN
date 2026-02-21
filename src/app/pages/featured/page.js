@@ -35,6 +35,7 @@ const FeaturedSection = () => {
           "https://uefn-maps-server.vercel.app/api/v1/products/featured",
         );
         const data = await res.json();
+        console.log("Featured API Response:", data); // এখানে এখন ডাটা দেখতে পাবেন
         setProducts(data.data);
         setFilteredProducts(data.data);
         setLoading(false);
