@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { logOut } from "../../lib/firebaseActions";
 import { MdProductionQuantityLimits } from "react-icons/md";
 
 const SidebarContent = ({ setIsMobileMenuOpen }) => {
@@ -38,6 +37,11 @@ const SidebarContent = ({ setIsMobileMenuOpen }) => {
       name: "All Products",
       icon: <MdProductionQuantityLimits size={20} />,
       href: "/admin/all-product",
+    },
+    {
+      name: "All Featured Products",
+      icon: <MdProductionQuantityLimits size={20} />,
+      href: "/admin/all-features-product",
     },
     { name: "Settings", icon: <Settings size={20} />, href: "/admin/settings" },
   ];
@@ -79,7 +83,7 @@ const SidebarContent = ({ setIsMobileMenuOpen }) => {
       {/* Logout Button */}
       <div className="p-4 border-t border-white/5 shrink-0">
         <button
-          onClick={() => logOut()}
+          onClick={() => handleSignOut()}
           className="flex items-center w-full p-4 text-gray-500 hover:text-red-500 hover:bg-red-500/5 rounded-2xl transition-all font-bold text-sm"
         >
           <LogOut size={20} />

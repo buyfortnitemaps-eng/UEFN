@@ -11,6 +11,8 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import FeaturedSection from "./pages/featured/page";
+
 const HomePage = () => {
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-white selection:bg-purple-500">
@@ -20,7 +22,7 @@ const HomePage = () => {
         <div className="absolute inset-0 opacity-[0.07] bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] bg-size-[28px_28px]" />
 
         {/* GLOW LIGHT */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-purple-600/25 blur-[180px] rounded-full" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-255 h-125 bg-purple-600/25 blur-[180px] rounded-full" />
 
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
           {/* LEFT CONTENT */}
@@ -41,7 +43,7 @@ const HomePage = () => {
               className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6"
             >
               Create Better Maps <br />
-              <span className="bg-gradient-to-r from-purple-400 to-fuchsia-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-purple-400 to-fuchsia-500 bg-clip-text text-transparent">
                 10x Faster
               </span>
             </motion.h1>
@@ -164,73 +166,8 @@ const HomePage = () => {
       </section>
 
       {/* --- FEATURED SECTION --- */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-3xl font-bold mb-2">Featured Releases</h2>
-            <p className="text-gray-500">
-              The most downloaded UEFN templates this week.
-            </p>
-          </div>
-          <button className="text-purple-400 hover:text-purple-300 font-medium">
-            View All →
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((item) => (
-            <motion.div
-              key={item}
-              whileHover={{ y: -10 }}
-              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group"
-            >
-              {/* Image Container */}
-              <div className="h-56 relative overflow-hidden bg-gray-900">
-                <img
-                  src={`https://cdn1.epicgames.com/offer/fn/032_1920x1080-9bee2710bfd29f1c5bb3da9cfc211cbe?resize=1&w=480&h=270&quality=medium`} // এখানে আপনার ইমেজের পাথ হবে
-                  alt="UEFN Map Preview"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-
-                {/* Gradient Overlay for better text visibility */}
-                <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0b] via-transparent to-transparent opacity-60" />
-
-                {/* Product Image Tag */}
-                <span className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full text-[10px] font-bold text-purple-400 border border-purple-500/30 tracking-widest uppercase">
-                  5GB ZIP
-                </span>
-              </div>
-
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
-                    Cyberpunk City Map V2
-                  </h3>
-                </div>
-
-                <p className="text-gray-400 text-sm mb-6 line-clamp-2">
-                  Full custom UEFN map with advanced Verse lighting scripts,
-                  high-poly 3D models and optimized performance.
-                </p>
-
-                <div className="flex items-center justify-between border-t border-white/5 pt-4">
-                  <div>
-                    <p className="text-gray-500 text-[10px] uppercase font-semibold">
-                      Price
-                    </p>
-                    <span className="text-2xl font-bold text-white">
-                      $49.99
-                    </span>
-                  </div>
-                  <button className="p-4 bg-purple-600 hover:bg-purple-500 rounded-xl transition-all shadow-lg shadow-purple-500/20 active:scale-95">
-                    <ShoppingCart size={20} className="text-white" />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+    
+      <FeaturedSection />
 
       {/* --- WHY US SECTION --- */}
       <section className="py-20 bg-white/2 border-y border-white/5 px-6">

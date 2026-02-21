@@ -9,9 +9,9 @@ import {
   signUpWithEmail,
   updateUserProfile,
   signInWithGoogle,
-  logOut, // logOut ফাংশনটি ইম্পোর্ট করুন
 } from "../../lib/firebaseActions";
 import { useAuth } from "../../../app/context/AuthContext"; // AuthContext ব্যবহার করুন
+import { handleSignOut } from "../../utils/handleSIgnout";
 
 const SignUp = () => {
   const { user, loading: authLoading } = useAuth(); // গ্লোবাল ইউজার স্টেট নিন
@@ -88,15 +88,6 @@ const SignUp = () => {
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      await logOut();
-      router.push("/auth/login");
-    } catch (error) {
-      console.error("Signout Error:", error.message);
-    }
-  };
-
   if (authLoading) return null; // অথেন্টিকেশন চেক হওয়া পর্যন্ত অপেক্ষা করুন
 
   return (
@@ -136,7 +127,7 @@ const SignUp = () => {
                   sign out first.
                 </p>
                 <button
-                  onClick={handleSignOut}
+                  onClick={() => handleSignOut()}
                   className="w-full bg-red-600/20 text-red-500 border border-red-500/30 py-4 rounded-2xl font-black text-lg hover:bg-red-600 hover:text-white transition-all flex items-center justify-center gap-2 active:scale-95"
                 >
                   <LogOut size={20} /> Sign Out

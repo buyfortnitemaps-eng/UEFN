@@ -7,6 +7,7 @@ import { auth } from "../../../../firebase";
 import AdminOnly from "../../components/admin/OnlyAdmin";
 import { useAuth } from "../../context/AuthContext";
 import EditProductModal from "../../components/admin/EditProductModal";
+import { Star } from "lucide-react";
 
 const AllProducts = () => {
   const { user, mongoUser } = useAuth();
@@ -16,6 +17,35 @@ const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
+
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [productToUpgrade, setProductToUpgrade] = useState(null);
+  const [featureTag, setFeatureTag] = useState("featured");
+
+  const handleUpgrade = async () => {
+    const token = await auth.currentUser.getIdToken();
+    try {
+      const res = await fetch(
+        `https://uefn-maps-server.vercel.app/api/v1/products/upgrade/${productToUpgrade._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ tag: featureTag }),
+        },
+      );
+
+      if (res.ok) {
+        alert("Product upgraded and moved to Featured list!");
+        setIsUpgradeModalOpen(false);
+        fetchProducts(); // লিস্ট রিফ্রেশ করার জন্য
+      }
+    } catch (error) {
+      console.error("Upgrade failed", error);
+    }
+  };
 
   const fetchProducts = async () => {
     const res = await fetch("https://uefn-maps-server.vercel.app/api/v1/products");
@@ -130,6 +160,16 @@ const AllProducts = () => {
                 <td className="p-6 text-right space-x-2">
                   <button
                     onClick={() => {
+                      setProductToUpgrade(product);
+                      setIsUpgradeModalOpen(true);
+                    }}
+                    className="p-3 bg-white/5 hover:bg-yellow-600/20 text-gray-400 hover:text-yellow-500 rounded-xl transition-all"
+                    title="Upgrade to Featured"
+                  >
+                    <Star size={18} />
+                  </button>
+                  <button
+                    onClick={() => {
                       setCurrentProduct(product);
                       setIsModalOpen(true);
                     }}
@@ -159,6 +199,56 @@ const AllProducts = () => {
           refresh={fetchProducts}
           categories={categories} // এই লাইনটি যোগ করুন
         />
+      )}
+
+      {isUpgradeModalOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#161618] border border-white/10 p-8 rounded-4xl w-full max-w-md shadow-2xl">
+            <h3 className="text-2xl font-black uppercase mb-2">
+              Upgrade Asset
+            </h3>
+            <p className="text-gray-400 text-sm mb-6">
+              Select a spotlight category for{" "}
+              <span className="text-purple-400">{productToUpgrade?.title}</span>
+            </p>
+
+            <div className="space-y-4">
+              <label className="text-xs font-bold uppercase text-gray-500">
+                Feature Type
+              </label>
+              <select
+                value={featureTag}
+                onChange={(e) => setFeatureTag(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-purple-500 transition-all"
+              >
+                <option value="featured" className="bg-[#161618]">
+                  Featured Asset
+                </option>
+                <option value="premium" className="bg-[#161618]">
+                  Premium Selection
+                </option>
+                <option value="trending" className="bg-[#161618]">
+                  Trending Now
+                </option>
+              </select>
+
+              <div className="flex gap-3 mt-8">
+                <button
+                  onClick={() => setIsUpgradeModalOpen(false)}
+                  className="flex-1 px-6 py-3 rounded-xl font-bold uppercase text-sm border border-white/10 hover:bg-white/5 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUpgrade}
+                  className="flex-1 px-6 py-3 rounded-xl font-bold uppercase text-sm bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-500/20 transition-all"
+                >
+                  Confirm Upgrade
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

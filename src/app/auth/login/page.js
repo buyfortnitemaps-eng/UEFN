@@ -15,14 +15,13 @@ import {
 } from "lucide-react";
 import { FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   loginWithEmail,
   signInWithGoogle,
-  logOut,
   resetPassword, // ইম্পোর্ট করুন
 } from "../../lib/firebaseActions";
 import { useAuth } from "../../context/AuthContext";
+import { handleSignOut } from "../../utils/handleSIgnout";
 
 const Login = () => {
   const { user, loading: authLoading, mongoUser } = useAuth();
@@ -32,17 +31,9 @@ const Login = () => {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState(""); // সাকসেস মেসেজ
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const router = useRouter();
 
   // হ্যান্ডেল লগআউট
-  const handleSignOut = async () => {
-    try {
-      await logOut();
-      router.push("/auth/login");
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  };
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -168,7 +159,7 @@ const Login = () => {
                   )}
 
                   <button
-                    onClick={handleSignOut}
+                    onClick={() => handleSignOut()}
                     className="w-full bg-red-500/10 text-red-500 border border-red-500/20 py-4 rounded-2xl font-black hover:bg-red-500 hover:text-white transition-all flex items-center justify-center gap-2"
                   >
                     <LogOut size={18} /> Sign Out
