@@ -146,20 +146,77 @@ const ChatWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999]">
-      {/* button click also unlocks audio */}
+    <div
+      className="fixed bottom-6 right-6 z-[9999]"
+      onMouseMove={() => {
+        // ব্রাউজার অডিও পলিসি আনলক করার জন্য
+        if (audioRef.current && audioRef.current.paused) {
+          audioRef.current.play().then(() => audioRef.current.pause()).catch(() => { });
+        }
+      }}
+    >
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="mb-4 w-87.5 h-125 bg-[#121214] rounded-4xl flex flex-col border border-white/10 shadow-2xl overflow-hidden"
+          >
+            {/* Header */}
+            <div className="p-5 bg-purple-600 flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="font-bold text-white text-sm italic">Live Support</span>
+              </div>
+              <button onClick={() => setIsOpen(false)} className="hover:rotate-90 transition-transform text-white">
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Message List */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#0A0A0B]">
+              {messages.map((m, i) => (
+                <div key={i} className={`flex ${m.isAdmin ? "justify-start" : "justify-end"}`}>
+                  <div className={`px-4 py-2.5 rounded-2xl text-sm max-w-[85%] shadow-lg ${m.isAdmin ? "bg-[#27272A] text-white rounded-tl-none border border-white/5" : "bg-purple-600 text-white rounded-tr-none"}`}>
+                    {m.text}
+                    {!m.isAdmin && (
+                      <div className="flex justify-end mt-1 opacity-70">
+                        {m.isSeen ? <CheckCheck size={12} /> : <Check size={12} />}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+              <div ref={scrollRef} />
+            </div>
+
+            {/* Input Form */}
+            <form onSubmit={sendMessage} className="p-4 bg-[#121214] border-t border-white/5 flex gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask us anything..."
+                className="flex-1 bg-white/5 rounded-xl px-4 py-3 text-sm outline-none text-white focus:ring-1 ring-purple-500/50 transition-all"
+              />
+              <button type="submit" className="bg-purple-600 p-3 rounded-xl hover:bg-purple-500 text-white shadow-lg active:scale-95 transition-transform">
+                <Send size={18} />
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Action Button */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        onClick={() => {
-          unlockAudio();
-          setIsOpen(!isOpen);
-        }}
-        className="relative p-5 bg-purple-600 rounded-full text-white"
+        onClick={() => setIsOpen(!isOpen)}
+        className="relative p-5 bg-purple-600 rounded-full text-white shadow-[0_0_30px_rgba(147,51,234,0.4)] border border-white/20"
       >
         {isOpen ? <X size={28} /> : <MessageCircle size={28} />}
         {!isOpen && unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-black h-6 w-6 rounded-full flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-black h-6 w-6 rounded-full flex items-center justify-center border-2 border-[#0A0A0A] animate-bounce">
             {unreadCount}
           </span>
         )}
