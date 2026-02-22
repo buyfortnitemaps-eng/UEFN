@@ -1,45 +1,93 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import React from "react";
+import { Zap, Target, ShieldCheck, Rocket } from "lucide-react";
 
 const AdminOverview = () => {
-  const stats = [
-    { label: "Total Sales", val: "$12,450", trend: "+12%" },
-    { label: "Active Users", val: "1,240", trend: "+5%" },
-    { label: "Products", val: "48", trend: "0%" },
-    { label: "Pending Orders", val: "12", trend: "-2%" }
+  const highlights = [
+    {
+      label: "Growth Strategy",
+      title: "Scale Operations",
+      desc: "Optimize infrastructure for next-gen performance.",
+      icon: <Rocket size={20} className="text-purple-500" />,
+    },
+    {
+      label: "Engagement Hub",
+      title: "Active Community",
+      desc: "Real-time interaction with global user segments.",
+      icon: <Zap size={20} className="text-amber-500" />,
+    },
+    {
+      label: "Market Reach",
+      title: "Target Audience",
+      desc: "Data-driven insights to capture new territories.",
+      icon: <Target size={20} className="text-blue-500" />,
+    },
+    {
+      label: "System Health",
+      title: "Ironclad Security",
+      desc: "Proactive monitoring and threat mitigation active.",
+      icon: <ShieldCheck size={20} className="text-green-500" />,
+    },
   ];
 
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-10">
         <h2 className="text-3xl font-black uppercase tracking-tight">
-          Dashboard <span className="text-purple-500">Overview</span>
+          System <span className="text-purple-500">Status</span>
         </h2>
-        <p className="text-gray-500 text-sm italic">Welcome back! Here's what's happening today.</p>
+        <p className="text-gray-500 text-sm italic">
+          Focusing on high-impact objectives today.
+        </p>
       </div>
 
-      {/* Stats Cards */}
+      {/* Highlights Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        {stats.map((stat, i) => (
-          <div key={i} className="bg-white/2 border border-white/5 p-6 rounded-3xl hover:border-purple-500/30 transition-all">
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">{stat.label}</p>
-            <div className="flex items-end justify-between">
-              <h3 className="text-2xl font-black">{stat.val}</h3>
-              <span className={`text-[10px] font-bold px-2 py-1 rounded ${stat.trend.startsWith('+') ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
-                {stat.trend}
-              </span>
+        {highlights.map((item, i) => (
+          <div
+            key={i}
+            className="bg-white/5 border border-white/10 p-6 rounded-3xl hover:bg-white/[0.08] hover:border-purple-500/40 transition-all group"
+          >
+            <div className="mb-4 bg-black/40 w-10 h-10 rounded-xl flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
+              {item.icon}
             </div>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-1">
+              {item.label}
+            </p>
+            <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+            <p className="text-xs text-gray-500 leading-relaxed font-medium">
+              {item.desc}
+            </p>
           </div>
         ))}
       </div>
 
-      {/* Placeholder for Charts/Tables */}
-      <div className="bg-white/2 border border-white/5 rounded-[2rem] p-10 flex flex-col items-center justify-center border-dashed">
-         <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center mb-4">
-            <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse" />
-         </div>
-         <p className="text-gray-500 font-medium">Recent Activity Data Coming Soon...</p>
+      {/* Strategic Board */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-purple-900/10 to-transparent border border-white/5 rounded-[40px] p-12 flex flex-col items-center justify-center text-center">
+        {/* Decorative Background Elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 bg-purple-600/10 blur-[80px]" />
+        <div className="absolute bottom-0 right-0 w-32 h-32 bg-blue-600/10 blur-[80px]" />
+
+        <div className="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mb-6 border border-purple-500/30">
+          <div className="w-4 h-4 bg-purple-500 rounded-full animate-ping" />
+        </div>
+
+        <h4 className="text-xl font-bold text-white mb-3">
+          Vision Control Center
+        </h4>
+        <p className="max-w-md text-gray-500 text-sm font-medium leading-loose">
+          "The best way to predict the future is to create it. Your dashboard is
+          now ready for high-level tactical deployment."
+        </p>
+
+        <div className="mt-8 flex gap-4">
+          <div className="px-4 py-1.5 rounded-full border border-white/10 text-[10px] uppercase font-bold text-gray-400">
+            Tactical Mode
+          </div>
+          <div className="px-4 py-1.5 rounded-full border border-purple-500/30 text-[10px] uppercase font-bold text-purple-400">
+            Live Sync
+          </div>
+        </div>
       </div>
     </div>
   );

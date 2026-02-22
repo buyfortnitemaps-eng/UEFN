@@ -1,60 +1,63 @@
 "use client";
-import React from "react";
 import {
-  LayoutDashboard,
-  Users,
-  Layers,
-  PlusSquare,
-  Settings,
-  LogOut,
+  LayoutDashboard, 
+  Layers, 
+  PlusSquare, 
+  ShoppingBag, 
+  Star, 
+  Mail, 
+  MessageCircleCode,
   Gamepad2,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MdProductionQuantityLimits } from "react-icons/md";
 
 const SidebarContent = ({ setIsMobileMenuOpen }) => {
   const pathname = usePathname();
 
-  const menuItems = [
-    {
-      name: "Overview",
-      icon: <LayoutDashboard size={20} />,
-      href: "/admin/dashboard",
-    },
-    { name: "All Users", icon: <Users size={20} />, href: "/admin/users" },
-    {
-      name: "Add Category",
-      icon: <Layers size={20} />,
-      href: "/admin/add-category",
-    },
-    {
-      name: "Add Product",
-      icon: <PlusSquare size={20} />,
-      href: "/admin/add-product",
-    },
-    {
-      name: "All Products",
-      icon: <MdProductionQuantityLimits size={20} />,
-      href: "/admin/all-product",
-    },
-    {
-      name: "All Featured Products",
-      icon: <MdProductionQuantityLimits size={20} />,
-      href: "/admin/all-features-product",
-    },
-    {
-      name: "All Messages",
-      icon: <MdProductionQuantityLimits size={20} />,
-      href: "/admin/all-message",
-    },
-    {
-      name: "Chat",
-      icon: <MdProductionQuantityLimits size={20} />,
-      href: "/admin/chat",
-    },
-    { name: "Settings", icon: <Settings size={20} />, href: "/admin/settings" },
-  ];
+
+const menuItems = [
+  {
+    name: "Overview",
+    icon: <LayoutDashboard size={20} />,
+    href: "/admin/dashboard",
+  },
+  {
+    name: "Add Category",
+    icon: <Layers size={20} />,
+    href: "/admin/add-category",
+  },
+  {
+    name: "Add Product",
+    icon: <PlusSquare size={20} />,
+    href: "/admin/add-product",
+  },
+  {
+    name: "All Products",
+    icon: <ShoppingBag size={20} />, // প্রোডাক্টের জন্য শপিং ব্যাগ আইকন বেশি মানানসই
+    href: "/admin/all-product",
+  },
+  {
+    name: "All Featured Products",
+    icon: <Star size={20} />, // Featured বা বিশেষ পণ্যের জন্য স্টার আইকন
+    href: "/admin/all-features-product",
+  },
+  {
+    name: "Portfolios",
+    icon: <Layers size={20} />, // Portfolios এর জন্য লেয়ার আইকন
+    href: "/admin/add-portfolio",
+  },
+  {
+    name: "All Messages",
+    icon: <Mail size={20} />, // সাধারণ ইনবক্স বা মেইল মেসেজের জন্য
+    href: "/admin/all-message",
+  },
+  {
+    name: "Chat",
+    icon: <MessageCircleCode size={20} />, // লাইভ চ্যাটের জন্য বাবল আইকন
+    href: "/admin/chat",
+  },
+];
 
   return (
     <div className="flex flex-col h-full">
@@ -89,17 +92,6 @@ const SidebarContent = ({ setIsMobileMenuOpen }) => {
           </Link>
         ))}
       </nav>
-
-      {/* Logout Button */}
-      <div className="p-4 border-t border-white/5 shrink-0">
-        <button
-          onClick={() => handleSignOut()}
-          className="flex items-center w-full p-4 text-gray-500 hover:text-red-500 hover:bg-red-500/5 rounded-2xl transition-all font-bold text-sm"
-        >
-          <LogOut size={20} />
-          <span className="ml-3">Sign Out</span>
-        </button>
-      </div>
     </div>
   );
 };

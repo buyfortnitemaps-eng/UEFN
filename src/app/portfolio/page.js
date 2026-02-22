@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Play, ExternalLink, Users, Star, X } from "lucide-react"; // X আইকন যোগ করা হয়েছে
 import Image from "next/image";
@@ -7,42 +7,33 @@ import Image from "next/image";
 const Portfolio = () => {
   const [activeVideo, setActiveVideo] = useState(null);
 
-  const projects = [
-    {
-      id: 1,
-      title: "Cyberpunk District 9",
-      type: "Full Game Map",
-      description: "A high-octane neon city built with custom Verse scripts for dynamic lighting and AI patrol systems.",
-      stats: { players: "50k+", rating: "4.9" },
-      img: "/p1.jpg",
-      youtubeId: "rR1ukpIxa4E", // এখানে ক্লায়েন্টের ইউটিউব ভিডিও আইডি বসবে
-      tags: ["UEFN", "Verse", "Custom Lighting"],
-    },
-    {
-      id: 2,
-      title: "Ancient Ruins Arena",
-      type: "Box Fight Template",
-      description: "Optimized competitive arena featuring destructible environments and high-poly nanite meshes.",
-      stats: { players: "12k+", rating: "4.8" },
-      img: "/p2.jpg",
-      youtubeId: "rR1ukpIxa4E", 
-      tags: ["Nanite", "Optimized", "Competitive"],
-    },
-    {
-      id: 3,
-      title: "Fast & Furious Island",
-      type: "Racing Mechanics",
-      description: "Custom vehicle physics engine implemented via Verse, pushing the limits of UEFN racing.",
-      stats: { players: "8k+", rating: "5.0" },
-      img: "/p3.jpg",
-      youtubeId: "rR1ukpIxa4E",
-      tags: ["Verse Script", "Vehicles", "VFX"],
-    },
-  ];
+  // Portfolio.js এর ভেতরে
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/portfolios");
+        const data = await res.json();
+        setProjects(data.data);
+      } catch (err) {
+        console.error(err);
+      }
+      setLoading(false);
+    };
+    fetchProjects();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="text-center p-20 font-black text-white">
+        Loading Creative Works...
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-white pt-28 pb-20 px-6 font-sans">
-      
       {/* --- YouTube Video Modal (পপআপ) --- */}
       <AnimatePresence>
         {activeVideo && (
@@ -118,7 +109,7 @@ const Portfolio = () => {
 
               <div className="relative h-75 md:h-112.5 w-full bg-gray-900 rounded-4xl overflow-hidden border border-white/10 shadow-2xl">
                 <Image
-                  src={project.img}
+                  src={project.image.url}
                   alt={project.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
@@ -151,11 +142,11 @@ const Portfolio = () => {
                   </span>
                 ))}
               </div>
-              
+
               <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
                 {project.title}
               </h2>
-              
+
               <p className="text-gray-400 leading-relaxed text-lg">
                 {project.description}
               </p>
@@ -173,7 +164,7 @@ const Portfolio = () => {
                     {project.stats.players}
                   </p>
                 </div>
-                
+
                 <div className="p-5 bg-white/2 border border-white/5 rounded-3xl group hover:border-yellow-500/30 transition-colors">
                   <div className="flex items-center gap-2 text-yellow-500 mb-2">
                     <Star size={18} />
@@ -189,7 +180,10 @@ const Portfolio = () => {
 
               <div className="pt-4">
                 <button className="w-full md:w-auto flex items-center justify-center gap-3 bg-white text-black hover:bg-purple-600 hover:text-white px-10 py-5 rounded-2xl font-black transition-all shadow-xl active:scale-95 group">
-                  <ExternalLink size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /> 
+                  <ExternalLink
+                    size={20}
+                    className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                  />
                   Launch Experience
                 </button>
               </div>
@@ -208,7 +202,7 @@ const Portfolio = () => {
         >
           <div className="absolute top-0 left-0 w-full h-full bg-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-blue-600/10 blur-[120px] rounded-full" />
-          
+
           <h2 className="text-5xl md:text-7xl font-black mb-8 relative z-10 leading-none">
             Have a vision for a <br />{" "}
             <span className="text-purple-500 underline decoration-purple-500/20 underline-offset-12">
@@ -216,7 +210,8 @@ const Portfolio = () => {
             </span>
           </h2>
           <p className="text-gray-400 mb-12 text-xl max-w-xl mx-auto leading-relaxed relative z-10">
-            I’m available for custom projects, system design, and long-term collaborations.
+            I’m available for custom projects, system design, and long-term
+            collaborations.
           </p>
           <button className="relative z-10 bg-purple-600 text-white px-16 py-6 rounded-2xl font-black text-xl hover:bg-purple-500 hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all active:scale-95">
             Get in Touch

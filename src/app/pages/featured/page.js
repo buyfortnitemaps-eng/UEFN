@@ -93,33 +93,41 @@ const FeaturedSection = () => {
   return (
     <section className="py-20 px-6 max-w-7xl mx-auto relative">
       {/* Header & Filter Tabs */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <Sparkles size={20} className="text-yellow-500" />
-            <h2 className="text-3xl font-bold text-white">Featured Releases</h2>
-          </div>
-          <p className="text-gray-500">
-            The most downloaded UEFN templates this week.
-          </p>
-        </div>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6">
+  {/* Left Side: Title & Description */}
+  <div className="w-full md:w-auto">
+    <div className="flex items-center gap-2 mb-2">
+      <Sparkles size={20} className="text-yellow-500 shrink-0" />
+      <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+        Featured Releases
+      </h2>
+    </div>
+    <p className="text-sm md:text-base text-gray-500">
+      The most downloaded UEFN templates this week.
+    </p>
+  </div>
 
-        <div className="flex bg-white/5 p-1 rounded-2xl border border-white/10 backdrop-blur-md">
-          {tags.map((tag) => (
-            <button
-              key={tag.id}
-              onClick={() => setActiveTag(tag.id)}
-              className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-                activeTag === tag.id
-                  ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20"
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              {tag.label}
-            </button>
-          ))}
-        </div>
+  {/* Right Side: Responsive Tabs/Tags */}
+  <div className="w-full md:w-auto overflow-hidden">
+    <div className="flex bg-white/5 p-1 rounded-2xl border border-white/10 backdrop-blur-md overflow-x-auto no-scrollbar scroll-smooth">
+      <div className="flex min-w-max md:min-w-0 gap-1">
+        {tags.map((tag) => (
+          <button
+            key={tag.id}
+            onClick={() => setActiveTag(tag.id)}
+            className={`px-4 md:px-6 py-2 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+              activeTag === tag.id
+                ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            {tag.label}
+          </button>
+        ))}
       </div>
+    </div>
+  </div>
+</div>
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

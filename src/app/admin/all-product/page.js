@@ -2,12 +2,11 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { useState, useEffect } from "react";
-import { Edit3, Trash2, Filter } from "lucide-react";
+import { Edit3, Trash2, Filter, Star } from "lucide-react";
 import { auth } from "../../../../firebase";
 import AdminOnly from "../../components/admin/OnlyAdmin";
 import { useAuth } from "../../context/AuthContext";
 import EditProductModal from "../../components/admin/EditProductModal";
-import { Star } from "lucide-react";
 
 const AllProducts = () => {
   const { user, mongoUser } = useAuth();
@@ -40,7 +39,7 @@ const AllProducts = () => {
       if (res.ok) {
         alert("Product upgraded and moved to Featured list!");
         setIsUpgradeModalOpen(false);
-        fetchProducts(); // লিস্ট রিফ্রেশ করার জন্য
+        fetchProducts();
       }
     } catch (error) {
       console.error("Upgrade failed", error);
@@ -48,14 +47,18 @@ const AllProducts = () => {
   };
 
   const fetchProducts = async () => {
-    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/all-products");
+    const res = await fetch(
+      "https://uefn-maps-server.onrender.com/api/v1/products/all-products",
+    );
     const data = await res.json();
     setProducts(data.data);
     setFilteredProducts(data.data);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
+    const res = await fetch(
+      "https://uefn-maps-server.onrender.com/api/v1/categories",
+    );
     const data = await res.json();
     setCategories(data.data);
   };
@@ -65,7 +68,6 @@ const AllProducts = () => {
     fetchCategories();
   }, []);
 
-  // ক্যাটাগরি ফিল্টার লজিক
   useEffect(() => {
     if (selectedCategory === "all") {
       setFilteredProducts(products);
@@ -79,28 +81,31 @@ const AllProducts = () => {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure? Image will also be deleted!")) return;
     const token = await auth.currentUser.getIdToken();
-    const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/products/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      `https://uefn-maps-server.onrender.com/api/v1/products/${id}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
     if (res.ok) fetchProducts();
   };
 
   if (!user || mongoUser?.role !== "admin") return <AdminOnly />;
 
   return (
-    <div className="max-w-7xl mx-auto p-6 text-white">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-        <h2 className="text-3xl font-black uppercase tracking-tighter">
+    <div className="max-w-7xl mx-auto p-4 md:p-6 text-white min-h-screen">
+      {/* Header & Filter Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
           Manage <span className="text-purple-500">Assets</span>
         </h2>
 
-        {/* Filter Section */}
-        <div className="flex items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/10">
-          <Filter size={18} className="ml-3 text-purple-500" />
+        <div className="flex items-center w-full md:w-auto gap-3 bg-white/5 p-2 rounded-2xl border border-white/10 backdrop-blur-sm">
+          <Filter size={18} className="ml-2 text-purple-500 shrink-0" />
           <select
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="bg-transparent outline-none p-2 text-sm font-bold uppercase tracking-widest cursor-pointer"
+            className="bg-transparent outline-none p-2 text-xs md:text-sm font-bold uppercase tracking-widest cursor-pointer w-full"
           >
             <option value="all" className="bg-[#0d0d0f]">
               All Categories
@@ -114,8 +119,8 @@ const AllProducts = () => {
         </div>
       </div>
 
-      {/* Table Section */}
-      <div className="bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden backdrop-blur-md">
+      {/* Desktop Table View (Hidden on Mobile) */}
+      <div className="hidden md:block bg-white/5 border border-white/10 rounded-4xl overflow-hidden backdrop-blur-md overflow-x-auto">
         <table className="w-full text-left">
           <thead className="bg-white/5">
             <tr>
@@ -158,31 +163,28 @@ const AllProducts = () => {
                   ${product.price}
                 </td>
                 <td className="p-6 text-right space-x-2">
-                  <button
+                  <ActionButton
+                    icon={<Star size={18} />}
+                    color="yellow"
                     onClick={() => {
                       setProductToUpgrade(product);
                       setIsUpgradeModalOpen(true);
                     }}
-                    className="p-3 bg-white/5 hover:bg-yellow-600/20 text-gray-400 hover:text-yellow-500 rounded-xl transition-all"
-                    title="Upgrade to Featured"
-                  >
-                    <Star size={18} />
-                  </button>
-                  <button
+                    title="Upgrade"
+                  />
+                  <ActionButton
+                    icon={<Edit3 size={18} />}
+                    color="blue"
                     onClick={() => {
                       setCurrentProduct(product);
                       setIsModalOpen(true);
                     }}
-                    className="p-3 bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all"
-                  >
-                    <Edit3 size={18} />
-                  </button>
-                  <button
+                  />
+                  <ActionButton
+                    icon={<Trash2 size={18} />}
+                    color="red"
                     onClick={() => handleDelete(product._id)}
-                    className="p-3 bg-white/5 hover:bg-red-600/20 text-gray-400 hover:text-red-500 rounded-xl transition-all"
-                  >
-                    <Trash2 size={18} />
-                  </button>
+                  />
                 </td>
               </tr>
             ))}
@@ -190,58 +192,118 @@ const AllProducts = () => {
         </table>
       </div>
 
-      {/* Update Modal (Simplified logic) */}
-      {/* Update Modal */}
+      {/* Mobile Card View (Hidden on Desktop) */}
+      <div className="md:hidden space-y-4">
+        {filteredProducts.map((product) => (
+          <div
+            key={product._id}
+            className="bg-white/5 border border-white/10 rounded-3xl p-5 backdrop-blur-md"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <img
+                src={product.image.url}
+                className="w-16 h-16 rounded-2xl object-cover border border-white/10 shadow-lg"
+                alt=""
+              />
+              <div className="flex-1 overflow-hidden">
+                <h3 className="font-bold text-gray-100 truncate">
+                  {product.title}
+                </h3>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-[10px] font-black uppercase text-purple-400 tracking-widest leading-none">
+                    {product.category.name}
+                  </span>
+                  <span className="text-sm font-mono font-bold text-purple-400 leading-none">
+                    ${product.price}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <MobileActionBtn
+                icon={<Star size={16} />}
+                label="Feature"
+                color="yellow"
+                onClick={() => {
+                  setProductToUpgrade(product);
+                  setIsUpgradeModalOpen(true);
+                }}
+              />
+              <MobileActionBtn
+                icon={<Edit3 size={16} />}
+                label="Edit"
+                color="blue"
+                onClick={() => {
+                  setCurrentProduct(product);
+                  setIsModalOpen(true);
+                }}
+              />
+              <MobileActionBtn
+                icon={<Trash2 size={16} />}
+                label="Delete"
+                color="red"
+                onClick={() => handleDelete(product._id)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Modals */}
       {isModalOpen && currentProduct && (
         <EditProductModal
           product={currentProduct}
           onClose={() => setIsModalOpen(false)}
           refresh={fetchProducts}
-          categories={categories} // এই লাইনটি যোগ করুন
+          categories={categories}
         />
       )}
 
       {isUpgradeModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-[#161618] border border-white/10 p-8 rounded-4xl w-full max-w-md shadow-2xl">
-            <h3 className="text-2xl font-black uppercase mb-2">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-end md:items-center justify-center z-50 p-0 md:p-4">
+          <div className="bg-[#161618] border-t md:border border-white/10 p-8 rounded-t-[2.5rem] md:rounded-[2.5rem] w-full max-w-md shadow-2xl animate-in slide-in-from-bottom duration-300">
+            <h3 className="text-2xl font-black uppercase mb-2 leading-none">
               Upgrade Asset
             </h3>
-            <p className="text-gray-400 text-sm mb-6">
-              Select a spotlight category for{" "}
-              <span className="text-purple-400">{productToUpgrade?.title}</span>
+            <p className="text-gray-400 text-sm mb-6 font-medium">
+              Spotlight category for{" "}
+              <span className="text-purple-400 italic">
+                {productToUpgrade?.title}
+              </span>
             </p>
 
-            <div className="space-y-4">
-              <label className="text-xs font-bold uppercase text-gray-500">
-                Feature Type
-              </label>
-              <select
-                value={featureTag}
-                onChange={(e) => setFeatureTag(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-purple-500 transition-all"
-              >
-                <option value="featured" className="bg-[#161618]">
-                  Featured Asset
-                </option>
-                <option value="premium" className="bg-[#161618]">
-                  Premium Selection
-                </option>
-                <option value="trending" className="bg-[#161618]">
-                  Trending Now
-                </option>
-              </select>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest ml-1">
+                  Feature Type
+                </label>
+                <select
+                  value={featureTag}
+                  onChange={(e) => setFeatureTag(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-purple-500 transition-all appearance-none font-bold text-sm"
+                >
+                  <option value="featured" className="bg-[#161618]">
+                    Featured Asset
+                  </option>
+                  <option value="premium" className="bg-[#161618]">
+                    Premium Selection
+                  </option>
+                  <option value="trending" className="bg-[#161618]">
+                    Trending Now
+                  </option>
+                </select>
+              </div>
 
-              <div className="flex gap-3 mt-8">
+              <div className="flex flex-col-reverse md:flex-row gap-3 mt-4">
                 <button
                   onClick={() => setIsUpgradeModalOpen(false)}
-                  className="flex-1 px-6 py-3 rounded-xl font-bold uppercase text-sm border border-white/10 hover:bg-white/5 transition-all"
+                  className="flex-1 px-6 py-4 rounded-2xl font-black uppercase text-xs border border-white/10 hover:bg-white/5 transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpgrade}
-                  className="flex-1 px-6 py-3 rounded-xl font-bold uppercase text-sm bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-500/20 transition-all"
+                  className="flex-1 px-6 py-4 rounded-2xl font-black uppercase text-xs bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-500/20 transition-all"
                 >
                   Confirm Upgrade
                 </button>
@@ -251,6 +313,36 @@ const AllProducts = () => {
         </div>
       )}
     </div>
+  );
+};
+
+// Helper Components for Cleaner Code
+const ActionButton = ({ icon, color, onClick, title }) => (
+  <button
+    onClick={onClick}
+    title={title}
+    className={`p-3 bg-white/5 hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all`}
+  >
+    {icon}
+  </button>
+);
+
+const MobileActionBtn = ({ icon, label, color, onClick }) => {
+  const colors = {
+    yellow: "hover:bg-yellow-600/20 text-yellow-500/80 border-yellow-500/10",
+    blue: "hover:bg-blue-600/20 text-blue-500/80 border-blue-500/10",
+    red: "hover:bg-red-600/20 text-red-500/80 border-red-500/10",
+  };
+  return (
+    <button
+      onClick={onClick}
+      className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-2xl bg-white/5 border ${colors[color]} transition-all active:scale-95`}
+    >
+      {icon}
+      <span className="text-[9px] font-black uppercase tracking-tighter">
+        {label}
+      </span>
+    </button>
   );
 };
 

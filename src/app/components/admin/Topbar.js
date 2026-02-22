@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 
 "use client";
-import React from "react";
 import { Search, Bell, Menu, ChevronDown } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 

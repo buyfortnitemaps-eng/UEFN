@@ -6,8 +6,8 @@ import { Trash2, Edit3, StarOff, Zap } from "lucide-react";
 import { auth } from "../../../../firebase";
 import { useAuth } from "../../context/AuthContext";
 import AdminOnly from "../../components/admin/OnlyAdmin";
-import EditFeaturedProductModal from "../../components/admin/EditFeaturedProductModal"; // Modal Import
-import DowngradeToProductModal from "../../components/admin/DowngradeToProductModal"; // Modal Import
+import EditFeaturedProductModal from "../../components/admin/EditFeaturedProductModal";
+import DowngradeToProductModal from "../../components/admin/DowngradeToProductModal";
 
 const FeaturedProducts = () => {
   const { user, mongoUser } = useAuth();
@@ -19,13 +19,17 @@ const FeaturedProducts = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
 
   const fetchFeatured = async () => {
-    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/featured");
+    const res = await fetch(
+      "https://uefn-maps-server.onrender.com/api/v1/products/featured",
+    );
     const data = await res.json();
     setFeaturedProducts(data.data);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
+    const res = await fetch(
+      "https://uefn-maps-server.onrender.com/api/v1/categories",
+    );
     const data = await res.json();
     setCategories(data.data);
   };
@@ -35,9 +39,11 @@ const FeaturedProducts = () => {
     fetchCategories();
   }, []);
 
-  // Delete Function
- const handleDelete = async (id) => {
-    if (!confirm("Are you sure? This will permanently delete the featured asset!")) return;
+  const handleDelete = async (id) => {
+    if (
+      !confirm("Are you sure? This will permanently delete the featured asset!")
+    )
+      return;
 
     try {
       const token = await auth.currentUser.getIdToken();
@@ -54,41 +60,38 @@ const FeaturedProducts = () => {
       const data = await res.json();
 
       if (res.ok) {
-        // ১. স্টেট থেকে ডিলিট হওয়া প্রোডাক্টটি সাথে সাথে ফিল্টার করে বাদ দিন (অটো আপডেট হবে)
-        setFeaturedProducts((prevProducts) => 
-          prevProducts.filter((product) => product._id !== id)
+        setFeaturedProducts((prevProducts) =>
+          prevProducts.filter((product) => product._id !== id),
         );
-        
-        // ২. চাইলে ব্যাকগ্রাউন্ডে একবার রিফেচ করতে পারেন (ঐচ্ছিক)
-        // fetchFeatured(); 
-
         alert("Featured asset deleted successfully! ✅");
       } else {
         alert(`Error: ${data.message || "Failed to delete asset"}`);
       }
     } catch (error) {
       console.error("Delete Error:", error);
-      alert("Something went wrong. Please check your internet connection.");
+      alert("Something went wrong.");
     }
   };
 
   if (!user || mongoUser?.role !== "admin") return <AdminOnly />;
 
   return (
-    <div className="max-w-7xl mx-auto p-6 text-white">
-      <div className="flex justify-between items-center mb-10">
-        <h2 className="text-3xl font-black uppercase tracking-tighter italic">
+    <div className="max-w-7xl mx-auto p-4 md:p-6 text-white min-h-screen">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic">
           Featured <span className="text-yellow-500">Spotlight</span>
         </h2>
-        <div className="bg-yellow-500/10 text-yellow-500 px-4 py-2 rounded-full border border-yellow-500/20 flex items-center gap-2">
-          <Zap size={16} fill="currentColor" />
-          <span className="text-xs font-black uppercase tracking-widest">
-            Featured Assets
+        <div className="bg-yellow-500/10 text-yellow-500 px-4 py-2 rounded-full border border-yellow-500/20 flex items-center gap-2 self-start md:self-center">
+          <Zap size={14} fill="currentColor" />
+          <span className="text-[10px] md:text-xs font-black uppercase tracking-widest">
+            Featured Assets: {featuredProducts.length}
           </span>
         </div>
       </div>
 
-      <div className="bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
+      {/* Desktop Table View (Visible only on md screens and up) */}
+      <div className="hidden md:block bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
         <table className="w-full text-left">
           <thead className="bg-white/10">
             <tr>
@@ -123,47 +126,34 @@ const FeaturedProducts = () => {
                   </span>
                 </td>
                 <td className="p-6">
-                  <span
-                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
-                      product.featureTag === "premium"
-                        ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
-                        : product.featureTag === "trending"
-                          ? "bg-orange-500/10 text-orange-400 border-orange-500/20"
-                          : "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
-                    }`}
-                  >
-                    {product.featureTag}
-                  </span>
+                  <TagBadge tag={product.featureTag} />
                 </td>
                 <td className="p-6 font-mono text-yellow-500 font-bold">
                   ${product.price}
                 </td>
                 <td className="p-6 text-right space-x-2">
-                  <button
+                  <ActionButton
+                    icon={<StarOff size={18} />}
+                    color="orange"
+                    title="Downgrade"
                     onClick={() => {
                       setCurrentProduct(product);
                       setIsDowngradeModalOpen(true);
                     }}
-                    className="p-3 bg-white/5 hover:bg-orange-600/20 text-gray-400 hover:text-orange-500 rounded-xl transition-all"
-                    title="Move to Normal Product"
-                  >
-                    <StarOff size={18} />
-                  </button>
-                  <button
+                  />
+                  <ActionButton
+                    icon={<Edit3 size={18} />}
+                    color="blue"
                     onClick={() => {
                       setCurrentProduct(product);
                       setIsEditModalOpen(true);
                     }}
-                    className="p-3 bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all"
-                  >
-                    <Edit3 size={18} />
-                  </button>
-                  <button
+                  />
+                  <ActionButton
+                    icon={<Trash2 size={18} />}
+                    color="red"
                     onClick={() => handleDelete(product._id)}
-                    className="p-3 bg-white/5 hover:bg-red-600/20 text-gray-400 hover:text-red-500 rounded-xl transition-all"
-                  >
-                    <Trash2 size={18} />
-                  </button>
+                  />
                 </td>
               </tr>
             ))}
@@ -171,7 +161,74 @@ const FeaturedProducts = () => {
         </table>
       </div>
 
-      {/* // Modal Rendering: */}
+      {/* Mobile Card View (Visible only on small screens) */}
+      <div className="md:hidden space-y-4">
+        {featuredProducts.map((product) => (
+          <div
+            key={product._id}
+            className="bg-white/5 border border-white/10 rounded-3xl p-5 backdrop-blur-md relative overflow-hidden"
+          >
+            {/* Background Glow for Premium/Trending */}
+            <div
+              className={`absolute top-0 right-0 w-24 h-24 blur-[60px] opacity-20 pointer-events-none ${
+                product.featureTag === "premium"
+                  ? "bg-blue-500"
+                  : product.featureTag === "trending"
+                    ? "bg-orange-500"
+                    : "bg-yellow-500"
+              }`}
+            />
+
+            <div className="flex gap-4 items-center mb-5">
+              <img
+                src={product.image?.url}
+                className="w-16 h-16 rounded-2xl object-cover border border-white/10"
+                alt=""
+              />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-gray-100 truncate text-lg">
+                  {product.title}
+                </h3>
+                <div className="flex items-center gap-3 mt-1">
+                  <TagBadge tag={product.featureTag} />
+                  <span className="text-sm font-mono font-black text-yellow-500">
+                    ${product.price}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2">
+              <MobileActionBtn
+                icon={<StarOff size={16} />}
+                label="Downgrade"
+                color="orange"
+                onClick={() => {
+                  setCurrentProduct(product);
+                  setIsDowngradeModalOpen(true);
+                }}
+              />
+              <MobileActionBtn
+                icon={<Edit3 size={16} />}
+                label="Edit"
+                color="blue"
+                onClick={() => {
+                  setCurrentProduct(product);
+                  setIsEditModalOpen(true);
+                }}
+              />
+              <MobileActionBtn
+                icon={<Trash2 size={16} />}
+                label="Delete"
+                color="red"
+                onClick={() => handleDelete(product._id)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Modals */}
       {isEditModalOpen && (
         <EditFeaturedProductModal
           product={currentProduct}
@@ -189,6 +246,54 @@ const FeaturedProducts = () => {
         />
       )}
     </div>
+  );
+};
+
+// --- Sub-components for better reusability ---
+
+const TagBadge = ({ tag }) => {
+  const styles = {
+    premium: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    trending: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+    default: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
+  };
+  const currentStyle = styles[tag] || styles.default;
+  return (
+    <span
+      className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${currentStyle}`}
+    >
+      {tag}
+    </span>
+  );
+};
+
+const ActionButton = ({ icon, color, onClick, title }) => (
+  <button
+    onClick={onClick}
+    title={title}
+    className={`p-3 bg-white/5 hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all inline-flex items-center justify-center`}
+  >
+    {icon}
+  </button>
+);
+
+const MobileActionBtn = ({ icon, label, color, onClick }) => {
+  const colorStyles = {
+    orange:
+      "text-orange-500 border-orange-500/10 bg-orange-500/5 hover:bg-orange-500/10",
+    blue: "text-blue-500 border-blue-500/10 bg-blue-500/5 hover:bg-blue-500/10",
+    red: "text-red-500 border-red-500/10 bg-red-500/5 hover:bg-red-500/10",
+  };
+  return (
+    <button
+      onClick={onClick}
+      className={`flex flex-col items-center justify-center gap-1.5 py-3 rounded-2xl border transition-all active:scale-95 ${colorStyles[color]}`}
+    >
+      {icon}
+      <span className="text-[9px] font-black uppercase tracking-tighter">
+        {label}
+      </span>
+    </button>
   );
 };
 
