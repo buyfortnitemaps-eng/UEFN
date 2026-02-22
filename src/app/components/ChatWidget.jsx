@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -17,17 +18,19 @@ const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   // CONNECT SOCKET
-  useEffect(() => {
-    socketRef.current = io("https://uefn-maps-server.onrender.com", {
-      reconnection: true,
-      reconnectionAttempts: Infinity,
-      reconnectionDelay: 2000,
-      timeout: 20000,
-      withCredentials: true,
-    });
+useEffect(() => {
+  if (socketRef.current) return;
 
-    const socket = socketRef.current;
+  const socket = io("https://uefn-maps-server.onrender.com", {
+    withCredentials: true,
+    reconnection: true,
+    reconnectionAttempts: Infinity,
+    reconnectionDelay: 2000,
+  });
 
+  socketRef.current = socket;
+
+  socket.on("connect", () => {
     let myId = user?.uid || localStorage.getItem("guest_id");
 
     if (!myId) {
@@ -35,18 +38,15 @@ const ChatWidget = () => {
       localStorage.setItem("guest_id", myId);
     }
 
-    // নিজের room এ join
     socket.emit("join_chat", myId);
+  });
 
-    // Admin reply receive
-    socket.on("receive_message", (data) => {
-      setMessages((prev) => [...prev, data]);
-    });
+  socket.on("receive_message", (data) => {
+    setMessages((prev) => [...prev, data]);
+  });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [user]);
+  return () => socket.disconnect();
+}, []);
 
   // AUTO SCROLL
   useEffect(() => {

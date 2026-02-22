@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 
+const SOCKET_URL = "https://uefn-maps-server.onrender.com";
+
 const AdminChat = () => {
   const socketRef = useRef(null);
 
@@ -10,21 +12,26 @@ const AdminChat = () => {
   const [messages, setMessages] = useState([]);
   const [reply, setReply] = useState("");
 
+  // CONNECT ONLY ONCE
   useEffect(() => {
-    socketRef.current = io("https://uefn-maps-server.onrender.com", {
+    if (socketRef.current) return;
+
+    const socket = io(SOCKET_URL, {
+      withCredentials: true,
       reconnection: true,
       reconnectionAttempts: Infinity,
       reconnectionDelay: 2000,
-      timeout: 20000,
-      withCredentials: true,
     });
 
-    const socket = socketRef.current;
+    socketRef.current = socket;
 
-    // ADMIN ROOM JOIN
-    socket.emit("join_chat", "ADMIN");
+    // IMPORTANT: join AFTER connect
+    socket.on("connect", () => {
+      console.log("Admin connected:", socket.id);
+      socket.emit("join_chat", "ADMIN");
+    });
 
-    // user message receive
+    // receive user message
     socket.on("admin_receive", (data) => {
       setActiveChats((prev) => {
         if (!prev.find((u) => u.id === data.senderId)) {
@@ -33,13 +40,11 @@ const AdminChat = () => {
         return prev;
       });
 
-      if (selectedUser && selectedUser.id === data.senderId) {
-        setMessages((prev) => [...prev, data]);
-      }
+      setMessages((prev) => [...prev, data]);
     });
 
     return () => socket.disconnect();
-  }, [selectedUser]);
+  }, []);
 
   const sendReply = () => {
     if (!reply.trim() || !selectedUser) return;
@@ -59,15 +64,11 @@ const AdminChat = () => {
 
   return (
     <div className="flex h-screen bg-black text-white">
-      {/* User list */}
       <div className="w-1/3 border-r border-white/10 p-4">
         {activeChats.map((u) => (
           <div
             key={u.id}
-            onClick={() => {
-              setSelectedUser(u);
-              setMessages([]);
-            }}
+            onClick={() => setSelectedUser(u)}
             className="p-3 cursor-pointer hover:bg-white/10"
           >
             {u.name} ({u.id.slice(0, 6)})
@@ -75,7 +76,6 @@ const AdminChat = () => {
         ))}
       </div>
 
-      {/* Chat window */}
       <div className="flex-1 flex flex-col">
         {selectedUser ? (
           <>
