@@ -30,10 +30,15 @@ const ChatWidget = () => {
     return myId;
   };
 
-  // ১. সকেট কানেকশন এবং লিসেনার (একবারই রান হবে)
+  // ১. ইনিশিয়াল সেটআপ (সাউন্ড ও সকেট)
   useEffect(() => {
+    // অডিও ফাইল লোড
     audioRef.current = new Audio("/notification.mp3");
-    if (Notification.permission !== "granted") Notification.requestPermission();
+
+    // নোটিফিকেশন পারমিশন চেক
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
 
     const socket = io(SOCKET_URL, { withCredentials: true });
     socketRef.current = socket;
@@ -42,43 +47,48 @@ const ChatWidget = () => {
       socket.emit("join_chat", getMyId());
     });
 
-    // মেসেজ রিসিভ লজিক
+    // মেসেজ রিসিভ হ্যান্ডলার
     socket.on("receive_message", (data) => {
-      // মেসেজ আসার সাথে সাথে স্টেটে যোগ হবে, বক্স খোলা থাকুক বা না থাকুক
       setMessages((prev) => [...prev, { ...data, isSeen: true }]);
 
-      // যদি চ্যাট বক্স বন্ধ থাকে তবে নোটিফিকেশন দিবে
+      // যদি চ্যাট উইন্ডো বন্ধ থাকে তবে নোটিফিকেশন এবং সাউন্ড দিবে
       if (!isOpenRef.current) {
-        audioRef.current?.play().catch(() => { });
+        if (audioRef.current) {
+          audioRef.current.currentTime = 0;
+          audioRef.current.play().catch(() => console.log("User interaction required for audio"));
+        }
+
         setUnreadCount(prev => prev + 1);
+
         if (Notification.permission === "granted") {
-          new Notification("Support Team", { body: data.text });
+          new Notification("Support Team", {
+            body: data.text,
+            icon: "/p5.jpg"
+          });
         }
       }
     });
 
-    // হিস্টোরি লোড করা (পেজ লোডেই একবার নিয়ে আসা ভালো)
-    const loadInitialHistory = async () => {
+    // শুরুতেই চ্যাট হিস্টোরি লোড করা
+    const loadHistory = async () => {
       try {
         const res = await fetch(`${API}/${getMyId()}`);
         const data = await res.json();
         setMessages(data);
-      } catch { console.log("Initial history failed"); }
+      } catch { console.log("Initial load failed"); }
     };
-    loadInitialHistory();
+    loadHistory();
 
-    return () => {
-      socket.disconnect();
-    };
+    return () => { socket.disconnect(); };
   }, []);
 
-  // ২. বক্স ওপেন/ক্লোজ হ্যান্ডলার
+  // ২. বক্স ওপেন/ক্লোজ স্টেট ম্যানেজমেন্ট
   useEffect(() => {
     isOpenRef.current = isOpen;
     if (isOpen) {
       setUnreadCount(0);
       socketRef.current?.emit("mark_seen", getMyId());
-      // বক্স ওপেন হলে লেটেস্ট মেসেজে স্ক্রল করবে
+      // ওপেন হওয়ার সাথে সাথে নিচে স্ক্রল করা
       setTimeout(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
@@ -112,7 +122,15 @@ const ChatWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999]">
+    <div
+      className="fixed bottom-6 right-6 z-[9999]"
+      onMouseMove={() => {
+        // ব্রাউজার অডিও পলিসি আনলক করার জন্য
+        if (audioRef.current && audioRef.current.paused) {
+          audioRef.current.play().then(() => audioRef.current.pause()).catch(() => { });
+        }
+      }}
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -132,8 +150,8 @@ const ChatWidget = () => {
               </button>
             </div>
 
-            {/* Message Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#0A0A0B] custom-scrollbar">
+            {/* Message List */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#0A0A0B]">
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.isAdmin ? "justify-start" : "justify-end"}`}>
                   <div className={`px-4 py-2.5 rounded-2xl text-sm max-w-[85%] shadow-lg ${m.isAdmin ? "bg-[#27272A] text-white rounded-tl-none border border-white/5" : "bg-purple-600 text-white rounded-tr-none"}`}>
@@ -154,10 +172,10 @@ const ChatWidget = () => {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message..."
+                placeholder="Ask us anything..."
                 className="flex-1 bg-white/5 rounded-xl px-4 py-3 text-sm outline-none text-white focus:ring-1 ring-purple-500/50 transition-all"
               />
-              <button type="submit" className="bg-purple-600 p-3 rounded-xl hover:bg-purple-500 text-white shadow-lg active:scale-90 transition-transform">
+              <button type="submit" className="bg-purple-600 p-3 rounded-xl hover:bg-purple-500 text-white shadow-lg active:scale-95 transition-transform">
                 <Send size={18} />
               </button>
             </form>
@@ -165,7 +183,7 @@ const ChatWidget = () => {
         )}
       </AnimatePresence>
 
-      {/* Floating Button */}
+      {/* Floating Action Button */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
