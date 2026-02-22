@@ -18,7 +18,7 @@ const ChatWidget = () => {
 
   // CONNECT SOCKET
   useEffect(() => {
-    socketRef.current = io("http://127.0.0.1:5000", {
+    socketRef.current = io("https://magriluefn.vercel.app/", {
       transports: ["websocket"],
     });
 
