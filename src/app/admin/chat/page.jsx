@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-import { Check, CheckCheck, User, Send } from "lucide-react"; // Suggested icons
+import { Check, CheckCheck, User, Send } from "lucide-react";
 
 const SOCKET_URL = "https://uefn-maps-server.onrender.com";
 const API = "https://uefn-maps-server.onrender.com/api/v1/chat";
@@ -17,7 +17,6 @@ const AdminChat = () => {
   const [reply, setReply] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [conversations, selectedUser]);
@@ -77,7 +76,7 @@ const AdminChat = () => {
       receiverId: selectedUser,
       isAdmin: true,
       isLogged: true,
-      isSeen: false, // Initial state
+      isSeen: false,
       timestamp: new Date()
     };
 
@@ -92,75 +91,51 @@ const AdminChat = () => {
   const messages = selectedUser ? conversations[selectedUser] || [] : [];
 
   return (
-    <div className="flex w-full max-w-5xl mx-auto h-[650px] bg-[#0F0F0F] text-gray-100 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-
+    <div className="flex w-full max-w-5xl mx-auto h-[600px] bg-[#0F0F0F] text-gray-100 rounded-2xl overflow-hidden border border-white/10 shadow-2xl my-10">
+      
       {/* SIDEBAR */}
-      <div className="w-80 border-r border-white/5 bg-[#141414] flex flex-col">
+      <div className="w-72 border-r border-white/5 bg-[#141414] flex flex-col">
         <div className="p-5 border-b border-white/5">
-          <h2 className="font-semibold text-lg tracking-tight">Messages</h2>
+          <h2 className="font-semibold text-lg tracking-tight">Active Chats</h2>
         </div>
-
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
-          {users.length === 0 ? (
-            <div className="text-gray-500 text-sm p-4 text-center">No active chats</div>
-          ) : (
-            users.map((id) => (
-              <button
-                key={id}
-                onClick={() => setSelectedUser(id)}
-                className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${selectedUser === id ? "bg-purple-600/20 text-purple-400 border border-purple-600/30" : "hover:bg-white/5 text-gray-400"
-                  }`}
-              >
-                <div className="h-10 w-10 rounded-full bg-linear-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-white">
-                  <User size={20} />
-                </div>
-                <div className="text-left overflow-hidden">
-                  <p className="text-sm font-medium truncate tracking-wide">Guest_{id.slice(-4)}</p>
-                  <p className="text-xs opacity-60 truncate">Click to view chat</p>
-                </div>
-              </button>
-            ))
-          )}
+          {users.map((id) => (
+            <button
+              key={id}
+              onClick={() => setSelectedUser(id)}
+              className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
+                selectedUser === id ? "bg-purple-600/20 text-purple-400 border border-purple-600/30" : "hover:bg-white/5 text-gray-400"
+              }`}
+            >
+              <div className="h-9 w-9 rounded-full bg-linear-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-white shrink-0">
+                <User size={18} />
+              </div>
+              <p className="text-sm font-medium truncate">Guest_{id.slice(-4)}</p>
+            </button>
+          ))}
         </div>
       </div>
 
       {/* CHAT AREA */}
       <div className="flex-1 flex flex-col bg-[#0A0A0A]">
         {!selectedUser ? (
-          <div className="m-auto text-center">
-            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Send size={24} className="text-gray-600" />
-            </div>
-            <p className="text-gray-500">Select a conversation to start</p>
-          </div>
+          <div className="m-auto text-gray-500">Select a user to chat</div>
         ) : (
           <>
-            {/* Header */}
-            <div className="px-6 py-4 border-b border-white/5 bg-[#0F0F0F] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="font-medium">Guest_{selectedUser.slice(-4)}</span>
-              </div>
+            <div className="px-6 py-4 border-b border-white/5 bg-[#0F0F0F] font-medium text-sm">
+              Chatting with: <span className="text-purple-400 ml-1 uppercase">{selectedUser.slice(-6)}</span>
             </div>
 
-            {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              {loading && <div className="text-center text-xs text-purple-400">Loading history...</div>}
-
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.isAdmin ? "justify-end" : "justify-start"}`}>
-                  <div className={`group relative max-w-[75%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${m.isAdmin ? "bg-purple-600 text-white rounded-tr-none" : "bg-[#1E1E1E] text-gray-200 rounded-tl-none border border-white/5"
-                    }`}>
+                  <div className={`relative max-w-[80%] px-4 py-2 rounded-2xl text-sm ${
+                    m.isAdmin ? "bg-purple-600 text-white rounded-tr-none" : "bg-[#1E1E1E] text-white rounded-tl-none"
+                  }`}>
                     {m.text}
-
-                    {/* SEEN INDICATOR */}
                     {m.isAdmin && (
-                      <div className="flex justify-end mt-1 opacity-70">
-                        {m.isSeen ? (
-                          <CheckCheck size={14} className="text-blue-300" />
-                        ) : (
-                          <Check size={14} />
-                        )}
+                      <div className="flex justify-end mt-1">
+                        {m.isSeen ? <CheckCheck size={14} className="text-white" /> : <Check size={14} className="text-white" />}
                       </div>
                     )}
                   </div>
@@ -169,23 +144,17 @@ const AdminChat = () => {
               <div ref={scrollRef} />
             </div>
 
-            {/* Input */}
-            <div className="p-4 bg-[#0F0F0F] border-t border-white/5">
-              <div className="relative flex items-center">
-                <input
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && sendReply()}
-                  placeholder="Write a message..."
-                  className="w-full bg-white/5 border border-white/10 px-4 py-3 pr-12 rounded-xl outline-none focus:border-purple-500/50 transition-all text-sm"
-                />
-                <button
-                  onClick={sendReply}
-                  className="absolute right-2 p-2 text-purple-400 hover:text-purple-300 transition-colors"
-                >
-                  <Send size={20} />
-                </button>
-              </div>
+            <div className="p-4 bg-[#0F0F0F] border-t border-white/5 flex gap-2">
+              <input
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && sendReply()}
+                placeholder="Reply..."
+                className="flex-1 bg-white/5 border border-white/10 px-4 py-2 rounded-xl outline-none text-sm"
+              />
+              <button onClick={sendReply} className="bg-purple-600 p-2 rounded-xl hover:bg-purple-500 transition-colors">
+                <Send size={18} className="text-white" />
+              </button>
             </div>
           </>
         )}
