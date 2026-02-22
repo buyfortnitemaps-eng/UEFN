@@ -14,7 +14,7 @@ const ChatWidget = () => {
   const socketRef = useRef(null);
   const scrollRef = useRef(null);
   const audioRef = useRef(null);
-  const isOpenRef = useRef(false); // বক্সের অবস্থা ট্র্যাক করার জন্য
+  const isOpenRef = useRef(false); // বক্সের অবস্থা ট্র্যাক করার জন্য Ref
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -30,16 +30,16 @@ const ChatWidget = () => {
     return myId;
   };
 
-  // ১. ইনিশিয়াল সেটআপ (সাউন্ড ও সকেট)
+  // ১. ইনিশিয়াল অডিও এবং নোটিফিকেশন পারমিশন
   useEffect(() => {
-    // অডিও ফাইল লোড
     audioRef.current = new Audio("/notification.mp3");
-
-    // নোটিফিকেশন পারমিশন চেক
-    if (Notification.permission !== "granted") {
+    if ("Notification" in window && Notification.permission !== "granted") {
       Notification.requestPermission();
     }
+  }, []);
 
+  // ২. সকেট কানেকশন এবং লিসেনার (আপনার AdminChat-এর মতো একবারই রান হবে)
+  useEffect(() => {
     const socket = io(SOCKET_URL, { withCredentials: true });
     socketRef.current = socket;
 
@@ -47,23 +47,21 @@ const ChatWidget = () => {
       socket.emit("join_chat", getMyId());
     });
 
-    // মেসেজ রিসিভ হ্যান্ডলার
     socket.on("receive_message", (data) => {
       setMessages((prev) => [...prev, { ...data, isSeen: true }]);
 
-      // যদি চ্যাট উইন্ডো বন্ধ থাকে তবে নোটিফিকেশন এবং সাউন্ড দিবে
+      // যদি বক্স বন্ধ থাকে (Ref থেকে চেক করা হচ্ছে)
       if (!isOpenRef.current) {
-        if (audioRef.current) {
-          audioRef.current.currentTime = 0;
-          audioRef.current.play().catch(() => console.log("User interaction required for audio"));
-        }
-
+        // অডিও প্লে করা
+        audioRef.current?.play().catch(() => console.log("Interaction required for audio"));
+        
         setUnreadCount(prev => prev + 1);
 
-        if (Notification.permission === "granted") {
-          new Notification("Support Team", {
+        // ব্রাউজার নোটিফিকেশন (ট্যাব হিডেন থাকলে)
+        if (document.hidden && Notification.permission === "granted") {
+          new Notification("New Message from Support", {
             body: data.text,
-            icon: "/p5.jpg"
+            icon: "/p5.jpg" // আপনার প্রজেক্ট অনুযায়ী আইকন পাথ
           });
         }
       }
@@ -79,23 +77,26 @@ const ChatWidget = () => {
     };
     loadHistory();
 
-    return () => { socket.disconnect(); };
-  }, []);
+    return () => {
+      socket.disconnect();
+    };
+  }, []); 
 
-  // ২. বক্স ওপেন/ক্লোজ স্টেট ম্যানেজমেন্ট
+  // ৩. বক্স ওপেন/ক্লোজ হ্যান্ডলার এবং Ref আপডেট
   useEffect(() => {
-    isOpenRef.current = isOpen;
+    isOpenRef.current = isOpen; // Ref আপডেট করা হচ্ছে
     if (isOpen) {
       setUnreadCount(0);
       socketRef.current?.emit("mark_seen", getMyId());
-      // ওপেন হওয়ার সাথে সাথে নিচে স্ক্রল করা
+      
+      // ওপেন হওয়ার পর স্ক্রল ফিক্স
       setTimeout(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     }
   }, [isOpen]);
 
-  // ৩. নতুন মেসেজ আসলে অটো-স্ক্রল
+  // ৪. নতুন মেসেজ আসলে অটো-স্ক্রল
   useEffect(() => {
     if (isOpen) {
       scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -122,39 +123,31 @@ const ChatWidget = () => {
   };
 
   return (
-    <div
-      className="fixed bottom-6 right-6 z-[9999]"
-      onMouseMove={() => {
-        // ব্রাউজার অডিও পলিসি আনলক করার জন্য
-        if (audioRef.current && audioRef.current.paused) {
-          audioRef.current.play().then(() => audioRef.current.pause()).catch(() => { });
-        }
-      }}
-    >
+    <div className="fixed bottom-6 right-6 z-[9999]">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="mb-4 w-87.5 h-125 bg-[#121214] rounded-4xl flex flex-col border border-white/10 shadow-2xl overflow-hidden"
+            className="mb-4 w-80 h-[500px] bg-[#121214] rounded-[2rem] flex flex-col border border-white/10 shadow-2xl overflow-hidden"
           >
             {/* Header */}
             <div className="p-5 bg-purple-600 flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="font-bold text-white text-sm italic">Live Support</span>
+                <span className="font-bold text-white text-sm italic">UEFN Support</span>
               </div>
               <button onClick={() => setIsOpen(false)} className="hover:rotate-90 transition-transform text-white">
                 <X size={20} />
               </button>
             </div>
 
-            {/* Message List */}
+            {/* Message Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#0A0A0B]">
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.isAdmin ? "justify-start" : "justify-end"}`}>
-                  <div className={`px-4 py-2.5 rounded-2xl text-sm max-w-[85%] shadow-lg ${m.isAdmin ? "bg-[#27272A] text-white rounded-tl-none border border-white/5" : "bg-purple-600 text-white rounded-tr-none"}`}>
+                  <div className={`px-4 py-2.5 rounded-2xl text-sm max-w-[85%] ${m.isAdmin ? "bg-[#27272A] text-white rounded-tl-none border border-white/5" : "bg-purple-600 text-white rounded-tr-none"}`}>
                     {m.text}
                     {!m.isAdmin && (
                       <div className="flex justify-end mt-1 opacity-70">
@@ -172,10 +165,10 @@ const ChatWidget = () => {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask us anything..."
-                className="flex-1 bg-white/5 rounded-xl px-4 py-3 text-sm outline-none text-white focus:ring-1 ring-purple-500/50 transition-all"
+                placeholder="Type your message..."
+                className="flex-1 bg-white/5 rounded-xl px-4 py-3 text-sm outline-none text-white focus:ring-1 ring-purple-500/50"
               />
-              <button type="submit" className="bg-purple-600 p-3 rounded-xl hover:bg-purple-500 text-white shadow-lg active:scale-95 transition-transform">
+              <button type="submit" className="bg-purple-600 p-3 rounded-xl hover:bg-purple-500 text-white shadow-lg active:scale-90 transition-transform">
                 <Send size={18} />
               </button>
             </form>
@@ -183,12 +176,11 @@ const ChatWidget = () => {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-5 bg-purple-600 rounded-full text-white shadow-[0_0_30px_rgba(147,51,234,0.4)] border border-white/20"
+        className="relative p-5 bg-purple-600 rounded-full text-white shadow-3xl border border-white/20"
       >
         {isOpen ? <X size={28} /> : <MessageCircle size={28} />}
         {!isOpen && unreadCount > 0 && (
