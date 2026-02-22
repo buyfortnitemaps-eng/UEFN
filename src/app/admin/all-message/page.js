@@ -7,14 +7,14 @@ const AdminMessages = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetch("https://uefn-maps-server.vercel.app/api/v1/contacts/all-messages")
+    fetch("https://uefn-maps-server.onrender.com/api/v1/contacts/all-messages")
       .then(res => res.json())
       .then(data => setMessages(data.data));
   }, []);
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure?")) return;
-    await fetch(`https://uefn-maps-server.vercel.app/api/v1/contacts/delete/${id}`, { method: "DELETE" });
+    await fetch(`https://uefn-maps-server.onrender.com/api/v1/contacts/delete/${id}`, { method: "DELETE" });
     setMessages(messages.filter(m => m._id !== id));
   };
 

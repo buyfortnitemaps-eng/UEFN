@@ -26,7 +26,7 @@ const AllProducts = () => {
     const token = await auth.currentUser.getIdToken();
     try {
       const res = await fetch(
-        `https://uefn-maps-server.vercel.app/api/v1/products/upgrade/${productToUpgrade._id}`,
+        `https://uefn-maps-server.onrender.com/api/v1/products/upgrade/${productToUpgrade._id}`,
         {
           method: "POST",
           headers: {
@@ -48,14 +48,14 @@ const AllProducts = () => {
   };
 
   const fetchProducts = async () => {
-    const res = await fetch("https://uefn-maps-server.vercel.app/api/v1/products");
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/all-products");
     const data = await res.json();
     setProducts(data.data);
     setFilteredProducts(data.data);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch("https://uefn-maps-server.vercel.app/api/v1/categories");
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
     const data = await res.json();
     setCategories(data.data);
   };
@@ -79,7 +79,7 @@ const AllProducts = () => {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure? Image will also be deleted!")) return;
     const token = await auth.currentUser.getIdToken();
-    const res = await fetch(`https://uefn-maps-server.vercel.app/api/v1/products/${id}`, {
+    const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/products/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

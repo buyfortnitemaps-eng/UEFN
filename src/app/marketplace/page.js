@@ -44,7 +44,7 @@ const Marketplace = () => {
         const currentPage = isLoadMore ? page + 1 : 1;
 
         // API URL with Pagination, Filter, Search, and Sort
-        const url = `https://uefn-maps-server.vercel.app/api/v1/products/client?page=${currentPage}&limit=12&category=${activeCategory}&search=${search}&sort=${sortBy}`;
+        const url = `https://uefn-maps-server.onrender.com/api/v1/products/client?page=${currentPage}&limit=12&category=${activeCategory}&search=${search}&sort=${sortBy}`;
 
         const res = await fetch(url);
         const data = await res.json();
@@ -71,7 +71,7 @@ const Marketplace = () => {
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const res = await fetch(`https://uefn-maps-server.vercel.app/api/v1/categories`);
+        const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/categories`);
         const data = await res.json();
         if (data.success) {
           setCategories([{ name: "All", _id: "All" }, ...data.data]);

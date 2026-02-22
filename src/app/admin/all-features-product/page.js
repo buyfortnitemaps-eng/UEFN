@@ -19,13 +19,13 @@ const FeaturedProducts = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
 
   const fetchFeatured = async () => {
-    const res = await fetch("https://uefn-maps-server.vercel.app/api/v1/products/featured");
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/featured");
     const data = await res.json();
     setFeaturedProducts(data.data);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch("https://uefn-maps-server.vercel.app/api/v1/categories");
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
     const data = await res.json();
     setCategories(data.data);
   };
@@ -42,7 +42,7 @@ const FeaturedProducts = () => {
     try {
       const token = await auth.currentUser.getIdToken();
       const res = await fetch(
-        `https://uefn-maps-server.vercel.app/api/v1/products/featured/${id}`,
+        `https://uefn-maps-server.onrender.com/api/v1/products/featured/${id}`,
         {
           method: "DELETE",
           headers: {

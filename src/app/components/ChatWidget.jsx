@@ -18,8 +18,12 @@ const ChatWidget = () => {
 
   // CONNECT SOCKET
   useEffect(() => {
-    socketRef.current = io("https://magriluefn.vercel.app/", {
-      transports: ["websocket"],
+    socketRef.current = io("https://uefn-maps-server.onrender.com", {
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 2000,
+      timeout: 20000,
+      withCredentials: true,
     });
 
     const socket = socketRef.current;
@@ -97,16 +101,14 @@ const ChatWidget = () => {
               {messages.map((m, i) => (
                 <div
                   key={i}
-                  className={`flex ${
-                    m.isAdmin ? "justify-start" : "justify-end"
-                  }`}
+                  className={`flex ${m.isAdmin ? "justify-start" : "justify-end"
+                    }`}
                 >
                   <div
-                    className={`px-3 py-2 rounded-2xl text-sm max-w-[80%] ${
-                      m.isAdmin
+                    className={`px-3 py-2 rounded-2xl text-sm max-w-[80%] ${m.isAdmin
                         ? "bg-gray-700 text-white"
                         : "bg-purple-600 text-white"
-                    }`}
+                      }`}
                   >
                     {m.text}
                   </div>

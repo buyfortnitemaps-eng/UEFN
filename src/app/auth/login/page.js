@@ -80,7 +80,7 @@ const Login = () => {
       const firebaseUser = res.user;
 
       await fetch(
-        "https://uefn-maps-server.vercel.app/api/v1/users/create-user",
+        "https://uefn-maps-server.onrender.com/api/v1/users/create-user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -11,8 +11,12 @@ const AdminChat = () => {
   const [reply, setReply] = useState("");
 
   useEffect(() => {
-    socketRef.current = io("https://magriluefn.vercel.app/", {
-      transports: ["websocket"],
+    socketRef.current = io("https://uefn-maps-server.onrender.com", {
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 2000,
+      timeout: 20000,
+      withCredentials: true,
     });
 
     const socket = socketRef.current;

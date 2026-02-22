@@ -25,7 +25,7 @@ const AddProduct = () => {
   });
 
   useEffect(() => {
-    fetch("https://uefn-maps-server.vercel.app/api/v1/categories")
+    fetch("https://uefn-maps-server.onrender.com/api/v1/categories")
       .then(res => res.json())
       .then(data => setCategories(data.data));
   }, []);
@@ -55,7 +55,7 @@ const AddProduct = () => {
       if (!imageData) throw new Error("Image upload failed");
 
       const token = await auth.currentUser.getIdToken();
-      const res = await fetch("https://uefn-maps-server.vercel.app/api/v1/products/create-product", {
+      const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/create-product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

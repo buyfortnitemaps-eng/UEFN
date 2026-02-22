@@ -61,7 +61,7 @@ const FeaturedSection = () => {
     const fetchFeatured = async () => {
       try {
         const res = await fetch(
-          "https://uefn-maps-server.vercel.app/api/v1/products/featured",
+          "https://uefn-maps-server.onrender.com/api/v1/products/featured",
         );
         const data = await res.json();
         setProducts(data.data || []);
