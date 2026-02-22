@@ -20,7 +20,7 @@ const FeaturedProducts = () => {
 
   const fetchFeatured = async () => {
     const res = await fetch(
-      "https://uefn-maps-server.onrender.com/api/v1/products/featured",
+      "http://localhost:5000/api/v1/products/featured",
     );
     const data = await res.json();
     setFeaturedProducts(data.data);
@@ -28,7 +28,7 @@ const FeaturedProducts = () => {
 
   const fetchCategories = async () => {
     const res = await fetch(
-      "https://uefn-maps-server.onrender.com/api/v1/categories",
+      "http://localhost:5000/api/v1/categories",
     );
     const data = await res.json();
     setCategories(data.data);
@@ -48,7 +48,7 @@ const FeaturedProducts = () => {
     try {
       const token = await auth.currentUser.getIdToken();
       const res = await fetch(
-        `https://uefn-maps-server.onrender.com/api/v1/products/featured/${id}`,
+        `http://localhost:5000/api/v1/products/featured/${id}`,
         {
           method: "DELETE",
           headers: {

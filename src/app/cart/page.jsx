@@ -29,7 +29,7 @@ export default function CartPage() {
             }
 
             const token = await currentUser.getIdToken();
-            const response = await fetch(`https://uefn-maps-server.onrender.com/api/v1/orders/checkout`, {
+            const response = await fetch(`http://localhost:5000/api/v1/orders/checkout`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

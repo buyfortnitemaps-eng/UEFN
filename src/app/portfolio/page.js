@@ -14,7 +14,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/portfolios");
+        const res = await fetch("http://localhost:5000/api/v1/portfolios");
         const data = await res.json();
         setProjects(data.data);
       } catch (err) {

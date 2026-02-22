@@ -50,7 +50,7 @@ const EditProductModal = ({ product, onClose, refresh, categories }) => {
 
       const token = await auth.currentUser.getIdToken();
       const res = await fetch(
-        `https://uefn-maps-server.onrender.com/api/v1/products/${product._id}`,
+        `http://localhost:5000/api/v1/products/${product._id}`,
         {
           method: "PATCH",
           headers: {

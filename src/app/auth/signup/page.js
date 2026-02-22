@@ -27,7 +27,7 @@ const SignUp = () => {
   const saveUserIntoDB = async (firebaseUser, name) => {
     try {
       const response = await fetch(
-        "https://uefn-maps-server.onrender.com/api/v1/users/create-user",
+        "http://localhost:5000/api/v1/users/create-user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

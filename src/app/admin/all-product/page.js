@@ -25,7 +25,7 @@ const AllProducts = () => {
     const token = await auth.currentUser.getIdToken();
     try {
       const res = await fetch(
-        `https://uefn-maps-server.onrender.com/api/v1/products/upgrade/${productToUpgrade._id}`,
+        `http://localhost:5000/api/v1/products/upgrade/${productToUpgrade._id}`,
         {
           method: "POST",
           headers: {
@@ -48,7 +48,7 @@ const AllProducts = () => {
 
   const fetchProducts = async () => {
     const res = await fetch(
-      "https://uefn-maps-server.onrender.com/api/v1/products/all-products",
+      "http://localhost:5000/api/v1/products/all-products",
     );
     const data = await res.json();
     setProducts(data.data);
@@ -57,7 +57,7 @@ const AllProducts = () => {
 
   const fetchCategories = async () => {
     const res = await fetch(
-      "https://uefn-maps-server.onrender.com/api/v1/categories",
+      "http://localhost:5000/api/v1/categories",
     );
     const data = await res.json();
     setCategories(data.data);
@@ -82,7 +82,7 @@ const AllProducts = () => {
     if (!confirm("Are you sure? Image will also be deleted!")) return;
     const token = await auth.currentUser.getIdToken();
     const res = await fetch(
-      `https://uefn-maps-server.onrender.com/api/v1/products/${id}`,
+      `http://localhost:5000/api/v1/products/${id}`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },

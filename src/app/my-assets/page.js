@@ -18,7 +18,7 @@ export default function MyAssetsPage() {
 
         const token = await currentUser.getIdToken();
         const response = await fetch(
-          `https://uefn-maps-server.onrender.com/api/v1/orders/my-orders`,
+          `http://localhost:5000/api/v1/orders/my-orders`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -43,7 +43,7 @@ export default function MyAssetsPage() {
 const handleDownload = async (asset) => {
   try {
     const token = await auth.currentUser.getIdToken();
-    const response = await fetch(`https://uefn-maps-server.onrender.com/api/v1/products/download-link`, {
+    const response = await fetch(`http://localhost:5000/api/v1/products/download-link`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

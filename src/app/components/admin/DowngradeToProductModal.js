@@ -12,7 +12,7 @@ const DowngradeToProductModal = ({ product, onClose, refresh, categories }) => {
     setLoading(true);
     try {
       const token = await auth.currentUser.getIdToken();
-      const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/products/backgrade/${product._id}`, {
+      const res = await fetch(`http://localhost:5000/api/v1/products/backgrade/${product._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

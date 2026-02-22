@@ -21,7 +21,7 @@ export const CartProvider = ({ children }) => {
     if (user) {
       const fetchCart = async () => {
         const token = await auth.currentUser.getIdToken();
-        const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/cart/my-cart", {
+        const res = await fetch("http://localhost:5000/api/v1/cart/my-cart", {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -36,7 +36,7 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("uefn_cart", JSON.stringify(updatedCart));
     if (user) {
       const token = await auth.currentUser.getIdToken();
-      await fetch("https://uefn-maps-server.onrender.com/api/v1/cart/sync", {
+      await fetch("http://localhost:5000/api/v1/cart/sync", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
