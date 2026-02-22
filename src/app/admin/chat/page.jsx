@@ -4,8 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import { Check, CheckCheck, User, Send, ChevronLeft } from "lucide-react";
 
-const SOCKET_URL = "http://localhost:5000";
-const API = "http://localhost:5000/api/v1/chat";
+const SOCKET_URL = "https://uefn-maps-server.onrender.com";
+const API = "https://uefn-maps-server.onrender.com/api/v1/chat";
 
 const AdminChat = () => {
   const socketRef = useRef(null);

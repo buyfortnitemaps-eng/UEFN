@@ -28,7 +28,7 @@ const ManagePortfolio = () => {
   }, []);
 
   const fetchPortfolios = async () => {
-    const res = await fetch("http://localhost:5000/api/v1/portfolios");
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/portfolios");
     const data = await res.json();
     setPortfolios(data.data);
   };
@@ -45,7 +45,7 @@ const ManagePortfolio = () => {
         image: imgRes,
       };
 
-      const res = await fetch("http://localhost:5000/api/v1/portfolios", {
+      const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/portfolios", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -67,7 +67,7 @@ const ManagePortfolio = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/v1/portfolios/${id}`,
+        `https://uefn-maps-server.onrender.com/api/v1/portfolios/${id}`,
         {
           method: "DELETE",
         },

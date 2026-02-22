@@ -18,7 +18,7 @@ const AddCategory = () => {
   // ১. ক্যাটাগরি ফেচ করা (Fetch all categories)
   const fetchCategories = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/v1/categories");
+      const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
       const data = await res.json();
       setCategories(data.data);
     } catch (error) {
@@ -42,7 +42,7 @@ const AddCategory = () => {
   //     const token = await auth.currentUser.getIdToken(); // Firebase থেকে টোকেন নেওয়া
 
   //     const res = await fetch(
-  //       "http://localhost:5000/api/v1/categories/create-category",
+  //       "https://uefn-maps-server.onrender.com/api/v1/categories/create-category",
   //       {
   //         method: "POST",
   //         headers: {
@@ -69,7 +69,7 @@ const AddCategory = () => {
     try {
       const token = await auth.currentUser.getIdToken(); // Firebase থেকে টোকেন নেওয়া
 
-      await fetch(`http://localhost:5000/api/v1/categories/${id}`, {
+      await fetch(`https://uefn-maps-server.onrender.com/api/v1/categories/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -98,8 +98,8 @@ const AddCategory = () => {
     try {
       const token = await auth.currentUser.getIdToken();
       const url = isEditing
-        ? `http://localhost:5000/api/v1/categories/${editId}`
-        : "http://localhost:5000/api/v1/categories/create-category";
+        ? `https://uefn-maps-server.onrender.com/api/v1/categories/${editId}`
+        : "https://uefn-maps-server.onrender.com/api/v1/categories/create-category";
 
       const method = isEditing ? "PATCH" : "POST";
 

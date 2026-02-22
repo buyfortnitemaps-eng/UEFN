@@ -6,8 +6,8 @@ import { useAuth } from "../context/AuthContext";
 import { MessageCircle, Send, X, Check, CheckCheck } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const SOCKET_URL = "http://localhost:5000";
-const API = "http://localhost:5000/api/v1/chat";
+const SOCKET_URL = "https://uefn-maps-server.onrender.com";
+const API = "https://uefn-maps-server.onrender.com/api/v1/chat";
 
 const ChatWidget = () => {
   const { user } = useAuth();

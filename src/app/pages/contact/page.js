@@ -18,7 +18,7 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch("http://localhost:5000/api/v1/contacts/send-message", {
+      const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/contacts/send-message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

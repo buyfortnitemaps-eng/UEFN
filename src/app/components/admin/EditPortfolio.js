@@ -51,7 +51,7 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
       };
 
       const res = await fetch(
-        `http://localhost:5000/api/v1/portfolios/${project._id}`,
+        `https://uefn-maps-server.onrender.com/api/v1/portfolios/${project._id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

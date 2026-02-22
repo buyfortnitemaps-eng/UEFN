@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       if (firebaseUser) {
         try {
           const res = await fetch(
-            `http://localhost:5000/api/v1/users/${firebaseUser.uid}`,
+            `https://uefn-maps-server.onrender.com/api/v1/users/${firebaseUser.uid}`,
           );
           const result = await res.json();
 
