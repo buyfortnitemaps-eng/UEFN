@@ -43,6 +43,16 @@ const SidebarContent = ({ setIsMobileMenuOpen }) => {
       icon: <MdProductionQuantityLimits size={20} />,
       href: "/admin/all-features-product",
     },
+    {
+      name: "All Messages",
+      icon: <MdProductionQuantityLimits size={20} />,
+      href: "/admin/all-message",
+    },
+    {
+      name: "Chat",
+      icon: <MdProductionQuantityLimits size={20} />,
+      href: "/admin/chat",
+    },
     { name: "Settings", icon: <Settings size={20} />, href: "/admin/settings" },
   ];
 

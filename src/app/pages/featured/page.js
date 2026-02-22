@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,27 +7,21 @@ import { ShoppingCart, Sparkles } from "lucide-react";
 
 import { useCart } from "../../lib/CartContext";
 import LoginAlertModal from "../../components/LoginAlertModal";
+import CartSuccessModal from "../../components/CartSuccessModal"; // পাথ চেক করে নিন
 import { useAuth } from "../../context/AuthContext";
 
-// --- Skeleton Card Component (Loading state design) ---
+// --- Skeleton Card Component ---
 const ProductSkeleton = () => (
   <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden animate-pulse">
-    {/* Image Placeholder */}
     <div className="h-56 bg-white/10 relative overflow-hidden">
-      {/* Shimmer Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+      <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
     </div>
-
     <div className="p-6">
-      {/* Title Placeholder */}
       <div className="h-6 bg-white/10 rounded-md w-3/4 mb-4" />
-      {/* Description Placeholder */}
       <div className="space-y-2 mb-6">
         <div className="h-3 bg-white/10 rounded-md w-full" />
         <div className="h-3 bg-white/10 rounded-md w-5/6" />
       </div>
-
-      {/* Price & Button Placeholder */}
       <div className="flex items-center justify-between border-t border-white/5 pt-4">
         <div className="space-y-2">
           <div className="h-2 bg-white/10 rounded-md w-10" />
@@ -47,7 +41,11 @@ const FeaturedSection = () => {
 
   const { user } = useAuth();
   const { addToCart, cart } = useCart();
+
+  // Modals state
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [lastAddedItem, setLastAddedItem] = useState("");
 
   const handleAddToCart = (product) => {
     if (!user) {
@@ -55,9 +53,10 @@ const FeaturedSection = () => {
       return;
     }
     addToCart(product);
+    setLastAddedItem(product.title); // শুধুমাত্র নাম সেট করছি মোডালের জন্য
+    setShowSuccessModal(true);
   };
 
-  // Fetching Data
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
@@ -76,7 +75,6 @@ const FeaturedSection = () => {
     fetchFeatured();
   }, []);
 
-  // Filter Logic
   useEffect(() => {
     if (activeTag === "all") {
       setFilteredProducts(products);
@@ -93,7 +91,7 @@ const FeaturedSection = () => {
   ];
 
   return (
-    <section className="py-20 px-6 max-w-7xl mx-auto">
+    <section className="py-20 px-6 max-w-7xl mx-auto relative">
       {/* Header & Filter Tabs */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
         <div>
@@ -123,10 +121,9 @@ const FeaturedSection = () => {
         </div>
       </div>
 
-      {/* --- Products Grid --- */}
+      {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {loading ? (
-          // Displaying 6 Skeleton Cards while loading
           [...Array(6)].map((_, index) => <ProductSkeleton key={index} />)
         ) : (
           <AnimatePresence mode="popLayout">
@@ -140,7 +137,6 @@ const FeaturedSection = () => {
                 whileHover={{ y: -10 }}
                 className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group"
               >
-                {/* Image Container */}
                 <div className="h-56 relative overflow-hidden bg-gray-900">
                   <img
                     src={product.image?.url}
@@ -148,8 +144,6 @@ const FeaturedSection = () => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0b] via-transparent to-transparent opacity-60" />
-
-                  {/* Dynamic Tag */}
                   <span
                     className={`absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter border backdrop-blur-md ${
                       product.featureTag === "premium"
@@ -161,10 +155,6 @@ const FeaturedSection = () => {
                   >
                     {product.featureTag}
                   </span>
-
-                  <span className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full text-[10px] font-bold text-purple-400 border border-purple-500/30 tracking-widest uppercase">
-                    UEFN
-                  </span>
                 </div>
 
                 <div className="p-6">
@@ -174,7 +164,6 @@ const FeaturedSection = () => {
                   <p className="text-gray-400 text-sm mb-6 line-clamp-2">
                     {product.description}
                   </p>
-
                   <div className="flex items-center justify-between border-t border-white/5 pt-4">
                     <div>
                       <p className="text-gray-500 text-[10px] uppercase font-semibold">
@@ -184,7 +173,6 @@ const FeaturedSection = () => {
                         ${product.price}
                       </span>
                     </div>
-
                     <button
                       onClick={() => handleAddToCart(product)}
                       className={`p-4 rounded-xl transition-all shadow-lg active:scale-95 ${
@@ -202,6 +190,15 @@ const FeaturedSection = () => {
           </AnimatePresence>
         )}
       </div>
+
+      {/* --- Global Modals --- */}
+
+      {/* Success Modal Component ব্যবহার করা হয়েছে */}
+      <CartSuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        productName={lastAddedItem}
+      />
 
       {showLoginModal && (
         <LoginAlertModal onClose={() => setShowLoginModal(false)} />

@@ -10,6 +10,7 @@ import {
   Download,
   Sparkles,
 } from "lucide-react";
+import ContactPage from "./pages/contact/page";
 
 import FeaturedSection from "./pages/featured/page";
 
@@ -311,6 +312,8 @@ const HomePage = () => {
           ))}
         </div>
       </section>
+
+      <ContactPage />
 
       {/* call to action */}
       <section className="py-24 px-6 bg-[#0a0a0b]">
