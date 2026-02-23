@@ -1,11 +1,10 @@
 import { logOut } from "../lib/firebaseActions";
 
-export const handleSignOut = async (clearCart, router) => {
+export const handleSignOut = async (clearCart) => {
   try {
     await logOut();
     localStorage.removeItem("uefn_cart");
-    if (clearCart) clearCart(); // এখান থেকে পাস করা ফাংশনটি কল হবে
-    router.push("/auth/login");
+    if (clearCart) clearCart();
   } catch (err) {
     console.error("Logout failed", err);
   }

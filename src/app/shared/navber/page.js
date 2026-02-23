@@ -16,7 +16,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, mongoUser } = useAuth();
   const { cart, setCart } = useCart();
-
+  
   // ইউআরএল চেঞ্জ হলে মোবাইল মেনু অটো বন্ধ হবে
   useEffect(() => {
     setIsOpen(false);
