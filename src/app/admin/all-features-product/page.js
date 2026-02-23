@@ -13,7 +13,6 @@ const FeaturedProducts = () => {
   const { user, mongoUser } = useAuth();
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDowngradeModalOpen, setIsDowngradeModalOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -76,7 +75,7 @@ const FeaturedProducts = () => {
   if (!user || mongoUser?.role !== "admin") return <AdminOnly />;
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-6 text-white min-h-screen">
+    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-6 text-white min-h-screen">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic">
@@ -104,6 +103,9 @@ const FeaturedProducts = () => {
               <th className="p-6 text-xs font-black uppercase text-gray-400">
                 Price
               </th>
+              <th className="p-6 text-xs font-black uppercase text-gray-400">
+                Type
+              </th>
               <th className="p-6 text-xs font-black uppercase text-gray-400 text-right">
                 Actions
               </th>
@@ -130,6 +132,9 @@ const FeaturedProducts = () => {
                 </td>
                 <td className="p-6 font-mono text-yellow-500 font-bold">
                   ${product.price}
+                </td>
+                <td className="p-6 font-mono text-yellow-500 font-bold">
+                  {product.gameType?.name}
                 </td>
                 <td className="p-6 text-right space-x-2">
                   <ActionButton

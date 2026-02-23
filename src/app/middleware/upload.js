@@ -31,3 +31,31 @@ export const uploadImageToCloudinary = async (file) => {
     return null;
   }
 };
+
+export const uploadMultipleImagesToCloudinary = async (files) => {
+  if (!files || files.length === 0) return [];
+
+  try {
+    // ১. প্রতিটি ফাইলের জন্য আপলোড প্রমিস তৈরি করা
+    const uploadPromises = files.map(async (file) => {
+      // আপনার তৈরি করা uploadImageToCloudinary ফাংশনটিকেই কল করা হচ্ছে
+      const result = await uploadImageToCloudinary(file);
+      
+      if (!result) {
+        throw new Error("Failed to upload one of the images");
+      }
+      
+      return result; // এটি { url, publicId } রিটার্ন করবে
+    });
+
+    // ২. সবগুলো আপলোড একসাথে সম্পন্ন করা (Parallel Upload)
+    const uploadedImages = await Promise.all(uploadPromises);
+    
+    // রিটার্ন করবে: [{url: '...', publicId: '...'}, {url: '...', publicId: '...'}]
+    return uploadedImages;
+    
+  } catch (error) {
+    console.error("Multiple image upload failed:", error);
+    return [];
+  }
+};

@@ -1,105 +1,48 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Edit3, Layers, Loader2 } from "lucide-react";
+import { Plus, Trash2, Edit3, Gamepad2, Loader2 } from "lucide-react";
 import { auth } from "../../../../firebase";
 import AdminOnly from "../../components/admin/OnlyAdmin";
 import { useAuth } from "@/app/context/AuthContext";
 
-const AddCategory = () => {
+const AddGameType = () => {
   const { user, mongoUser, loading: authLoading } = useAuth();
-  const [categoryName, setCategoryName] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [typeName, setTypeName] = useState("");
+  const [gameTypes, setGameTypes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
 
-
-  // ১. ক্যাটাগরি ফেচ করা (Fetch all categories)
-  const fetchCategories = async () => {
+  // 1. Fetch all game types
+  const fetchGameTypes = async () => {
     try {
-      const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
+      // Adjusted endpoint for game types
+      const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/game-types");
       const data = await res.json();
-      setCategories(data.data);
+      setGameTypes(data.data || []);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Error fetching game types:", error);
     } finally {
       setFetchLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCategories();
+    fetchGameTypes();
   }, []);
 
-  // ২. ক্যাটাগরি সাবমিট করা (Add Category)
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!categoryName) return;
-  //   setLoading(true);
-  //   try {
-  //     // ফ্রন্টএন্ডে রিকোয়েস্ট পাঠানোর সময়
-  //     const token = await auth.currentUser.getIdToken(); // Firebase থেকে টোকেন নেওয়া
-
-  //     const res = await fetch(
-  //       "https://uefn-maps-server.onrender.com/api/v1/categories/create-category",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`, // এখানে টোকেনটি দিতে হবে
-  //         },
-  //         body: JSON.stringify({ name: categoryName }),
-  //       },
-  //     );
-  //     if (res.ok) {
-  //       setCategoryName("");
-  //       fetchCategories(); // লিস্ট রিফ্রেশ করা
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // ৩. ক্যাটাগরি ডিলিট করা (Delete Category)
-  const handleDelete = async (id) => {
-    if (!confirm("Are you sure?")) return;
-    try {
-      const token = await auth.currentUser.getIdToken(); // Firebase থেকে টোকেন নেওয়া
-
-      await fetch(`https://uefn-maps-server.onrender.com/api/v1/categories/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // এখানে টোকেনটি দিতে হবে
-        },
-      });
-      fetchCategories();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleEditClick = (category) => {
-    setIsEditing(true);
-    setEditId(category._id);
-    setCategoryName(category.name); // ইনপুটে নাম সেট হবে
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // স্ক্রল করে উপরে নিয়ে যাবে
-  };
-
-  // handleSubmit ফাংশনটি আপডেট করুন
+  // 2. Handle Submit (Add or Update)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!categoryName) return;
+    if (!typeName) return;
     setLoading(true);
 
     try {
       const token = await auth.currentUser.getIdToken();
       const url = isEditing
-        ? `https://uefn-maps-server.onrender.com/api/v1/categories/${editId}`
-        : "https://uefn-maps-server.onrender.com/api/v1/categories/create-category";
+        ? `https://uefn-maps-server.onrender.com/api/v1/game-types/${editId}`
+        : "https://uefn-maps-server.onrender.com/api/v1/game-types/create-game-type";
 
       const method = isEditing ? "PATCH" : "POST";
 
@@ -109,20 +52,46 @@ const AddCategory = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name: categoryName }),
+        body: JSON.stringify({ name: typeName }),
       });
 
       if (res.ok) {
-        setCategoryName("");
+        setTypeName("");
         setIsEditing(false);
         setEditId(null);
-        fetchCategories();
+        fetchGameTypes();
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error submitting game type:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // 3. Delete Game Type
+  const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to delete this game type?")) return;
+    try {
+      const token = await auth.currentUser.getIdToken();
+
+      await fetch(`https://uefn-maps-server.onrender.com/api/v1/game-types/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchGameTypes();
+    } catch (error) {
+      console.error("Error deleting game type:", error);
+    }
+  };
+
+  const handleEditClick = (type) => {
+    setIsEditing(true);
+    setEditId(type._id);
+    setTypeName(type.name);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (authLoading) {
@@ -133,21 +102,20 @@ const AddCategory = () => {
     );
   }
 
-  // যদি ইউজার লগইন না থাকে অথবা ইউজার অ্যাডমিন না হয়
   if (!user || mongoUser?.role !== "admin") {
     return <AdminOnly />;
   }
 
   return (
     <div className="max-w-4xl mx-auto space-y-10">
-      {/* --- Add Category Form --- */}
+      {/* --- Add Game Type Form --- */}
       <section>
         <div className="mb-6">
           <h2 className="text-2xl font-black uppercase tracking-tight">
-            Add New <span className="text-purple-500">Category</span>
+            {isEditing ? "Edit" : "Add New"} <span className="text-purple-500">Game Type</span>
           </h2>
           <p className="text-gray-500 text-xs italic">
-            Create a new category for your UEFN assets.
+            Define the logic type for your maps (e.g., 1v1, Open World, Horror).
           </p>
         </div>
 
@@ -156,16 +124,16 @@ const AddCategory = () => {
           className="flex flex-col sm:flex-row gap-4 bg-white/2 p-6 rounded-4xl border border-white/5 backdrop-blur-md"
         >
           <div className="relative flex-1 group">
-            <Layers
+            <Gamepad2
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-purple-500"
               size={18}
             />
             <input
               required
               type="text"
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-              placeholder="Enter Category Name (e.g. Box Fight, Tycoon)"
+              value={typeName}
+              onChange={(e) => setTypeName(e.target.value)}
+              placeholder="Enter Game Type (e.g. 1v1, Hide and Seek)"
               className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm text-white"
             />
           </div>
@@ -178,18 +146,19 @@ const AddCategory = () => {
               <Loader2 className="animate-spin" size={20} />
             ) : (
               <>
-                <Plus size={20} /> Add
+                {isEditing ? <Edit3 size={20} /> : <Plus size={20} />} 
+                {isEditing ? "Update" : "Add"}
               </>
             )}
           </button>
         </form>
       </section>
 
-      {/* --- Category Table List --- */}
+      {/* --- Game Type Table List --- */}
       <section>
         <div className="mb-6 flex items-center justify-between">
           <h3 className="text-xl font-bold text-purple-500">
-            Existing Categories ({categories.length})
+            Existing Game Types ({gameTypes.length})
           </h3>
         </div>
 
@@ -199,10 +168,10 @@ const AddCategory = () => {
               <thead>
                 <tr className="bg-white/5 border-b border-white/5">
                   <th className="p-5 text-xs font-black uppercase text-gray-500 tracking-widest">
-                    Category Name
+                    Game Type Name
                   </th>
                   <th className="p-5 text-xs font-black uppercase text-gray-500 tracking-widest">
-                    Products
+                    Maps Count
                   </th>
                   <th className="p-5 text-xs font-black uppercase text-gray-500 tracking-widest text-right">
                     Actions
@@ -219,31 +188,36 @@ const AddCategory = () => {
                       Loading database...
                     </td>
                   </tr>
-                ) : categories.length === 0 ? (
+                ) : gameTypes.length === 0 ? (
                   <tr>
                     <td
                       colSpan="3"
                       className="p-10 text-center text-gray-600 italic"
                     >
-                      No categories found. Create one above!
+                      No game types found. Create one above!
                     </td>
                   </tr>
                 ) : (
-                  categories.map((cat) => (
+                  gameTypes.map((type) => (
                     <tr
-                      key={cat._id}
+                      key={type._id}
                       className="border-b border-white/5 hover:bg-white/2 transition-colors group"
                     >
                       <td className="p-5 font-bold text-sm text-white">
-                        {cat.name}
+                        {type.name}
                       </td>
-                      <td className="p-5 text-xs text-gray-500">{cat?.totalProduct} Products</td>
+                      <td className="p-5 text-xs text-gray-500">
+                        {type?.totalProduct || 0} Maps
+                      </td>
                       <td className="p-5 text-right space-x-2">
-                        <button onClick={() => handleEditClick(cat)} className="p-2.5 bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all">
+                        <button 
+                          onClick={() => handleEditClick(type)} 
+                          className="p-2.5 bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all"
+                        >
                           <Edit3 size={16} />
                         </button>
                         <button
-                          onClick={() => handleDelete(cat._id)}
+                          onClick={() => handleDelete(type._id)}
                           className="p-2.5 bg-white/5 hover:bg-red-600/20 text-gray-400 hover:text-red-500 rounded-xl transition-all"
                         >
                           <Trash2 size={16} />
@@ -261,4 +235,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default AddGameType;

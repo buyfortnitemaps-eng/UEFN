@@ -85,7 +85,7 @@ const ManagePortfolio = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 text-white bg-[#0a0a0b]">
+    <div className="max-w-6xl mx-auto p-6 text-white bg-[#0a0a0b] mt-10">
       <h2 className="text-3xl font-black mb-10 uppercase tracking-tighter text-purple-500">
         Add New Portfolio
       </h2>

@@ -15,6 +15,7 @@ import { useCart } from "../lib/CartContext";
 import { useAuth } from "../context/AuthContext";
 import LoginAlertModal from "../components/LoginAlertModal";
 import CartSuccessModal from "../components/CartSuccessModal";
+import Link from "next/link";
 
 const Marketplace = () => {
   // --- States ---
@@ -71,9 +72,7 @@ const Marketplace = () => {
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const res = await fetch(
-          `https://uefn-maps-server.onrender.com/api/v1/categories`,
-        );
+        const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/categories`);
         const data = await res.json();
         if (data.success) {
           setCategories([{ name: "All", _id: "All" }, ...data.data]);
@@ -245,11 +244,16 @@ const Marketplace = () => {
                       {/* --- Image Section: Fixed Height & Width --- */}
                       <div className="relative h-44 overflow-hidden bg-[#16161a]">
                         {product.image?.url ? (
-                          <img
-                            src={product.image.url}
-                            alt={product.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                          />
+                          <Link
+                            href={`/marketplace/${product._id}`}
+                            className="relative z-10 block w-full h-full"
+                          >
+                            <img
+                              src={product.image.url}
+                              alt={product.title}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out cursor-pointer"
+                            />
+                          </Link>
                         ) : (
                           <div className="w-full h-full flex flex-col items-center justify-center text-gray-600 bg-white/5">
                             <LayoutGrid size={32} className="mb-2 opacity-20" />
@@ -281,9 +285,11 @@ const Marketplace = () => {
                       {/* --- Content Section --- */}
                       <div className="p-8 flex flex-col grow">
                         <div className="mb-6 grow">
-                          <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-purple-400 transition-colors duration-300">
-                            {product.title}
-                          </h3>
+                          <Link href={`/marketplace/${product._id}`}>
+                            <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-purple-400 transition-colors duration-300">
+                              {product.title}
+                            </h3>
+                          </Link>
                           <p className="text-gray-500 text-xs line-clamp-2 leading-relaxed">
                             {product.description ||
                               "Premium UEFN template designed for high-performance creative maps."}

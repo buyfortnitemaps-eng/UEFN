@@ -111,7 +111,7 @@ const AdminChat = () => {
   const messages = selectedUser ? conversations[selectedUser] || [] : [];
 
   return (
-    <div className="w-full bg-[#0A0A0A] min-h-screen md:py-10">
+    <div className="w-full bg-[#0A0A0A] min-h-screen md:py-10 mt-10">
       <div className="hidden md:flex w-full max-w-5xl mx-auto h-150 bg-[#0F0F0F] text-gray-100 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
         <div className="w-72 border-r border-white/5 bg-[#141414] flex flex-col">
           <div className="p-5 border-b border-white/5">

@@ -94,7 +94,7 @@ const AllProducts = () => {
   if (!user || mongoUser?.role !== "admin") return <AdminOnly />;
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-6 text-white min-h-screen">
+    <div className="max-w-7xl mt-10 mx-auto p-4 md:p-6 text-white min-h-screen">
       {/* Header & Filter Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
         <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
@@ -133,6 +133,9 @@ const AllProducts = () => {
               <th className="p-6 text-xs font-black uppercase text-gray-400">
                 Price
               </th>
+              <th className="p-6 text-xs font-black uppercase text-gray-400">
+                Type
+              </th>
               <th className="p-6 text-xs font-black uppercase text-gray-400 text-right">
                 Actions
               </th>
@@ -161,6 +164,9 @@ const AllProducts = () => {
                 </td>
                 <td className="p-6 font-mono text-purple-400 font-bold">
                   ${product.price}
+                </td>
+                <td className="p-6 font-mono text-purple-400 font-bold">
+                  {product.gameType?.name}
                 </td>
                 <td className="p-6 text-right space-x-2">
                   <ActionButton

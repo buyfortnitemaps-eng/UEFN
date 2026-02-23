@@ -3,35 +3,16 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, Sparkles } from "lucide-react";
+import { ShoppingCart, Sparkles, ArrowRight } from "lucide-react";
+import Link from "next/link"; // লিঙ্ক যোগ করা হয়েছে
 
 import { useCart } from "../../lib/CartContext";
 import LoginAlertModal from "../../components/LoginAlertModal";
-import CartSuccessModal from "../../components/CartSuccessModal"; // পাথ চেক করে নিন
+import CartSuccessModal from "../../components/CartSuccessModal";
 import { useAuth } from "../../context/AuthContext";
+import ProductSkeleton from "../../components/productSclekton";
 
-// --- Skeleton Card Component ---
-const ProductSkeleton = () => (
-  <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden animate-pulse">
-    <div className="h-56 bg-white/10 relative overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
-    </div>
-    <div className="p-6">
-      <div className="h-6 bg-white/10 rounded-md w-3/4 mb-4" />
-      <div className="space-y-2 mb-6">
-        <div className="h-3 bg-white/10 rounded-md w-full" />
-        <div className="h-3 bg-white/10 rounded-md w-5/6" />
-      </div>
-      <div className="flex items-center justify-between border-t border-white/5 pt-4">
-        <div className="space-y-2">
-          <div className="h-2 bg-white/10 rounded-md w-10" />
-          <div className="h-6 bg-white/10 rounded-md w-16" />
-        </div>
-        <div className="h-12 w-12 bg-white/10 rounded-xl" />
-      </div>
-    </div>
-  </div>
-);
+// ... ProductSkeleton আগের মতই থাকবে ...
 
 const FeaturedSection = () => {
   const [products, setProducts] = useState([]);
@@ -42,7 +23,6 @@ const FeaturedSection = () => {
   const { user } = useAuth();
   const { addToCart, cart } = useCart();
 
-  // Modals state
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState("");
@@ -53,7 +33,7 @@ const FeaturedSection = () => {
       return;
     }
     addToCart(product);
-    setLastAddedItem(product.title); // শুধুমাত্র নাম সেট করছি মোডালের জন্য
+    setLastAddedItem(product.title);
     setShowSuccessModal(true);
   };
 
@@ -93,41 +73,35 @@ const FeaturedSection = () => {
   return (
     <section className="py-20 px-6 max-w-7xl mx-auto relative">
       {/* Header & Filter Tabs */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6">
-  {/* Left Side: Title & Description */}
-  <div className="w-full md:w-auto">
-    <div className="flex items-center gap-2 mb-2">
-      <Sparkles size={20} className="text-yellow-500 shrink-0" />
-      <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight">
-        Featured Releases
-      </h2>
-    </div>
-    <p className="text-sm md:text-base text-gray-500">
-      The most downloaded UEFN templates this week.
-    </p>
-  </div>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles size={20} className="text-yellow-500 shrink-0" />
+            <h2 className="text-3xl font-bold text-white leading-tight italic uppercase tracking-tighter">
+              Featured <span className="text-purple-500">Spotlight</span>
+            </h2>
+          </div>
+          <p className="text-gray-500 text-sm">
+            Hand-picked premium UEFN templates for creators.
+          </p>
+        </div>
 
-  {/* Right Side: Responsive Tabs/Tags */}
-  <div className="w-full md:w-auto overflow-hidden">
-    <div className="flex bg-white/5 p-1 rounded-2xl border border-white/10 backdrop-blur-md overflow-x-auto no-scrollbar scroll-smooth">
-      <div className="flex min-w-max md:min-w-0 gap-1">
-        {tags.map((tag) => (
-          <button
-            key={tag.id}
-            onClick={() => setActiveTag(tag.id)}
-            className={`px-4 md:px-6 py-2 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${
-              activeTag === tag.id
-                ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20"
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            {tag.label}
-          </button>
-        ))}
+        <div className="flex bg-white/5 p-1 rounded-2xl border border-white/10 backdrop-blur-md overflow-x-auto no-scrollbar">
+          {tags.map((tag) => (
+            <button
+              key={tag.id}
+              onClick={() => setActiveTag(tag.id)}
+              className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+                activeTag === tag.id
+                  ? "bg-purple-600 text-white"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              {tag.label}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -135,58 +109,78 @@ const FeaturedSection = () => {
           [...Array(6)].map((_, index) => <ProductSkeleton key={index} />)
         ) : (
           <AnimatePresence mode="popLayout">
-            {filteredProducts.slice(0, 6).map((product) => (
+            {filteredProducts.slice(0, 12).map((product) => (
               <motion.div
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 key={product._id}
-                whileHover={{ y: -10 }}
-                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group"
+                className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group relative"
               >
-                <div className="h-56 relative overflow-hidden bg-gray-900">
-                  <img
-                    src={product.image?.url}
-                    alt={product.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0b] via-transparent to-transparent opacity-60" />
-                  <span
-                    className={`absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter border backdrop-blur-md ${
-                      product.featureTag === "premium"
-                        ? "bg-blue-500/20 text-blue-400 border-blue-500/30"
-                        : product.featureTag === "trending"
-                          ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
-                          : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
-                    }`}
-                  >
-                    {product.featureTag}
-                  </span>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors mb-2">
-                    {product.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm mb-6 line-clamp-2">
-                    {product.description}
-                  </p>
-                  <div className="flex items-center justify-between border-t border-white/5 pt-4">
-                    <div>
-                      <p className="text-gray-500 text-[10px] uppercase font-semibold">
-                        Price
-                      </p>
-                      <span className="text-2xl font-bold text-white">
-                        ${product.price}
+                {/* Image Section - Dynamic Link */}
+                <Link
+                  href={`/product/${product._id}`}
+                  className="block h-56 relative overflow-hidden bg-gray-900"
+                >
+                  <Link href={`/pages/featured/${product._id}`}>
+                    <img
+                      src={product.image?.url}
+                      alt={product.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="bg-white text-black px-4 py-2 rounded-full font-black text-[10px] uppercase tracking-tighter">
+                        View Details
                       </span>
                     </div>
+                  </Link>
+                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase border backdrop-blur-md bg-white/10 text-white">
+                    {product.featureTag}
+                  </span>
+                </Link>
+
+                <div className="p-6">
+                  {/* Title - Dynamic Link */}
+                  <Link href={`/pages/featured/${product._id}`}>
+                    <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase tracking-tighter">
+                      {product.title}
+                    </h3>
+                  </Link>
+
+                  <p className="text-gray-400 text-xs mb-6 line-clamp-2 h-8">
+                    {product.description}
+                  </p>
+
+                  <div className="flex items-center justify-between border-t border-white/5 pt-4">
+                    <div>
+                      <p className="text-gray-500 text-[9px] uppercase font-black tracking-widest">
+                        Price
+                      </p>
+                      <div className="flex items-center gap-2">
+                        {product.isDiscount ? (
+                          <>
+                            <span className="text-2xl font-black text-white">
+                              ${product.discountPrice}
+                            </span>
+                            <span className="text-sm text-gray-500 line-through font-bold">
+                              ${product.price}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-2xl font-black text-white">
+                            ${product.price}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
                     <button
                       onClick={() => handleAddToCart(product)}
-                      className={`p-4 rounded-xl transition-all shadow-lg active:scale-95 ${
+                      className={`p-4 rounded-2xl transition-all active:scale-90 ${
                         cart.find((i) => i._id === product._id)
-                          ? "bg-green-600 hover:bg-green-500"
-                          : "bg-purple-600 hover:bg-purple-500 shadow-purple-500/20"
+                          ? "bg-green-600 shadow-[0_0_20px_rgba(22,163,74,0.4)]"
+                          : "bg-purple-600 hover:bg-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.3)]"
                       }`}
                     >
                       <ShoppingCart size={20} className="text-white" />
@@ -199,25 +193,28 @@ const FeaturedSection = () => {
         )}
       </div>
 
-      {/* --- Global Modals --- */}
-
-      {/* Success Modal Component ব্যবহার করা হয়েছে */}
+      {/* Success & Login Modals */}
       <CartSuccessModal
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
         productName={lastAddedItem}
       />
-
       {showLoginModal && (
         <LoginAlertModal onClose={() => setShowLoginModal(false)} />
       )}
 
       {/* View All Button */}
-      {!loading && filteredProducts.length > 3 && (
+      {!loading && (
         <div className="mt-16 text-center">
-          <button className="px-10 py-4 bg-white/5 border border-white/10 hover:border-purple-500/50 rounded-2xl font-bold uppercase text-xs tracking-[0.2em] transition-all hover:bg-purple-500/10 text-white">
-            View All {activeTag !== "all" ? activeTag : "Featured"} Assets →
-          </button>
+          <Link href="/pages/featured/all-assets">
+            <button className="px-10 py-5 bg-white/5 border border-white/10 hover:border-purple-500/50 rounded-2xl font-black uppercase text-[10px] tracking-[0.3em] transition-all hover:bg-purple-500/10 text-white flex items-center gap-3 mx-auto group">
+              Explore All Assets{" "}
+              <ArrowRight
+                size={14}
+                className="group-hover:translate-x-1 transition-transform"
+              />
+            </button>
+          </Link>
         </div>
       )}
     </section>

@@ -74,7 +74,7 @@ const ManageLegals = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 text-white min-h-screen">
+    <div className="max-w-6xl mx-auto p-6 text-white min-h-screen mt-10">
       <h1 className="text-3xl font-black mb-8 text-purple-500 uppercase italic">
         Manage Legal Pages
       </h1>
