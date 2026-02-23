@@ -41,11 +41,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-[100] bg-[#0a0a0b]/95 backdrop-blur-md border-b border-white/5">
+    <nav className="fixed top-0 w-full z-100 bg-[#0a0a0b]/95 backdrop-blur-md border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         
         {/* Logo Section */}
-        <Link href="/" className="flex items-center gap-2 group shrink-0 relative z-[130]">
+        <Link href="/" className="flex items-center gap-2 group shrink-0 relative z-130">
           <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-purple-500/20">
             <Gamepad2 className="text-white" size={24} />
           </div>
@@ -88,7 +88,7 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full border-2 border-purple-500/50 overflow-hidden">
-                  <img src={user.photoURL || "/default-avatar.png"} alt="User" className="w-full h-full object-cover" />
+                  <img src={user.photoURL || "/profile.jpg"} alt="User" className="w-full h-full object-cover" />
                 </div>
                 <button onClick={handleNavbarSignOut} className="text-gray-400 hover:text-red-500 p-2 hover:bg-red-500/5 rounded-lg transition-all">
                   <LogOut size={20} />
@@ -105,7 +105,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Icons Area */}
-        <div className="md:hidden flex items-center gap-4 relative z-[130]">
+        <div className="md:hidden flex items-center gap-4 relative z-130">
           <Link href="/cart" className="relative p-2 text-gray-400">
             <ShoppingBag size={24} />
             {cart.length > 0 && (
@@ -133,7 +133,7 @@ const Navbar = () => {
               animate={{ opacity: 1 }} 
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/90 backdrop-blur-md z-[110] md:hidden"
+              className="fixed inset-0 bg-black/90 backdrop-blur-md z-110 md:hidden"
             />
             
             {/* Sidebar with Solid Dark Background */}
@@ -142,14 +142,14 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 w-[80%] max-w-[300px] h-screen bg-[#0a0a0b] z-[120] md:hidden border-l border-white/10 shadow-3xl flex flex-col pt-24"
+              className="fixed top-0 right-0 w-[80%] max-w-75 h-screen bg-[#0a0a0b] z-120 md:hidden border-l border-white/10 shadow-3xl flex flex-col pt-24"
             >
               <div className="flex-1 overflow-y-auto p-6 flex flex-col">
                 
                 {/* User Info Section */}
                 {user && (
                   <div className="mb-8 flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
-                    <img src={user.photoURL || "/default-avatar.png"} alt="User" className="w-12 h-12 rounded-full border-2 border-purple-500" />
+                    <img src={user.photoURL || "/profile.jpg"} alt="User" className="w-12 h-12 rounded-full border-2 border-purple-500" />
                     <div className="overflow-hidden">
                       <p className="text-white font-bold truncate text-sm">{user.displayName || "Gamer"}</p>
                       <p className="text-purple-500 text-[10px] font-black uppercase tracking-widest">{mongoUser?.role || "Member"}</p>
