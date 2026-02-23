@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Play, ExternalLink, Users, Star, X } from "lucide-react"; // X আইকন যোগ করা হয়েছে
 import Image from "next/image";
+import Link from "next/link";
 
 const Portfolio = () => {
   const [activeVideo, setActiveVideo] = useState(null);
@@ -14,7 +15,9 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/portfolios");
+        const res = await fetch(
+          "https://uefn-maps-server.onrender.com/api/v1/portfolios",
+        );
         const data = await res.json();
         setProjects(data.data);
       } catch (err) {
@@ -27,7 +30,7 @@ const Portfolio = () => {
 
   if (loading)
     return (
-      <div className="text-center p-20 font-black text-white">
+      <div className="text-center p-20 bg-black text-white min-h-screen">
         Loading Creative Works...
       </div>
     );
@@ -179,13 +182,15 @@ const Portfolio = () => {
               </div>
 
               <div className="pt-4">
-                <button className="w-full md:w-auto flex items-center justify-center gap-3 bg-white text-black hover:bg-purple-600 hover:text-white px-10 py-5 rounded-2xl font-black transition-all shadow-xl active:scale-95 group">
-                  <ExternalLink
-                    size={20}
-                    className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
-                  />
-                  Launch Experience
-                </button>
+                <Link href={"/marketplace"}>
+                  <button className="w-full md:w-auto flex items-center justify-center gap-3 bg-white text-black hover:bg-purple-600 hover:text-white px-10 py-5 rounded-2xl font-black transition-all shadow-xl active:scale-95 group">
+                    <ExternalLink
+                      size={20}
+                      className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                    />
+                    Launch Experience
+                  </button>
+                </Link>
               </div>
             </div>
           </motion.section>
@@ -213,9 +218,11 @@ const Portfolio = () => {
             I’m available for custom projects, system design, and long-term
             collaborations.
           </p>
-          <button className="relative z-10 bg-purple-600 text-white px-16 py-6 rounded-2xl font-black text-xl hover:bg-purple-500 hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all active:scale-95">
-            Get in Touch
-          </button>
+          <Link href="/pages/contact">
+            <button className="relative z-10 bg-purple-600 text-white px-16 py-6 rounded-2xl font-black text-xl hover:bg-purple-500 hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all active:scale-95">
+              Get in Touch
+            </button>
+          </Link>
         </motion.div>
       </section>
     </div>

@@ -71,7 +71,9 @@ const Marketplace = () => {
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/categories`);
+        const res = await fetch(
+          `https://uefn-maps-server.onrender.com/api/v1/categories`,
+        );
         const data = await res.json();
         if (data.success) {
           setCategories([{ name: "All", _id: "All" }, ...data.data]);
@@ -111,6 +113,24 @@ const Marketplace = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-white pt-28 pb-20 px-6 font-sans">
+      {/* --- Marketplace Hidden SEO --- */}
+      <section className="sr-only">
+        <h2>Premium UEFN Map Store and Creator Marketplace</h2>
+        <p>
+          Browse our extensive collection of Fortnite UEFN maps and Creative 2.0
+          islands. Our store features pro Fortnite maps including Deathrun, Box
+          fight, Zone wars, 1v1 maps, and competitive PvP maps.
+        </p>
+        <ul>
+          <li>Buy optimized Red vs Blue and Parkour maps</li>
+          <li>
+            Explore high-quality Tycoon, Horror, and Escape room templates
+          </li>
+          <li>Download UEFN Verse scripts and custom game modes</li>
+          <li>New and trending Fortnite islands updated daily</li>
+        </ul>
+      </section>
+
       {/* --- Top Header Section --- */}
       <section className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-end gap-6">
         <div>
@@ -176,7 +196,7 @@ const Marketplace = () => {
             )}
           </div>
 
-          <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
+          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 scrollbar-hide">
             {categories.map((cat) => {
               const categoryId =
                 cat._id === "All" ? "All" : cat._id?.$oid || cat._id;

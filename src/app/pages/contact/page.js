@@ -18,11 +18,14 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/contacts/send-message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://uefn-maps-server.onrender.com/api/v1/contacts/send-message",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
       if (res.ok) {
         setShowSuccess(true);
         setFormData({ name: "", email: "", phone: "", message: "" });
@@ -39,6 +42,22 @@ const ContactPage = () => {
     <div className="min-h-screen bg-[#0a0a0b] text-white pt-32 pb-20 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* --- Contact Hidden SEO --- */}
+          <section className="sr-only">
+            <h2>Contact UEFN Creator for Map Commissions</h2>
+            <p>
+              Get in touch for custom Fortnite map services, UEFN development
+              help, and specialized map design requests. We provide the best
+              Fortnite map support and UEFN creator services.
+            </p>
+            <ul>
+              <li>Hire UEFN developer for premium map projects</li>
+              <li>Support for purchased UEFN assets and Verse scripts</li>
+              <li>Request custom Fortnite Creative islands and game modes</li>
+              <li>Join our Discord for UEFN map design collaboration</li>
+            </ul>
+          </section>
+
           {/* Left Side: Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}

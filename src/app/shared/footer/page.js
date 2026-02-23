@@ -15,7 +15,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-purple-600 rounded-md flex items-center justify-center group-hover:bg-purple-500 transition-colors">
                 <Gamepad2 className="text-white" size={20} />
               </div>
-              <span className="text-xl font-bold tracking-tighter text-white">MAGRIL<span className="text-purple-500">UEFN</span></span>
+              <span className="text-xl font-bold tracking-tighter text-white">FORTNITE<span className="text-purple-500">UEFN</span></span>
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed">
               Premium UEFN assets for modern creators. High-quality maps, scripts, and 3D models delivered instantly via AWS S3.
@@ -24,12 +24,12 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-white font-bold mb-6">Marketplace</h4>
+            <h4 className="text-white font-bold mb-6">Pages</h4>
             <ul className="space-y-4 text-sm text-gray-500">
-              <li><Link href="/assets" className="hover:text-purple-500 transition-colors">Browse All Assets</Link></li>
-              <li><Link href="/templates" className="hover:text-purple-500 transition-colors">Game Templates</Link></li>
-              <li><Link href="/scripts" className="hover:text-purple-500 transition-colors">Verse Scripts</Link></li>
-              <li><Link href="/portfolio" className="hover:text-purple-500 transition-colors">Featured Creators</Link></li>
+              <li><Link href="/my-assets" className="hover:text-purple-500 transition-colors">Browse All Assets</Link></li>
+              <li><Link href="/marketplace" className="hover:text-purple-500 transition-colors">Marketplace</Link></li>
+              <li><Link href="/portfolio" className="hover:text-purple-500 transition-colors">Portfolio</Link></li>
+              <li><Link href="/pages/contact" className="hover:text-purple-500 transition-colors">Contact</Link></li>
             </ul>
           </div>
 
@@ -37,10 +37,11 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6">Support</h4>
             <ul className="space-y-4 text-sm text-gray-500">
-              <li><Link href="/faq" className="hover:text-purple-500 transition-colors">FAQs</Link></li>
-              <li><Link href="/terms" className="hover:text-purple-500 transition-colors">Terms of Service</Link></li>
-              <li><Link href="/privacy" className="hover:text-purple-500 transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/contact" className="hover:text-purple-500 transition-colors">Contact Support</Link></li>
+              <li><Link href="/legal/faqs">FAQs</Link></li>
+              <li><Link href="/legal/terms-of-service">Terms of Service</Link></li>
+              <li><Link href="/legal/privacy-policy">Privacy Policy</Link></li>
+              <li><Link href="/legal/refund-policy">Refund Policy</Link></li>
+              <li><Link href="/legal/contact-support">Contact Support</Link></li>
             </ul>
           </div>
 
@@ -60,7 +61,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
               <Mail size={16} className="text-purple-500" />
-              <span>support@magriluefn.com</span>
+              <span>support@fortniteuefn.com</span>
             </div>
           </div>
         </div>
@@ -68,7 +69,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:row justify-between items-center gap-4">
           <p className="text-gray-600 text-xs text-center md:text-left">
-            © {new Date().getFullYear()} MAGRIL UEFN. All rights reserved. 
+            © {new Date().getFullYear()} FORTNITE UEFN. All rights reserved. 
             <span className="block md:inline mt-1 md:mt-0 md:ml-2 text-gray-700 font-medium italic">Hand-crafted for Fortnite Creators.</span>
           </p>
           <div className="flex items-center gap-6">

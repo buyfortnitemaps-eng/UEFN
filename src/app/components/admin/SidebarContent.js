@@ -8,6 +8,7 @@ import {
   Mail, 
   MessageCircleCode,
   Gamepad2,
+  Scale,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -56,6 +57,11 @@ const menuItems = [
     name: "Chat",
     icon: <MessageCircleCode size={20} />, // লাইভ চ্যাটের জন্য বাবল আইকন
     href: "/admin/chat",
+  },
+  {
+    name: "Legal Pages",
+    icon: <Scale size={20} />, 
+    href: "/admin/legal",
   },
 ];
 
