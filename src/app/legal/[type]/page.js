@@ -33,7 +33,7 @@ const LegalPage = () => {
   useEffect(() => {
     const fetchLegalData = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/v1/legals`);
+        const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/legals`);
         const result = await res.json();
 
         const currentData = result.data.find(

@@ -46,7 +46,7 @@ const ManageLegals = () => {
   }, []);
 
   const fetchLegals = async () => {
-    const res = await fetch("http://localhost:5000/api/v1/legals");
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/legals");
     const data = await res.json();
     setLegals(data.data);
   };
@@ -56,7 +56,7 @@ const ManageLegals = () => {
 
     setLoading(true);
 
-    await fetch("http://localhost:5000/api/v1/legals/upsert", {
+    await fetch("https://uefn-maps-server.onrender.com/api/v1/legals/upsert", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ type: selectedType, content }),
