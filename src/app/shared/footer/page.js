@@ -91,22 +91,16 @@ const Footer = () => {
             <h4 className="text-foreground font-bold mb-6">Stay Connected</h4>
             <div className="flex gap-4 mb-6">
               <a
-                href="#"
+                href="https://x.com/Uefnmapcom"
                 className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-foreground transition-all"
               >
                 <Twitter size={18} />
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/@UEFNMAP"
                 className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-foreground transition-all"
               >
                 <Youtube size={18} />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-foreground transition-all"
-              >
-                <Github size={18} />
               </a>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">

@@ -20,14 +20,12 @@ export default function GameModeDetail() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // কার্ট স্টেট এবং হুকসমূহ
   const { user } = useAuth();
   const { addToCart, cart } = useCart();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState("");
 
-  // কার্টে অ্যাড করার ফাংশন
   const handleAddToCart = (product) => {
     if (!user) {
       setShowLoginModal(true);
@@ -84,7 +82,7 @@ export default function GameModeDetail() {
             products.map((product) => (
               <div
                 key={product._id}
-                className="bg-card-bg border border-border-color rounded-[2.5rem] overflow-hidden group hover:border-purple-500/50 transition-all duration-300"
+                className="bg-card-bg border border-border-color rounded-[2.5rem] overflow-hidden group hover:border-purple-500/50 transition-all duration-300 flex flex-col shadow-xl shadow-purple-500/5"
               >
                 <Link
                   href={
@@ -92,35 +90,67 @@ export default function GameModeDetail() {
                       ? `/pages/featured/${product._id}`
                       : `/marketplace/${product._id}`
                   }
-                  className="block h-60 overflow-hidden relative"
+                  className="block h-56 overflow-hidden relative bg-muted/20"
                 >
                   <img
                     src={product.image?.url}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     alt={product.title}
                   />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="bg-white text-black px-5 py-2 rounded-full font-black text-[10px] uppercase tracking-widest">
+                      View Details
+                    </span>
+                  </div>
                 </Link>
 
-                <div className="p-7">
+                <div className="p-6 flex flex-col grow">
                   <Link
                     href={
                       product.featureTag
                         ? `/pages/featured/${product._id}`
                         : `/marketplace/${product._id}`
                     }
-                    className="block h-60 overflow-hidden relative"
                   >
-                    <h3 className="text-xl font-black uppercase italic text-foreground mb-4 line-clamp-1">
+                    <h3 className="text-xl font-black uppercase italic text-foreground mb-2 group-hover:text-purple-500 transition-colors line-clamp-1">
                       {product.title}
                     </h3>
                   </Link>
 
-                  <div className="flex justify-between items-center border-t border-border-color pt-5 mt-2">
-                    <span className="text-2xl font-black text-foreground">
-                      ${product.price}
-                    </span>
+                  {/* ডেসক্রিপশন লজিক: ৮০ ক্যারেক্টারের বেশি হলে '...' দেখাবে */}
+                  <p className="text-muted-foreground text-xs mb-6 h-8 opacity-80 leading-relaxed">
+                    {product.description?.length > 80
+                      ? `${product.description.slice(0, 80)}...`
+                      : product.description ||
+                        "Premium UEFN template optimized for performance."}
+                  </p>
 
-                    {/* onClick হ্যান্ডলার যোগ করা হয়েছে */}
+                  <div className="flex justify-between items-center border-t border-border-color pt-5 mt-auto">
+                    <div className="flex flex-col">
+                      <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">
+                        Price
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {product.isDiscount ? (
+                          <>
+                            {/* ডিসকাউন্ট প্রাইস */}
+                            <span className="text-2xl font-black text-foreground">
+                              ${product.discountPrice}
+                            </span>
+                            {/* মেইন প্রাইস যা কাটা থাকবে */}
+                            <span className="text-sm text-muted-foreground line-through font-bold opacity-60">
+                              ${product.price}
+                            </span>
+                          </>
+                        ) : (
+                          /* যদি ডিসকাউন্ট না থাকে তবে শুধু মেইন প্রাইস */
+                          <span className="text-2xl font-black text-foreground">
+                            ${product.price}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
                     <button
                       onClick={() => handleAddToCart(product)}
                       className={`p-4 rounded-2xl transition-all active:scale-90 ${
@@ -149,7 +179,6 @@ export default function GameModeDetail() {
         </div>
       </div>
 
-      {/* মোডালগুলো নিচে অ্যাড করা হলো */}
       <CartSuccessModal
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}

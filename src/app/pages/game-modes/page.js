@@ -50,7 +50,7 @@ export default function GameTypes() {
                 className="group bg-card-bg border border-border-color p-5 md:p-6 rounded-4xl hover:border-purple-500/50 transition-all duration-300 relative overflow-hidden shadow-sm"
               >
                 {/* Subtle Background Icon */}
-                <div className="absolute -top-2 -right-2 p-4 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-10 transition-opacity">
+                <div className="absolute -top-2 -right-2 p-4 opacity-[0.2] dark:opacity-[0.2] group-hover:opacity-20 transition-opacity">
                   <Gamepad2 size={60} className="text-foreground" />
                 </div>
 

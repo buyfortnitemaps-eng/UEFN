@@ -262,7 +262,7 @@ export default function ProductDetail() {
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                     className="w-full p-6 text-left flex justify-between items-center group"
                   >
-                    <span className="font-bold text-lg md:text-xl text-gray-200 group-hover:text-purple-400 transition-colors">
+                    <span className="font-bold text-lg md:text-xl text-foreground group-hover:text-purple-400 transition-colors">
                       {faq.question}
                     </span>
                     {openFaq === index ? (

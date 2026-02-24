@@ -69,7 +69,7 @@ const SignUp = () => {
     } catch (error) {
       console.error("Signup Error:", error.message);
       if (firebaseUser) {
-        await firebaseUser.delete(); 
+        await firebaseUser.delete();
       }
 
       alert(error.message || "Something went wrong during signup.");
@@ -213,7 +213,11 @@ const SignUp = () => {
                   onClick={handleGoogleAction}
                   className="w-full bg-background border border-white/5 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95"
                 >
-                  <img src="/google.svg" className="w-5 h-5" alt="Google" />{" "}
+                  <img
+                    src="/google.webp"
+                    className="w-6 h-6 rounded-full "
+                    alt="Google"
+                  />{" "}
                   Sign up with Google
                 </button>
               </div>
