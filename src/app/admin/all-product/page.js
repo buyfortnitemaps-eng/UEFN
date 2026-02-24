@@ -149,7 +149,7 @@ const AllProducts = () => {
                     className="w-12 h-12 rounded-xl object-cover border border-white/5"
                     alt=""
                   />
-                  <span className="font-bold text-gray-200">
+                  <span className="font-bold text-forground">
                     {product.title}
                   </span>
                 </td>
