@@ -86,10 +86,10 @@ const handleDownload = async (asset) => {
     );
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white pt-28 pb-24 px-4 sm:px-6 md:px-10">
+    <div className="min-h-screen bg-background text-foreground pt-28 pb-24 px-4 sm:px-6 md:px-10">
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 border-b border-white/10 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 border-b border-white/5 pb-6">
           <div>
             <h1 className="text-3xl sm:text-4xl font-black tracking-tight uppercase">
               My <span className="text-purple-500">Vault</span>
@@ -102,7 +102,7 @@ const handleDownload = async (asset) => {
 
         {/* EMPTY STATE */}
         {assets.length === 0 ? (
-          <div className="text-center py-28 bg-white/4 rounded-3xl border border-dashed border-white/10">
+          <div className="text-center py-28 bg-white/4 rounded-3xl border border-dashed border-border-color">
             <Package size={46} className="mx-auto mb-4 text-gray-700" />
             <h2 className="text-xl font-bold text-gray-300">Vault Empty</h2>
             <p className="text-gray-500 mt-2 text-sm">
@@ -112,9 +112,9 @@ const handleDownload = async (asset) => {
         ) : (
           <>
             {/* ================== DESKTOP TABLE ================== */}
-            <div className="hidden md:block bg-white/4 border border-white/10 rounded-3xl overflow-hidden">
+            <div className="hidden md:block bg-white/4 border border-white/5 rounded-3xl overflow-hidden">
               <table className="w-full">
-                <thead className="bg-white/5 text-gray-400 text-xs uppercase tracking-widest">
+                <thead className="bg-background text-gray-400 text-xs uppercase tracking-widest">
                   <tr>
                     <th className="p-5 text-left">Asset</th>
                     <th className="p-5 text-left">Title</th>
@@ -137,7 +137,7 @@ const handleDownload = async (asset) => {
                         <div className="flex items-center gap-3">
                           <img
                             src={asset.image?.url}
-                            className="w-10 h-10 rounded-xl object-cover border border-white/10"
+                            className="w-10 h-10 rounded-xl object-cover border border-white/5"
                             alt={asset.title}
                           />
                         </div>
@@ -160,7 +160,7 @@ const handleDownload = async (asset) => {
                         {/* ডেক্সটপ ভিউতে টেবিলের ভেতরের বাটনটি এভাবে পরিবর্তন করুন */}
                         <button
                           onClick={() => handleDownload(asset)} // window.open এর বদলে ফাংশন কল করুন
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-purple-600/20 border border-white/10 hover:border-purple-500/30 text-gray-300 hover:text-purple-400 transition-all"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-background hover:bg-background border border-white/5 hover:border-purple-500/30 text-gray-300 hover:text-purple-400 transition-all"
                         >
                           <Download size={16} />
                           <span className="text-xs font-bold uppercase tracking-wider">
@@ -182,11 +182,11 @@ const handleDownload = async (asset) => {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.04 }}
-                  className="bg-white/4 border border-white/10 rounded-2xl p-4 flex gap-4 items-center"
+                  className="bg-white/4 border border-white/5 rounded-2xl p-4 flex gap-4 items-center"
                 >
                   <img
                     src={asset.image?.url}
-                    className="w-16 h-16 rounded-xl object-cover border border-white/10"
+                    className="w-16 h-16 rounded-xl object-cover border border-white/5"
                     alt={asset.title}
                   />
 
@@ -202,7 +202,7 @@ const handleDownload = async (asset) => {
 
                   <button
                     onClick={() => handleDownload(asset)}
-                    className="p-3 rounded-xl bg-purple-600/20 hover:bg-purple-600 text-purple-400 hover:text-white transition group"
+                    className="p-3 rounded-xl bg-background hover:bg-purple-600 text-purple-400 hover:text-foreground transition group"
                   >
                     <Download
                       size={18}

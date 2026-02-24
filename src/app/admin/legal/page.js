@@ -74,25 +74,25 @@ const ManageLegals = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 text-white min-h-screen mt-10">
+    <div className="max-w-6xl mx-auto p-6 text-foreground min-h-screen mt-10">
       <h1 className="text-3xl font-black mb-8 text-purple-500 uppercase italic">
         Manage Legal Pages
       </h1>
 
-      <div className="bg-[#121214] border border-white/10 p-8 rounded-[2.5rem] mb-12 shadow-2xl">
+      <div className="bg-background border border-white/5 p-8 rounded-[2.5rem] mb-12 shadow-2xl">
         <select
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
-          className="w-full bg-white/5 border border-white/10 p-4 rounded-xl mb-6"
+          className="w-full bg-background border border-white/5 p-4 rounded-xl mb-6"
         >
           {types.map((t) => (
-            <option key={t} value={t} className="bg-[#121214]">
+            <option key={t} value={t} className="bg-background">
               {t}
             </option>
           ))}
         </select>
 
-        <div className="rounded-xl overflow-hidden border border-white/10">
+        <div className="rounded-xl overflow-hidden border border-white/5">
   <style>{`
     .ql-editor {
       min-height: 300px;
@@ -118,9 +118,9 @@ const ManageLegals = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-[#121214] border border-white/10 rounded-[2.5rem] overflow-hidden">
+      <div className="bg-background border border-white/5 rounded-[2.5rem] overflow-hidden">
         <table className="w-full">
-          <thead className="bg-white/5 text-purple-400 uppercase text-xs">
+          <thead className="bg-background text-purple-400 uppercase text-xs">
             <tr>
               <th className="p-6">Page Type</th>
               <th className="p-6">Last Updated</th>
@@ -137,7 +137,7 @@ const ManageLegals = () => {
                 <td className="p-6">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="p-3 bg-blue-500/10 text-blue-500 rounded-xl hover:bg-blue-500 hover:text-white"
+                    className="p-3 bg-blue-500/10 text-blue-500 rounded-xl hover:bg-blue-500 hover:text-foreground"
                   >
                     <Edit size={18} />
                   </button>

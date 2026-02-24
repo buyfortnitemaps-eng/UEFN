@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const LoginAlertModal = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 z-110 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#0d0d0f] border border-white/10 p-8 rounded-4xl w-full max-w-sm text-center shadow-2xl animate-in zoom-in-95">
+    <div className="fixed inset-0 z-110 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+      <div className="bg-card-bg border border-white/5 p-8 rounded-4xl w-full max-w-sm text-center shadow-2xl animate-in zoom-in-95">
         <div className="bg-purple-500/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
           <LogIn className="text-purple-500" size={32} />
         </div>
@@ -21,7 +21,7 @@ const LoginAlertModal = ({ onClose }) => {
           </Link>
           <button 
             onClick={onClose}
-            className="text-xs text-gray-500 hover:text-white transition-colors"
+            className="text-xs text-gray-500 hover:text-foreground transition-colors"
           >
             Maybe Later
           </button>

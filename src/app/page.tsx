@@ -4,7 +4,7 @@ import ClientPage from "./ClientPage"; // আপনার আসল ক্লা
 export const metadata = {
   title: "MAGRIL UEFN | Premium Fortnite UEFN Maps & Store",
   description: "Buy custom Fortnite maps, UEFN map store, and premium Fortnite Creative 2.0 islands. Explore Deathrun, Zone wars, and more.",
-  keywords: "Fortnite UEFN maps, Fortnite Creative, UEFN map store, Custom Fortnite maps, Buy Fortnite maps, UEFN creator marketplace",
+  keywords: "Fortnite UEFN maps, Fortnite Creative, UEFN map store, Custom Fortnite maps, Buy Fortnite maps, UEFN creator Shope",
   openGraph: {
     title: "MAGRIL UEFN | Pro Fortnite Map Store",
     description: "Explore trending Fortnite maps and UEFN assets.",

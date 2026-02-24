@@ -9,6 +9,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../lib/CartContext";
 import { logOut } from "../../lib/firebaseActions";
+import ThemeToggle from "../../utils/them-toggle"
 
 const Navbar = () => {
   const router = useRouter();
@@ -36,20 +37,20 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/", icon: <Home size={20} /> },
-    { name: "Marketplace", href: "/marketplace", icon: <Store size={20} /> },
-    { name: "Portfolio", href: "/portfolio", icon: <UserCircle size={20} /> },
+    { name: "Shope", href: "/marketplace", icon: <Store size={20} /> },
+    { name: "About US", href: "/portfolio", icon: <UserCircle size={20} /> },
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-100 bg-[#0a0a0b]/95 backdrop-blur-md border-b border-white/5">
+    <nav className="fixed top-0 w-full z-100 bg-background/95 backdrop-blur-md border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-2 group shrink-0 relative z-130">
           <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-purple-500/20">
-            <Gamepad2 className="text-white" size={24} />
+            <Gamepad2 className="text-foreground" size={24} />
           </div>
-          <span className="text-xl font-bold tracking-tighter text-white">
+          <span className="text-xl font-bold tracking-tighter text-foreground">
             FORTNITE<span className="text-purple-500">UEFN</span>
           </span>
         </Link>
@@ -57,7 +58,7 @@ const Navbar = () => {
         {/* Desktop Menu (Visible on PC) */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <Link key={link.name} href={link.href} className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+            <Link key={link.name} href={link.href} className="text-sm font-medium text-gray-400 hover:text-foreground transition-colors">
               {link.name}
             </Link>
           ))}
@@ -75,15 +76,17 @@ const Navbar = () => {
             </>
           )}
 
-          <div className="flex items-center gap-4 ml-4 border-l border-white/10 pl-6">
-            <Link href="/cart" className="relative p-2 hover:bg-white/5 rounded-full text-gray-400 hover:text-white transition-all group">
+          <div className="flex items-center gap-4 ml-4 border-l border-border-color pl-6">
+            <Link href="/cart" className="relative p-2 hover:bg-background rounded-full text-gray-400 hover:text-foreground transition-all group">
               <ShoppingBag size={20} />
               {cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-purple-600 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-[#0a0a0b]">
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-purple-600 text-foreground text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-[#0a0a0b]">
                   {cart.length}
                 </span>
               )}
             </Link>
+
+            <ThemeToggle />
 
             {user ? (
               <div className="flex items-center gap-3">
@@ -96,7 +99,7 @@ const Navbar = () => {
               </div>
             ) : (
               <Link href="/auth/login">
-                <button className="bg-purple-600 hover:bg-purple-500 px-6 py-2 rounded-xl text-sm font-black uppercase tracking-widest text-white shadow-lg active:scale-95 transition-all">
+                <button className="bg-purple-600 hover:bg-purple-500 px-6 py-2 rounded-xl text-sm font-black uppercase tracking-widest text-foreground shadow-lg active:scale-95 transition-all">
                   Login
                 </button>
               </Link>
@@ -109,14 +112,14 @@ const Navbar = () => {
           <Link href="/cart" className="relative p-2 text-gray-400">
             <ShoppingBag size={24} />
             {cart.length > 0 && (
-              <span className="absolute top-1 right-1 w-4 h-4 bg-purple-600 rounded-full text-[10px] flex items-center justify-center text-white font-bold">
+              <span className="absolute top-1 right-1 w-4 h-4 bg-purple-600 rounded-full text-[10px] flex items-center justify-center text-foreground font-bold">
                 {cart.length}
               </span>
             )}
           </Link>
           <button 
             onClick={() => setIsOpen(!isOpen)} 
-            className="text-white p-2 bg-white/5 rounded-xl border border-white/10 active:scale-90 transition-all"
+            className="text-foreground p-2 bg-background rounded-xl border border-white/5 active:scale-90 transition-all"
           >
             {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
@@ -133,7 +136,7 @@ const Navbar = () => {
               animate={{ opacity: 1 }} 
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/90 backdrop-blur-md z-110 md:hidden"
+              className="fixed inset-0 bg-background/90 backdrop-blur-md z-110 md:hidden"
             />
             
             {/* Sidebar with Solid Dark Background */}
@@ -142,16 +145,16 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 w-[80%] max-w-75 h-screen bg-[#0a0a0b] z-120 md:hidden border-l border-white/10 shadow-3xl flex flex-col pt-24"
+              className="fixed top-0 right-0 w-[80%] max-w-75 h-screen bg-background z-120 md:hidden border-l border-border-color shadow-3xl flex flex-col pt-24"
             >
               <div className="flex-1 overflow-y-auto p-6 flex flex-col">
                 
                 {/* User Info Section */}
                 {user && (
-                  <div className="mb-8 flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                  <div className="mb-8 flex items-center gap-4 p-4 bg-background rounded-2xl border border-white/5">
                     <img src={user.photoURL || "/profile.jpg"} alt="User" className="w-12 h-12 rounded-full border-2 border-purple-500" />
                     <div className="overflow-hidden">
-                      <p className="text-white font-bold truncate text-sm">{user.displayName || "Gamer"}</p>
+                      <p className="text-foreground font-bold truncate text-sm">{user.displayName || "Gamer"}</p>
                       <p className="text-purple-500 text-[10px] font-black uppercase tracking-widest">{mongoUser?.role || "Member"}</p>
                     </div>
                   </div>
@@ -164,7 +167,7 @@ const Navbar = () => {
                     <Link 
                       key={link.name} 
                       href={link.href} 
-                      className="flex items-center justify-between p-4 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 group transition-all"
+                      className="flex items-center justify-between p-4 rounded-xl text-gray-400 hover:text-foreground hover:bg-background group transition-all"
                     >
                       <div className="flex items-center gap-4 font-bold text-sm">
                         <span className="text-gray-500 group-hover:text-purple-500">{link.icon}</span>
@@ -175,7 +178,7 @@ const Navbar = () => {
                   ))}
                 </div>
 
-                <hr className="border-white/5 my-6" />
+                <hr className="border-border-color my-6" />
 
                 {/* Account Links Section */}
                 {user && (
@@ -192,6 +195,11 @@ const Navbar = () => {
                   </div>
                 )}
 
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-600 ml-2 mb-4">Explorer</p>
+                  <ThemeToggle />
+                </div>
+
                 {/* Bottom Sign Out/Login Button */}
                 <div className="mt-auto">
                   {user ? (
@@ -203,7 +211,7 @@ const Navbar = () => {
                     </button>
                   ) : (
                     <Link href="/auth/login" className="block">
-                      <button className="w-full bg-purple-600 py-4 rounded-2xl font-black uppercase tracking-widest text-white shadow-lg active:scale-95 transition-all text-sm">
+                      <button className="w-full bg-purple-600 py-4 rounded-2xl font-black uppercase tracking-widest text-foreground shadow-lg active:scale-95 transition-all text-sm">
                         Login / Sign Up
                       </button>
                     </Link>

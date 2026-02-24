@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 // Lucide থেকে সরিয়ে Next.js Link ব্যবহার করা হয়েছে
-import Link from "next/link"; 
+import Link from "next/link";
 import { ShoppingCart, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -40,9 +40,12 @@ export default function AllAssets() {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/featured");
+        const res = await fetch(
+          "https://uefn-maps-server.onrender.com/api/v1/products/featured",
+        );
         const data = await res.json();
-        setProducts(data.data || []);
+        const sortedData = (data.data || []).reverse(); 
+        setProducts(sortedData);
         setFilteredProducts(data.data || []);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -69,24 +72,24 @@ export default function AllAssets() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] pt-32 pb-20 px-6 md:px-10">
+    <div className="min-h-screen bg-background pt-32 pb-20 px-6 md:px-10">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-black uppercase text-white mb-4 tracking-tighter">
+          <h1 className="text-4xl md:text-5xl font-black uppercase text-foreground mb-4 tracking-tighter">
             All <span className="text-purple-500">Featured Assets</span>
           </h1>
-          
+
           {/* Tags / Filters */}
-          <div className="flex bg-white/5 p-1 rounded-2xl border border-white/10 w-fit backdrop-blur-md overflow-x-auto no-scrollbar">
+          <div className="flex bg-background p-1 rounded-2xl border border-white/5 w-fit backdrop-blur-md overflow-x-auto no-scrollbar">
             {tags.map((tag) => (
               <button
                 key={tag.id}
                 onClick={() => setActiveTag(tag.id)}
                 className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
                   activeTag === tag.id
-                    ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20"
-                    : "text-gray-400 hover:text-white"
+                    ? "bg-purple-600 text-foreground shadow-lg shadow-purple-500/20"
+                    : "text-gray-400 hover:text-foreground"
                 }`}
               >
                 {tag.label}
@@ -108,22 +111,25 @@ export default function AllAssets() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   key={product._id}
-                  className="bg-white/5 border border-white/10 rounded-4xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group"
+                  className="bg-background border border-white/5 rounded-4xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group"
                 >
                   {/* Image Section - Link logic fixed */}
-                  <Link href={`/pages/featured/${product._id}`} className="block h-60 relative overflow-hidden bg-gray-900">
+                  <Link
+                    href={`/pages/featured/${product._id}`}
+                    className="block h-60 relative overflow-hidden bg-gray-900"
+                  >
                     <img
                       src={product.image?.url}
                       alt={product.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <span className="bg-white text-black px-5 py-2 rounded-full font-black text-[10px] uppercase tracking-widest">
                         View Details
                       </span>
                     </div>
                     {product.featureTag && (
-                      <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[9px] font-black uppercase border backdrop-blur-md bg-black/40 text-white border-white/20">
+                      <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[9px] font-black uppercase border backdrop-blur-md bg-background/40 text-foreground border-white/20">
                         {product.featureTag}
                       </span>
                     )}
@@ -132,7 +138,7 @@ export default function AllAssets() {
                   <div className="p-6">
                     {/* Title Link logic fixed */}
                     <Link href={`/pages/featured/${product._id}`}>
-                      <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase tracking-tighter">
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase tracking-tighter">
                         {product.title}
                       </h3>
                     </Link>
@@ -141,7 +147,7 @@ export default function AllAssets() {
                       {product.description}
                     </p>
 
-                    <div className="flex items-center justify-between border-t border-white/5 pt-5">
+                    <div className="flex items-center justify-between border-t border-border-color pt-5">
                       <div>
                         <p className="text-gray-500 text-[9px] uppercase font-black tracking-widest mb-1">
                           Price
@@ -149,7 +155,7 @@ export default function AllAssets() {
                         <div className="flex items-center gap-2">
                           {product.isDiscount ? (
                             <>
-                              <span className="text-2xl font-black text-white">
+                              <span className="text-2xl font-black text-foreground">
                                 ${product.discountPrice}
                               </span>
                               <span className="text-sm text-gray-500 line-through font-bold">
@@ -157,7 +163,7 @@ export default function AllAssets() {
                               </span>
                             </>
                           ) : (
-                            <span className="text-2xl font-black text-white">
+                            <span className="text-2xl font-black text-foreground">
                               ${product.price}
                             </span>
                           )}
@@ -172,7 +178,7 @@ export default function AllAssets() {
                             : "bg-purple-600 hover:bg-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.3)]"
                         }`}
                       >
-                        <ShoppingCart size={20} className="text-white" />
+                        <ShoppingCart size={20} className="text-foreground" />
                       </button>
                     </div>
                   </div>
@@ -189,7 +195,9 @@ export default function AllAssets() {
         onClose={() => setShowSuccessModal(false)}
         productName={lastAddedItem}
       />
-      {showLoginModal && <LoginAlertModal onClose={() => setShowLoginModal(false)} />}
+      {showLoginModal && (
+        <LoginAlertModal onClose={() => setShowLoginModal(false)} />
+      )}
     </div>
   );
 }

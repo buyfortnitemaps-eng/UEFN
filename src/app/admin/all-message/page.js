@@ -19,7 +19,7 @@ const AdminMessages = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white p-10 pt-28">
+    <div className="min-h-screen bg-background text-foreground p-10 pt-28">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-black mb-10 uppercase tracking-widest border-l-4 border-purple-500 pl-4">
           Inbox <span className="text-gray-500 text-lg">({messages.length})</span>
@@ -27,7 +27,7 @@ const AdminMessages = () => {
 
         <div className="grid gap-6">
           {messages.map((msg) => (
-            <div key={msg._id} className="bg-white/5 border border-white/10 p-6 rounded-3xl flex flex-col md:flex-row justify-between gap-6 hover:border-purple-500/30 transition-all">
+            <div key={msg._id} className="bg-background border border-white/5 p-6 rounded-3xl flex flex-col md:flex-row justify-between gap-6 hover:border-purple-500/30 transition-all">
               <div className="space-y-4 flex-1">
                 <div className="flex flex-wrap gap-4 items-center">
                   <div className="flex items-center gap-2 px-3 py-1 bg-purple-500/10 rounded-full text-purple-400 text-xs font-bold">
@@ -40,14 +40,14 @@ const AdminMessages = () => {
                     <Clock size={14} /> {new Date(msg.createdAt).toLocaleString()}
                   </div>
                 </div>
-                <p className="text-gray-300 leading-relaxed bg-black/20 p-4 rounded-2xl border border-white/5 italic">
+                <p className="text-foreground leading-relaxed bg-background/20 p-4 rounded-2xl border border-white/5 italic">
                   "{msg.message}"
                 </p>
                 <p className="text-purple-400 text-xs font-bold">Phone: {msg.phone}</p>
               </div>
               <button 
                 onClick={() => handleDelete(msg._id)}
-                className="p-4 h-fit bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-2xl transition-all self-end md:self-center"
+                className="p-4 h-fit bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-foreground rounded-2xl transition-all self-end md:self-center"
               >
                 <Trash2 size={20} />
               </button>

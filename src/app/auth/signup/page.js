@@ -91,7 +91,7 @@ const SignUp = () => {
   if (authLoading) return null; // অথেন্টিকেশন চেক হওয়া পর্যন্ত অপেক্ষা করুন
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center px-6 py-20 relative overflow-hidden text-white">
+    <div className="min-h-screen bg-background flex items-center justify-center px-6 py-20 relative overflow-hidden text-foreground">
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full" />
 
@@ -100,10 +100,10 @@ const SignUp = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-lg relative z-10"
       >
-        <div className="bg-white/2 border border-white/10 rounded-[3rem] p-8 md:p-14 backdrop-blur-xl">
+        <div className="bg-white/2 border border-white/5 rounded-[3rem] p-8 md:p-14 backdrop-blur-xl">
           <div className="text-center mb-10">
             <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-purple-600/20">
-              <Gamepad2 className="text-white" size={32} />
+              <Gamepad2 className="text-foreground" size={32} />
             </div>
             <h1 className="text-4xl font-black uppercase tracking-tighter italic">
               {user ? "Account" : "Join"}{" "}
@@ -121,14 +121,14 @@ const SignUp = () => {
           {user ? (
             /* --- ইউজার লগইন থাকলে এই বাটনটি দেখাবে --- */
             <div className="space-y-6">
-              <div className="p-6 bg-white/5 border border-white/10 rounded-2xl text-center">
+              <div className="p-6 bg-background border border-white/5 rounded-2xl text-center">
                 <p className="text-gray-400 text-sm mb-4 font-medium italic">
                   You are already signed in. To create a new account, please
                   sign out first.
                 </p>
                 <button
                   onClick={() => handleSignOut()}
-                  className="w-full bg-red-600/20 text-red-500 border border-red-500/30 py-4 rounded-2xl font-black text-lg hover:bg-red-600 hover:text-white transition-all flex items-center justify-center gap-2 active:scale-95"
+                  className="w-full bg-red-600/20 text-red-500 border border-red-500/30 py-4 rounded-2xl font-black text-lg hover:bg-red-600 hover:text-foreground transition-all flex items-center justify-center gap-2 active:scale-95"
                 >
                   <LogOut size={20} /> Sign Out
                 </button>
@@ -156,7 +156,7 @@ const SignUp = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
                   />
                 </div>
 
@@ -172,7 +172,7 @@ const SignUp = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
                   />
                 </div>
 
@@ -188,12 +188,12 @@ const SignUp = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-foreground transition-colors"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -202,7 +202,7 @@ const SignUp = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-purple-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-purple-500 transition-all shadow-xl shadow-purple-600/20 active:scale-95 disabled:opacity-50"
+                  className="w-full bg-purple-600 text-foreground py-5 rounded-2xl font-black text-lg hover:bg-purple-500 transition-all shadow-xl shadow-purple-600/20 active:scale-95 disabled:opacity-50"
                 >
                   {loading ? "Creating..." : "Create Account"}
                 </button>
@@ -211,7 +211,7 @@ const SignUp = () => {
               <div className="mt-8">
                 <button
                   onClick={handleGoogleAction}
-                  className="w-full bg-white/5 border border-white/10 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95"
+                  className="w-full bg-background border border-white/5 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95"
                 >
                   <img src="/google.svg" className="w-5 h-5" alt="Google" />{" "}
                   Sign up with Google
@@ -222,7 +222,7 @@ const SignUp = () => {
                 Already have an account?{" "}
                 <Link
                   href="/auth/login"
-                  className="text-white font-black hover:text-purple-500 transition-colors"
+                  className="text-foreground font-black hover:text-purple-500 transition-colors"
                 >
                   Login
                 </Link>

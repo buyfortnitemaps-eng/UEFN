@@ -54,14 +54,14 @@ const LegalPage = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="animate-spin text-purple-500" size={40} />
       </div>
     );
 
   if (!data)
     return (
-      <div className="min-h-screen bg-[#0a0a0b] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <h1 className="text-2xl font-bold italic uppercase">
           404 | Content not found
         </h1>
@@ -71,7 +71,7 @@ const LegalPage = () => {
   const cleanHTML = DOMPurify.sanitize(data.content);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white pt-32 pb-20 px-4 md:px-6 relative">
+    <div className="min-h-screen bg-background text-foreground pt-32 pb-20 px-4 md:px-6 relative">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-purple-600/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -82,7 +82,7 @@ const LegalPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-14"
         >
-          <div className="inline-block p-4 bg-white/5 rounded-3xl mb-6 border border-white/10">
+          <div className="inline-block p-4 bg-background rounded-3xl mb-6 border border-white/5">
             {getIcon(data.type)}
           </div>
 
@@ -99,7 +99,7 @@ const LegalPage = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="legal-content bg-[#0d0d0f] border border-white/10 p-6 md:p-14 rounded-[3rem] shadow-2xl"
+          className="legal-content bg-card-bg border border-white/5 p-6 md:p-14 rounded-[3rem] shadow-2xl"
         >
           <div
             className="ql-editor custom-legal"

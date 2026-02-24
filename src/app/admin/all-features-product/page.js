@@ -18,17 +18,14 @@ const FeaturedProducts = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
 
   const fetchFeatured = async () => {
-    const res = await fetch(
-      "https://uefn-maps-server.onrender.com/api/v1/products/featured",
-    );
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/featured");
     const data = await res.json();
-    setFeaturedProducts(data.data);
+    const sortedData = (data.data || []).reverse();
+    setFeaturedProducts(sortedData);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch(
-      "https://uefn-maps-server.onrender.com/api/v1/categories",
-    );
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
     const data = await res.json();
     setCategories(data.data);
   };
@@ -75,7 +72,7 @@ const FeaturedProducts = () => {
   if (!user || mongoUser?.role !== "admin") return <AdminOnly />;
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-6 text-white min-h-screen">
+    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-6 text-foreground min-h-screen">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic">
@@ -90,7 +87,7 @@ const FeaturedProducts = () => {
       </div>
 
       {/* Desktop Table View (Visible only on md screens and up) */}
-      <div className="hidden md:block bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
+      <div className="hidden md:block bg-background border border-white/5 rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
         <table className="w-full text-left">
           <thead className="bg-white/10">
             <tr>
@@ -120,10 +117,10 @@ const FeaturedProducts = () => {
                 <td className="p-6 flex items-center gap-4">
                   <img
                     src={product.image?.url}
-                    className="w-12 h-12 rounded-xl object-cover border border-white/10"
+                    className="w-12 h-12 rounded-xl object-cover border border-white/5"
                     alt=""
                   />
-                  <span className="font-bold text-gray-200">
+                  <span className="font-bold text-foreground">
                     {product.title}
                   </span>
                 </td>
@@ -171,7 +168,7 @@ const FeaturedProducts = () => {
         {featuredProducts.map((product) => (
           <div
             key={product._id}
-            className="bg-white/5 border border-white/10 rounded-3xl p-5 backdrop-blur-md relative overflow-hidden"
+            className="bg-background border border-white/5 rounded-3xl p-5 backdrop-blur-md relative overflow-hidden"
           >
             {/* Background Glow for Premium/Trending */}
             <div
@@ -187,11 +184,11 @@ const FeaturedProducts = () => {
             <div className="flex gap-4 items-center mb-5">
               <img
                 src={product.image?.url}
-                className="w-16 h-16 rounded-2xl object-cover border border-white/10"
+                className="w-16 h-16 rounded-2xl object-cover border border-white/5"
                 alt=""
               />
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-gray-100 truncate text-lg">
+                <h3 className="font-bold text-foreground truncate text-lg">
                   {product.title}
                 </h3>
                 <div className="flex items-center gap-3 mt-1">
@@ -276,7 +273,7 @@ const ActionButton = ({ icon, color, onClick, title }) => (
   <button
     onClick={onClick}
     title={title}
-    className={`p-3 bg-white/5 hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all inline-flex items-center justify-center`}
+    className={`p-3 bg-background hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all inline-flex items-center justify-center`}
   >
     {icon}
   </button>

@@ -17,7 +17,7 @@ import LoginAlertModal from "../components/LoginAlertModal";
 import CartSuccessModal from "../components/CartSuccessModal";
 import Link from "next/link";
 
-const Marketplace = () => {
+const Shope = () => {
   // --- States ---
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([{ name: "All", _id: "All" }]);
@@ -98,7 +98,7 @@ const Marketplace = () => {
 
   // --- Skeleton Component ---
   const ProductSkeleton = () => (
-    <div className="bg-white/5 border border-white/10 rounded-3xl h-80 animate-pulse">
+    <div className="bg-background border border-white/5 rounded-3xl h-80 animate-pulse">
       <div className="h-44 bg-white/10 rounded-t-3xl" />
       <div className="p-6 space-y-4">
         <div className="h-5 bg-white/10 rounded w-3/4" />
@@ -111,10 +111,10 @@ const Marketplace = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white pt-28 pb-20 px-6 font-sans">
-      {/* --- Marketplace Hidden SEO --- */}
+    <div className="min-h-screen bg-background text-foreground pt-28 pb-20 px-6 font-sans">
+      {/* --- Shope Hidden SEO --- */}
       <section className="sr-only">
-        <h2>Premium UEFN Map Store and Creator Marketplace</h2>
+        <h2>Premium UEFN Map Store and Creator Shope</h2>
         <p>
           Browse our extensive collection of Fortnite UEFN maps and Creative 2.0
           islands. Our store features pro Fortnite maps including Deathrun, Box
@@ -136,7 +136,7 @@ const Marketplace = () => {
           <div className="flex items-center gap-2 mb-2">
             <LayoutGrid size={24} className="text-purple-500" />
             <h1 className="text-4xl font-black uppercase tracking-tighter">
-              Marketplace
+              Shope
             </h1>
           </div>
           <p className="text-gray-500 text-sm italic">
@@ -150,7 +150,7 @@ const Marketplace = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full bg-black border border-white/10 rounded-xl py-3 px-4 appearance-none focus:border-purple-500 outline-none transition-all cursor-pointer text-sm font-bold uppercase tracking-wider"
+              className="w-full bg-background border border-white/5 rounded-xl py-3 px-4 appearance-none focus:border-purple-500 outline-none transition-all cursor-pointer text-sm font-bold uppercase tracking-wider"
             >
               <option value="newest">Newest First</option>
               <option value="lowToHigh">Price: Low to High</option>
@@ -171,7 +171,7 @@ const Marketplace = () => {
             <input
               type="text"
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-purple-500 outline-none transition-all placeholder:text-gray-600"
+              className="w-full bg-background border border-white/5 rounded-xl py-3 pl-12 pr-4 focus:border-purple-500 outline-none transition-all placeholder:text-gray-600"
               placeholder="Search assets..."
             />
           </div>
@@ -207,8 +207,8 @@ const Marketplace = () => {
                   onClick={() => setActiveCategory(categoryId)}
                   className={`px-5 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-left transition-all duration-300 ${
                     isSelected
-                      ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20 translate-x-1"
-                      : "bg-white/5 text-gray-500 hover:bg-white/10 hover:text-white"
+                      ? "bg-purple-600 text-foreground shadow-lg shadow-purple-500/20 translate-x-1"
+                      : "bg-background text-gray-500 hover:bg-white/10 hover:text-foreground"
                   }`}
                 >
                   {cat.name}
@@ -239,13 +239,13 @@ const Marketplace = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       whileHover={{ y: -8 }}
-                      className="flex flex-col bg-[#0d0d0f] border border-white/5 rounded-[2.5rem] overflow-hidden group hover:border-purple-500/40 transition-all duration-500 shadow-2xl h-full"
+                      className="flex flex-col bg-card-bg border border-white/5 rounded-[2.5rem] overflow-hidden group hover:border-purple-500/40 transition-all duration-500 shadow-2xl h-full"
                     >
                       {/* --- Image Section: Fixed Height & Width --- */}
                       <div className="relative h-44 overflow-hidden bg-[#16161a]">
                         {product.image?.url ? (
                           <Link
-                            href={`/marketplace/${product._id}`}
+                            href={`marketplace/${product._id}`}
                             className="relative z-10 block w-full h-full"
                           >
                             <img
@@ -255,7 +255,7 @@ const Marketplace = () => {
                             />
                           </Link>
                         ) : (
-                          <div className="w-full h-full flex flex-col items-center justify-center text-gray-600 bg-white/5">
+                          <div className="w-full h-full flex flex-col items-center justify-center text-gray-600 bg-background">
                             <LayoutGrid size={32} className="mb-2 opacity-20" />
                             <span className="uppercase font-black text-[10px] tracking-widest">
                               No Asset Image
@@ -265,18 +265,18 @@ const Marketplace = () => {
 
                         {/* Overlay Gradients */}
                         <div className="absolute inset-0 bg-linear-to-t from-[#0d0d0f] via-transparent to-transparent opacity-80" />
-                        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
+                        <div className="absolute inset-0 bg-background/10 group-hover:bg-transparent transition-colors duration-500" />
 
                         {/* Category Badge - Top Left */}
                         <div className="absolute top-5 left-5">
-                          <span className="px-4 py-1.5 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest shadow-xl">
+                          <span className="px-4 py-1.5 bg-background/60 backdrop-blur-xl border border-white/5 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest shadow-xl">
                             {product.category?.name || "UEFN Asset"}
                           </span>
                         </div>
 
                         {/* Price Tag Overlay - Top Right (Optional style) */}
                         <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-lg">
+                          <div className="bg-purple-600 text-foreground text-[10px] font-bold px-3 py-1 rounded-lg">
                             NEW
                           </div>
                         </div>
@@ -285,8 +285,8 @@ const Marketplace = () => {
                       {/* --- Content Section --- */}
                       <div className="p-8 flex flex-col grow">
                         <div className="mb-6 grow">
-                          <Link href={`/marketplace/${product._id}`}>
-                            <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-purple-400 transition-colors duration-300">
+                          <Link href={`marketplace/${product._id}`}>
+                            <h3 className="text-xl font-bold text-foreground mb-2 line-clamp-1 group-hover:text-purple-400 transition-colors duration-300">
                               {product.title}
                             </h3>
                           </Link>
@@ -297,13 +297,13 @@ const Marketplace = () => {
                         </div>
 
                         {/* Bottom Action Area */}
-                        <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                        <div className="flex items-center justify-between pt-6 border-t border-border-color">
                           <div className="flex flex-col">
                             <span className="text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] mb-1">
                               Price
                             </span>
                             <div className="flex items-baseline gap-1">
-                              <span className="text-2xl font-black text-white leading-none tracking-tight">
+                              <span className="text-2xl font-black text-foreground leading-none tracking-tight">
                                 ${product.price}
                               </span>
                               <span className="text-[10px] text-gray-500 font-medium">
@@ -316,8 +316,8 @@ const Marketplace = () => {
                             onClick={() => handleAddToCart(product)}
                             className={`relative overflow-hidden p-4 rounded-2xl transition-all duration-500 shadow-2xl active:scale-90 group/btn ${
                               isInCart
-                                ? "bg-green-600 text-white shadow-green-500/20"
-                                : "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-500/30"
+                                ? "bg-green-600 text-foreground shadow-green-500/20"
+                                : "bg-purple-600 hover:bg-purple-500 text-foreground shadow-purple-500/30"
                             }`}
                           >
                             <div className="relative z-10 flex items-center justify-center">
@@ -352,7 +352,7 @@ const Marketplace = () => {
               <button
                 onClick={() => fetchProducts(true)}
                 disabled={loadMoreLoading}
-                className="px-12 py-4 bg-white/5 border border-white/10 rounded-2xl hover:border-purple-500 hover:text-white transition-all duration-300 font-black uppercase text-[10px] tracking-[0.3em] disabled:opacity-50"
+                className="px-12 py-4 bg-background border border-white/5 rounded-2xl hover:border-purple-500 hover:text-foreground transition-all duration-300 font-black uppercase text-[10px] tracking-[0.3em] disabled:opacity-50"
               >
                 {loadMoreLoading ? "Fetching Data..." : "Load More Assets →"}
               </button>
@@ -374,4 +374,4 @@ const Marketplace = () => {
   );
 };
 
-export default Marketplace;
+export default Shope;

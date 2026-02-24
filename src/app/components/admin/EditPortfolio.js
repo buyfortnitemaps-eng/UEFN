@@ -72,15 +72,15 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-      <div className="bg-[#0d0d0f] border border-white/10 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8 shadow-2xl">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
+      <div className="bg-card-bg border border-white/5 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8 shadow-2xl">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-black uppercase italic">
             Edit <span className="text-purple-500">Project</span>
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/5 rounded-full"
+            className="p-2 hover:bg-background rounded-full"
           >
             <X size={24} />
           </button>
@@ -92,7 +92,7 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
         >
           <div className="space-y-4">
             <input
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-purple-500"
+              className="w-full bg-background border border-white/5 p-4 rounded-xl outline-none focus:border-purple-500"
               value={formData.title}
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
@@ -100,7 +100,7 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
               placeholder="Title"
             />
             <input
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-purple-500"
+              className="w-full bg-background border border-white/5 p-4 rounded-xl outline-none focus:border-purple-500"
               value={formData.type}
               onChange={(e) =>
                 setFormData({ ...formData, type: e.target.value })
@@ -109,7 +109,7 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
             />
             <div className="grid grid-cols-2 gap-4">
               <input
-                className="bg-white/5 border border-white/10 p-4 rounded-xl"
+                className="bg-background border border-white/5 p-4 rounded-xl"
                 value={formData.players}
                 onChange={(e) =>
                   setFormData({ ...formData, players: e.target.value })
@@ -117,7 +117,7 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
                 placeholder="Players"
               />
               <input
-                className="bg-white/5 border border-white/10 p-4 rounded-xl"
+                className="bg-background border border-white/5 p-4 rounded-xl"
                 value={formData.rating}
                 onChange={(e) =>
                   setFormData({ ...formData, rating: e.target.value })
@@ -126,7 +126,7 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
               />
             </div>
             <input
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-xl"
+              className="w-full bg-background border border-white/5 p-4 rounded-xl"
               value={formData.youtubeId}
               onChange={(e) =>
                 setFormData({ ...formData, youtubeId: e.target.value })
@@ -136,9 +136,9 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
           </div>
 
           <div className="space-y-4">
-            <div className="relative h-40 rounded-xl overflow-hidden border-2 border-dashed border-white/10">
+            <div className="relative h-40 rounded-xl overflow-hidden border-2 border-dashed border-border-color">
               <img src={preview} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+              <div className="absolute inset-0 bg-background/60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
                 <input
                   type="file"
                   onChange={handleImageChange}
@@ -149,7 +149,7 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
             </div>
             <textarea
               rows={4}
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-xl"
+              className="w-full bg-background border border-white/5 p-4 rounded-xl"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })

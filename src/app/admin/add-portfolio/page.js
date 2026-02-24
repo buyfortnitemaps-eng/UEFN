@@ -85,7 +85,7 @@ const ManagePortfolio = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 text-white bg-[#0a0a0b] mt-10">
+    <div className="max-w-6xl mx-auto p-6 text-foreground bg-background mt-10">
       <h2 className="text-3xl font-black mb-10 uppercase tracking-tighter text-purple-500">
         Add New Portfolio
       </h2>
@@ -93,23 +93,23 @@ const ManagePortfolio = () => {
       {/* Form Section */}
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white/5 p-8 rounded-[2.5rem] border border-white/10 mb-20"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-background p-8 rounded-[2.5rem] border border-white/5 mb-20"
       >
         <input
           type="text"
           placeholder="Title"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl"
+          className="bg-background border border-white/5 p-4 rounded-2xl"
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <input
           type="text"
           placeholder="Type (e.g. Full Game Map)"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl"
+          className="bg-background border border-white/5 p-4 rounded-2xl"
           onChange={(e) => setFormData({ ...formData, type: e.target.value })}
         />
         <textarea
           placeholder="Description"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl md:col-span-2"
+          className="bg-background border border-white/5 p-4 rounded-2xl md:col-span-2"
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
@@ -117,7 +117,7 @@ const ManagePortfolio = () => {
         <input
           type="text"
           placeholder="Players (e.g. 50k+)"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl"
+          className="bg-background border border-white/5 p-4 rounded-2xl"
           onChange={(e) =>
             setFormData({ ...formData, players: e.target.value })
           }
@@ -125,13 +125,13 @@ const ManagePortfolio = () => {
         <input
           type="text"
           placeholder="Rating"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl"
+          className="bg-background border border-white/5 p-4 rounded-2xl"
           onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
         />
         <input
           type="text"
           placeholder="YouTube Video ID"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl"
+          className="bg-background border border-white/5 p-4 rounded-2xl"
           onChange={(e) =>
             setFormData({ ...formData, youtubeId: e.target.value })
           }
@@ -139,12 +139,12 @@ const ManagePortfolio = () => {
         <input
           type="text"
           placeholder="Tags (comma separated)"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl"
+          className="bg-background border border-white/5 p-4 rounded-2xl"
           onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
         />
         <input
           type="file"
-          className="bg-[#121214] border border-white/10 p-4 rounded-2xl"
+          className="bg-background border border-white/5 p-4 rounded-2xl"
           onChange={(e) =>
             setFormData({ ...formData, image: e.target.files[0] })
           }
@@ -165,7 +165,7 @@ const ManagePortfolio = () => {
       </form>
 
       {/* Table Section */}
-      <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
+      <div className="bg-background border border-white/5 rounded-3xl overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-white/10 text-purple-400 uppercase text-xs">
             <tr>
@@ -178,7 +178,7 @@ const ManagePortfolio = () => {
             {portfolios.map((p) => (
               <tr
                 key={p._id}
-                className="border-t border-white/5 hover:bg-white/5"
+                className="border-t border-border-color hover:bg-background"
               >
                 <td className="p-4 flex items-center gap-3">
                   <img
@@ -194,14 +194,14 @@ const ManagePortfolio = () => {
                       setCurrentProject(p);
                       setIsModalOpen(true);
                     }}
-                    className="p-2 bg-blue-500/10 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all"
+                    className="p-2 bg-blue-500/10 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-foreground transition-all"
                   >
                     <Edit size={16} />
                   </button>
 
                   <button
                     onClick={() => handleDelete(p._id)}
-                    className="p-2 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all"
+                    className="p-2 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-foreground transition-all"
                   >
                     <Trash2 size={16} />
                   </button>

@@ -34,21 +34,21 @@ const DowngradeToProductModal = ({ product, onClose, refresh, categories }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#0d0d0f] border border-white/10 w-full max-w-sm rounded-4xl p-8">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+      <div className="bg-card-bg border border-white/5 w-full max-w-sm rounded-4xl p-8">
         <h2 className="text-lg font-black uppercase mb-6 italic">Restore to Normal</h2>
         <label className="text-[10px] font-black uppercase text-gray-500">Select Category</label>
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 mt-2 outline-none mb-6"
+          className="w-full bg-background border border-white/5 rounded-xl py-3 px-4 mt-2 outline-none mb-6"
         >
           {categories.map((cat) => (
-            <option key={cat._id} value={cat._id} className="bg-[#0d0d0f]">{cat.name}</option>
+            <option key={cat._id} value={cat._id} className="bg-card-bg">{cat.name}</option>
           ))}
         </select>
         <div className="flex gap-2">
-          <button onClick={onClose} className="flex-1 py-3 font-bold uppercase text-[10px] border border-white/10 rounded-xl">Cancel</button>
+          <button onClick={onClose} className="flex-1 py-3 font-bold uppercase text-[10px] border border-white/5 rounded-xl">Cancel</button>
           <button onClick={handleDowngrade} disabled={loading} className="flex-1 bg-white text-black py-3 font-bold uppercase text-[10px] rounded-xl flex justify-center items-center">
              {loading ? <Loader2 className="animate-spin" size={14} /> : "Confirm Move"}
           </button>

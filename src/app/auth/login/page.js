@@ -102,7 +102,7 @@ const Login = () => {
   if (authLoading) return null;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center px-6 py-20 relative overflow-hidden text-white">
+    <div className="min-h-screen bg-background flex items-center justify-center px-6 py-20 relative overflow-hidden text-foreground">
       {/* Background Glows */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full" />
@@ -112,13 +112,13 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md relative z-10"
       >
-        <div className="bg-white/2 border border-white/10 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-xl shadow-2xl">
+        <div className="bg-white/2 border border-white/5 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-xl shadow-2xl">
           {/* Header */}
           <div className="text-center mb-10">
             <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-purple-600/20">
-              <Gamepad2 className="text-white" size={32} />
+              <Gamepad2 className="text-foreground" size={32} />
             </div>
-            <h1 className="text-3xl font-black tracking-tighter text-white uppercase italic">
+            <h1 className="text-3xl font-black tracking-tighter text-foreground uppercase italic">
               {user ? "Session" : "Welcome"}{" "}
               <span className="text-purple-500">
                 {user ? "Active" : "Back"}
@@ -134,7 +134,7 @@ const Login = () => {
           {user ? (
             /* --- সাইনআউট সেকশন --- */
             <div className="space-y-6">
-              <div className="p-6 bg-white/5 border border-white/10 rounded-3xl text-center">
+              <div className="p-6 bg-background border border-white/5 rounded-3xl text-center">
                 <p className="text-gray-400 text-sm mb-6 leading-relaxed">
                   You are currently signed in. You can manage your assets or
                   switch to another account.
@@ -143,7 +143,7 @@ const Login = () => {
                   {user && mongoUser?.role === "user" && (
                     <Link
                       href="/assets"
-                      className="w-full bg-white text-black py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-purple-600 hover:text-white transition-all"
+                      className="w-full bg-white text-black py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-purple-600 hover:text-foreground transition-all"
                     >
                       Go to Assets <ArrowRight size={18} />
                     </Link>
@@ -152,7 +152,7 @@ const Login = () => {
                   {user && mongoUser?.role === "admin" && (
                     <Link
                       href="/admin/dashboard"
-                      className="w-full bg-white text-black py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-purple-600 hover:text-white transition-all"
+                      className="w-full bg-white text-black py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-purple-600 hover:text-foreground transition-all"
                     >
                       Go to Admin Dashboard <ArrowRight size={18} />
                     </Link>
@@ -160,7 +160,7 @@ const Login = () => {
 
                   <button
                     onClick={() => handleSignOut()}
-                    className="w-full bg-red-500/10 text-red-500 border border-red-500/20 py-4 rounded-2xl font-black hover:bg-red-500 hover:text-white transition-all flex items-center justify-center gap-2"
+                    className="w-full bg-red-500/10 text-red-500 border border-red-500/20 py-4 rounded-2xl font-black hover:bg-red-500 hover:text-foreground transition-all flex items-center justify-center gap-2"
                   >
                     <LogOut size={18} /> Sign Out
                   </button>
@@ -204,7 +204,7 @@ const Login = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-700 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-foreground placeholder:text-gray-700 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
                   />
                 </div>
 
@@ -220,12 +220,12 @@ const Login = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-12 text-white placeholder:text-gray-700 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-12 text-foreground placeholder:text-gray-700 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-foreground transition-colors"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -247,7 +247,7 @@ const Login = () => {
                   disabled={loading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-white text-black py-4 rounded-2xl font-black text-lg hover:bg-purple-600 hover:text-white transition-all shadow-xl disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full bg-white text-black py-4 rounded-2xl font-black text-lg hover:bg-purple-600 hover:text-foreground transition-all shadow-xl disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <Loader2 className="animate-spin" size={20} />
@@ -258,17 +258,17 @@ const Login = () => {
               </form>
 
               <div className="flex items-center gap-4 my-8">
-                <div className="h-px flex-1 bg-white/5" />
+                <div className="h-px flex-1 bg-background" />
                 <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">
                   Or continue with
                 </span>
-                <div className="h-px flex-1 bg-white/5" />
+                <div className="h-px flex-1 bg-background" />
               </div>
 
               <div className="grid gap-4">
                 <button
                   onClick={handleGoogleLogin}
-                  className="flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/5 py-4 rounded-2xl transition-all font-bold text-sm text-white active:scale-95"
+                  className="flex items-center justify-center gap-3 bg-background hover:bg-white/10 border border-white/5 py-4 rounded-2xl transition-all font-bold text-sm text-foreground active:scale-95"
                 >
                   <FaGoogle size={18} /> Google
                 </button>

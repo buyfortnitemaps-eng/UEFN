@@ -46,15 +46,15 @@ const AdminOverview = () => {
         {highlights.map((item, i) => (
           <div
             key={i}
-            className="bg-white/5 border border-white/10 p-6 rounded-3xl hover:bg-white/[0.08] hover:border-purple-500/40 transition-all group"
+            className="bg-background border border-white/5 p-6 rounded-3xl hover:bg-white/[0.08] hover:border-purple-500/40 transition-all group"
           >
-            <div className="mb-4 bg-black/40 w-10 h-10 rounded-xl flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
+            <div className="mb-4 bg-background/40 w-10 h-10 rounded-xl flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
               {item.icon}
             </div>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-1">
               {item.label}
             </p>
-            <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+            <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
             <p className="text-xs text-gray-500 leading-relaxed font-medium">
               {item.desc}
             </p>
@@ -68,11 +68,11 @@ const AdminOverview = () => {
         <div className="absolute top-0 left-0 w-32 h-32 bg-purple-600/10 blur-[80px]" />
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-blue-600/10 blur-[80px]" />
 
-        <div className="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mb-6 border border-purple-500/30">
+        <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center mb-6 border border-purple-500/30">
           <div className="w-4 h-4 bg-purple-500 rounded-full animate-ping" />
         </div>
 
-        <h4 className="text-xl font-bold text-white mb-3">
+        <h4 className="text-xl font-bold text-foreground mb-3">
           Vision Control Center
         </h4>
         <p className="max-w-md text-gray-500 text-sm font-medium leading-loose">
@@ -81,7 +81,7 @@ const AdminOverview = () => {
         </p>
 
         <div className="mt-8 flex gap-4">
-          <div className="px-4 py-1.5 rounded-full border border-white/10 text-[10px] uppercase font-bold text-gray-400">
+          <div className="px-4 py-1.5 rounded-full border border-white/5 text-[10px] uppercase font-bold text-gray-400">
             Tactical Mode
           </div>
           <div className="px-4 py-1.5 rounded-full border border-purple-500/30 text-[10px] uppercase font-bold text-purple-400">

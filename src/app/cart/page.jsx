@@ -58,11 +58,11 @@ export default function CartPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0b] text-white pt-24 pb-40 px-4 sm:px-6">
+        <div className="min-h-screen bg-background text-foreground pt-24 pb-40 px-4 sm:px-6">
             <div className="max-w-7xl mx-auto mb-10">
-                <div className="flex items-center justify-between border-b border-white/10 pb-6">
+                <div className="flex items-center justify-between border-b border-white/5 pb-6">
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-purple-600/20 rounded-2xl text-purple-500">
+                        <div className="p-3 bg-background rounded-2xl text-purple-500">
                             <ShoppingBag size={28} />
                         </div>
                         <div>
@@ -71,7 +71,7 @@ export default function CartPage() {
                         </div>
                     </div>
                     <Link href="/marketplace">
-                        <button className="hidden sm:block text-sm border border-white/10 px-5 py-2 rounded-xl hover:border-purple-500/40 hover:text-purple-400 transition">
+                        <button className="hidden sm:block text-sm border border-white/5 px-5 py-2 rounded-xl hover:border-purple-500/40 hover:text-purple-400 transition">
                             Continue Browsing
                         </button>
                     </Link>
@@ -79,11 +79,11 @@ export default function CartPage() {
             </div>
 
             {cart.length === 0 ? (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-3xl mx-auto text-center py-28 border border-dashed border-white/10 rounded-3xl">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-3xl mx-auto text-center py-28 border border-dashed border-border-color rounded-3xl">
                     <ShoppingBag size={42} className="mx-auto mb-5 text-purple-500" />
                     <p className="text-gray-400 text-lg mb-6">Your vault is empty. Start collecting powerful assets.</p>
                     <Link href="/marketplace">
-                        <button className="bg-purple-600 hover:bg-purple-500 px-10 py-3 rounded-xl font-bold transition">Browse Marketplace</button>
+                        <button className="bg-purple-600 hover:bg-purple-500 px-10 py-3 rounded-xl font-bold transition">Browse Shope</button>
                     </Link>
                 </motion.div>
             ) : (
@@ -96,7 +96,7 @@ export default function CartPage() {
                                         <img src={item.image?.url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <h3 className="font-bold text-white truncate">{item.title}</h3>
+                                        <h3 className="font-bold text-foreground truncate">{item.title}</h3>
                                         <p className="text-xs text-gray-400 mt-1">Seller: {item.seller?.name}</p>
                                         <div className="mt-2 text-purple-400 font-black text-lg">${item.price}</div>
                                     </div>
@@ -117,7 +117,7 @@ export default function CartPage() {
                                     <span>${subtotal.toFixed(2)}</span>
                                 </div>
                             </div>
-                            <div className="border-t border-white/10 pt-6 mb-8">
+                            <div className="border-t border-border-color pt-6 mb-8">
                                 <div className="flex justify-between items-center">
                                     <span className="text-xl font-bold">Total</span>
                                     <span className="text-3xl font-black text-purple-500">${total.toFixed(2)}</span>
@@ -145,7 +145,7 @@ export default function CartPage() {
 
             {/* MOBILE CHECKOUT BAR */}
             {cart.length > 0 && (
-                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0a0a0b]/95 backdrop-blur border-t border-white/10 p-4 flex items-center justify-between">
+                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur border-t border-border-color p-4 flex items-center justify-between">
                     <div>
                         <p className="text-xs text-gray-400">Total</p>
                         <p className="text-xl font-black text-purple-400">${total.toFixed(2)}</p>

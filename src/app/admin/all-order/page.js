@@ -70,7 +70,7 @@ const AdminOrders = () => {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
-          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic text-white">
+          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic text-foreground">
             Order <span className="text-purple-500">History</span>
           </h2>
           <p className="text-gray-500 text-xs md:text-sm italic">
@@ -88,14 +88,14 @@ const AdminOrders = () => {
             placeholder="Search Order or User ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 md:py-4 pl-12 pr-4 outline-none focus:border-purple-500 transition-all text-sm text-white"
+            className="w-full bg-background border border-white/5 rounded-2xl py-3.5 md:py-4 pl-12 pr-4 outline-none focus:border-purple-500 transition-all text-sm text-foreground"
           />
         </div>
       </div>
 
       {/* Stats Grid - Responsive Column Count */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        <div className="bg-white/5 border border-white/10 p-5 md:p-6 rounded-3xl backdrop-blur-md flex items-center gap-4">
+        <div className="bg-background border border-white/5 p-5 md:p-6 rounded-3xl backdrop-blur-md flex items-center gap-4">
           <div className="p-3 bg-blue-500/20 rounded-2xl text-blue-500">
             <Package size={24} />
           </div>
@@ -103,12 +103,12 @@ const AdminOrders = () => {
             <p className="text-[10px] font-black uppercase text-gray-500">
               Total Orders
             </p>
-            <h4 className="text-xl md:text-2xl font-bold text-white">
+            <h4 className="text-xl md:text-2xl font-bold text-foreground">
               {orders.length}
             </h4>
           </div>
         </div>
-        <div className="bg-white/5 border border-white/10 p-5 md:p-6 rounded-3xl backdrop-blur-md flex items-center gap-4">
+        <div className="bg-background border border-white/5 p-5 md:p-6 rounded-3xl backdrop-blur-md flex items-center gap-4">
           <div className="p-3 bg-green-500/20 rounded-2xl text-green-500">
             <DollarSign size={24} />
           </div>
@@ -116,7 +116,7 @@ const AdminOrders = () => {
             <p className="text-[10px] font-black uppercase text-gray-500">
               Total Revenue
             </p>
-            <h4 className="text-xl md:text-2xl font-bold text-white">
+            <h4 className="text-xl md:text-2xl font-bold text-foreground">
               $
               {orders
                 .reduce((acc, curr) => acc + curr.totalAmount, 0)
@@ -132,7 +132,7 @@ const AdminOrders = () => {
         {filteredOrders.map((order) => (
           <div
             key={order._id.$oid || order._id}
-            className="bg-white/5 border border-white/10 rounded-3xl p-5 space-y-4 relative overflow-hidden"
+            className="bg-background border border-white/5 rounded-3xl p-5 space-y-4 relative overflow-hidden"
           >
             <div className="flex justify-between items-start">
               <div>
@@ -147,7 +147,7 @@ const AdminOrders = () => {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-lg font-black text-white italic">
+                <p className="text-lg font-black text-foreground italic">
                   ${order.totalAmount}
                 </p>
               </div>
@@ -159,12 +159,12 @@ const AdminOrders = () => {
                   key={idx}
                   src={prod.image.url}
                   alt=""
-                  className="w-10 h-10 rounded-lg object-cover border border-white/10"
+                  className="w-10 h-10 rounded-lg object-cover border border-white/5"
                 />
               ))}
             </div>
 
-            <div className="flex justify-between items-center pt-4 border-t border-white/5">
+            <div className="flex justify-between items-center pt-4 border-t border-border-color">
               <div className="flex gap-2">
                 <span
                   className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase border ${order.paymentStatus === "paid" ? "bg-green-500/10 text-green-400 border-green-500/20" : "bg-red-500/10 text-red-400 border-red-500/20"}`}
@@ -188,11 +188,11 @@ const AdminOrders = () => {
       </div>
 
       {/* Desktop Table View (Hidden on Mobile/Tablet) */}
-      <div className="hidden lg:block bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden backdrop-blur-md">
+      <div className="hidden lg:block bg-background border border-white/5 rounded-[2.5rem] overflow-hidden backdrop-blur-md">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-white/5 border-b border-white/5">
+              <tr className="bg-background border-b border-white/5">
                 <th className="p-6 text-[10px] font-black uppercase text-gray-500 tracking-widest">
                   Order Info
                 </th>
@@ -245,14 +245,14 @@ const AdminOrders = () => {
                               alt={prod.title}
                               className="w-10 h-10 rounded-xl border-2 border-[#0d0d0f] object-cover"
                             />
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/tool:block bg-black text-white text-[8px] px-2 py-1 rounded-md whitespace-nowrap z-50">
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/tool:block bg-background text-foreground text-[8px] px-2 py-1 rounded-md whitespace-nowrap z-50">
                               {prod.title}
                             </div>
                           </div>
                         ))}
                       </div>
                     </td>
-                    <td className="p-6 text-lg font-black text-white italic">
+                    <td className="p-6 text-lg font-black text-foreground italic">
                       ${order.totalAmount}
                     </td>
                     <td className="p-6">

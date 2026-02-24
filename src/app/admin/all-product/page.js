@@ -51,14 +51,13 @@ const AllProducts = () => {
       "https://uefn-maps-server.onrender.com/api/v1/products/all-products",
     );
     const data = await res.json();
-    setProducts(data.data);
+    const sortedData = (data.data || []).reverse();
+    setProducts(sortedData);
     setFilteredProducts(data.data);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch(
-      "https://uefn-maps-server.onrender.com/api/v1/categories",
-    );
+    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
     const data = await res.json();
     setCategories(data.data);
   };
@@ -81,37 +80,34 @@ const AllProducts = () => {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure? Image will also be deleted!")) return;
     const token = await auth.currentUser.getIdToken();
-    const res = await fetch(
-      `https://uefn-maps-server.onrender.com/api/v1/products/${id}`,
-      {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
+    const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/products/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
     if (res.ok) fetchProducts();
   };
 
   if (!user || mongoUser?.role !== "admin") return <AdminOnly />;
 
   return (
-    <div className="max-w-7xl mt-10 mx-auto p-4 md:p-6 text-white min-h-screen">
+    <div className="max-w-7xl mt-10 mx-auto p-4 md:p-6 text-foreground min-h-screen">
       {/* Header & Filter Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
         <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
           Manage <span className="text-purple-500">Assets</span>
         </h2>
 
-        <div className="flex items-center w-full md:w-auto gap-3 bg-white/5 p-2 rounded-2xl border border-white/10 backdrop-blur-sm">
+        <div className="flex items-center w-full md:w-auto gap-3 bg-background p-2 rounded-2xl border border-white/5 backdrop-blur-sm">
           <Filter size={18} className="ml-2 text-purple-500 shrink-0" />
           <select
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="bg-transparent outline-none p-2 text-xs md:text-sm font-bold uppercase tracking-widest cursor-pointer w-full"
           >
-            <option value="all" className="bg-[#0d0d0f]">
+            <option value="all" className="bg-card-bg">
               All Categories
             </option>
             {categories.map((cat) => (
-              <option key={cat._id} value={cat._id} className="bg-[#0d0d0f]">
+              <option key={cat._id} value={cat._id} className="bg-card-bg">
                 {cat.name}
               </option>
             ))}
@@ -120,9 +116,9 @@ const AllProducts = () => {
       </div>
 
       {/* Desktop Table View (Hidden on Mobile) */}
-      <div className="hidden md:block bg-white/5 border border-white/10 rounded-4xl overflow-hidden backdrop-blur-md overflow-x-auto">
+      <div className="hidden md:block bg-background border border-white/5 rounded-4xl overflow-hidden backdrop-blur-md overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-white/5">
+          <thead className="bg-background">
             <tr>
               <th className="p-6 text-xs font-black uppercase text-gray-400">
                 Asset
@@ -150,7 +146,7 @@ const AllProducts = () => {
                 <td className="p-6 flex items-center gap-4">
                   <img
                     src={product.image.url}
-                    className="w-12 h-12 rounded-xl object-cover border border-white/10"
+                    className="w-12 h-12 rounded-xl object-cover border border-white/5"
                     alt=""
                   />
                   <span className="font-bold text-gray-200">
@@ -203,16 +199,16 @@ const AllProducts = () => {
         {filteredProducts.map((product) => (
           <div
             key={product._id}
-            className="bg-white/5 border border-white/10 rounded-3xl p-5 backdrop-blur-md"
+            className="bg-background border border-white/5 rounded-3xl p-5 backdrop-blur-md"
           >
             <div className="flex items-center gap-4 mb-4">
               <img
                 src={product.image.url}
-                className="w-16 h-16 rounded-2xl object-cover border border-white/10 shadow-lg"
+                className="w-16 h-16 rounded-2xl object-cover border border-white/5 shadow-lg"
                 alt=""
               />
               <div className="flex-1 overflow-hidden">
-                <h3 className="font-bold text-gray-100 truncate">
+                <h3 className="font-bold text-foreground truncate">
                   {product.title}
                 </h3>
                 <div className="flex items-center gap-2 mt-1">
@@ -266,8 +262,8 @@ const AllProducts = () => {
       )}
 
       {isUpgradeModalOpen && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-end md:items-center justify-center z-50 p-0 md:p-4">
-          <div className="bg-[#161618] border-t md:border border-white/10 p-8 rounded-t-[2.5rem] md:rounded-[2.5rem] w-full max-w-md shadow-2xl animate-in slide-in-from-bottom duration-300">
+        <div className="fixed inset-0 bg-background/90 backdrop-blur-md flex items-end md:items-center justify-center z-50 p-0 md:p-4">
+          <div className="bg-background border-t md:border border-white/5 p-8 rounded-t-[2.5rem] md:rounded-[2.5rem] w-full max-w-md shadow-2xl animate-in slide-in-from-bottom duration-300">
             <h3 className="text-2xl font-black uppercase mb-2 leading-none">
               Upgrade Asset
             </h3>
@@ -286,15 +282,15 @@ const AllProducts = () => {
                 <select
                   value={featureTag}
                   onChange={(e) => setFeatureTag(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-purple-500 transition-all appearance-none font-bold text-sm"
+                  className="w-full bg-background border border-white/5 p-4 rounded-2xl outline-none focus:border-purple-500 transition-all appearance-none font-bold text-sm"
                 >
-                  <option value="featured" className="bg-[#161618]">
+                  <option value="featured" className="bg-background">
                     Featured Asset
                   </option>
-                  <option value="premium" className="bg-[#161618]">
+                  <option value="premium" className="bg-background">
                     Premium Selection
                   </option>
-                  <option value="trending" className="bg-[#161618]">
+                  <option value="trending" className="bg-background">
                     Trending Now
                   </option>
                 </select>
@@ -303,7 +299,7 @@ const AllProducts = () => {
               <div className="flex flex-col-reverse md:flex-row gap-3 mt-4">
                 <button
                   onClick={() => setIsUpgradeModalOpen(false)}
-                  className="flex-1 px-6 py-4 rounded-2xl font-black uppercase text-xs border border-white/10 hover:bg-white/5 transition-all"
+                  className="flex-1 px-6 py-4 rounded-2xl font-black uppercase text-xs border border-white/5 hover:bg-background transition-all"
                 >
                   Cancel
                 </button>
@@ -327,7 +323,7 @@ const ActionButton = ({ icon, color, onClick, title }) => (
   <button
     onClick={onClick}
     title={title}
-    className={`p-3 bg-white/5 hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all`}
+    className={`p-3 bg-background hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all`}
   >
     {icon}
   </button>
@@ -342,7 +338,7 @@ const MobileActionBtn = ({ icon, label, color, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-2xl bg-white/5 border ${colors[color]} transition-all active:scale-95`}
+      className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-2xl bg-background border ${colors[color]} transition-all active:scale-95`}
     >
       {icon}
       <span className="text-[9px] font-black uppercase tracking-tighter">

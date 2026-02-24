@@ -79,7 +79,7 @@ const SidebarContent = ({ setIsMobileMenuOpen }) => {
       {/* Logo Section */}
       <div className="h-20 flex items-center px-6 border-b border-white/5 shrink-0">
         <Gamepad2 className="text-purple-500 shrink-0" size={28} />
-        <span className="ml-3 font-black tracking-tighter text-xl uppercase italic text-white">
+        <span className="ml-3 font-black tracking-tighter text-xl uppercase italic text-foreground">
           Admin<span className="text-purple-500">Panel</span>
         </span>
       </div>
@@ -95,8 +95,8 @@ const SidebarContent = ({ setIsMobileMenuOpen }) => {
             <div
               className={`flex items-center p-3.5 rounded-2xl transition-all group ${
                 pathname === item.href
-                  ? "bg-purple-600 text-white shadow-lg shadow-purple-900/40"
-                  : "text-gray-500 hover:bg-white/5 hover:text-white"
+                  ? "bg-purple-600 text-foreground shadow-lg shadow-purple-900/40"
+                  : "text-gray-500 hover:bg-background hover:text-foreground"
               }`}
             >
               <span className="shrink-0">{item.icon}</span>

@@ -39,7 +39,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white pt-32 pb-20 px-6">
+    <div className="min-h-screen bg-background text-foreground pt-32 pb-20 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* --- Contact Hidden SEO --- */}
@@ -83,7 +83,7 @@ const ContactPage = () => {
                 {
                   icon: <Phone className="text-purple-500" />,
                   label: "Phone",
-                  value: "+880 1234 567890",
+                  value: "+880 1953 558205",
                 },
                 {
                   icon: <MapPin className="text-purple-500" />,
@@ -93,7 +93,7 @@ const ContactPage = () => {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-4 bg-white/5 p-6 rounded-3xl border border-white/10"
+                  className="flex items-center gap-4 bg-background p-6 rounded-3xl border border-white/5"
                 >
                   <div className="p-3 bg-purple-500/10 rounded-2xl">
                     {item.icon}
@@ -102,7 +102,7 @@ const ContactPage = () => {
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
                       {item.label}
                     </p>
-                    <p className="text-white font-bold">{item.value}</p>
+                    <p className="text-foreground font-bold">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -113,7 +113,7 @@ const ContactPage = () => {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden"
+            className="bg-background border border-white/5 p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden"
           >
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/10 blur-[100px] rounded-full" />
 
@@ -129,7 +129,7 @@ const ContactPage = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full bg-[#0a0a0b] border border-white/10 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                    className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
                     placeholder="John Doe"
                   />
                 </div>
@@ -144,7 +144,7 @@ const ContactPage = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full bg-[#0a0a0b] border border-white/10 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                    className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -160,8 +160,8 @@ const ContactPage = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full bg-[#0a0a0b] border border-white/10 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
-                  placeholder="+880..."
+                  className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                  placeholder="+1..."
                 />
               </div>
 
@@ -176,14 +176,14 @@ const ContactPage = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full bg-[#0a0a0b] border border-white/10 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all resize-none"
+                  className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all resize-none"
                   placeholder="Tell us about your project..."
                 />
               </div>
 
               <button
                 disabled={isSubmitting}
-                className="w-full py-5 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-xl shadow-purple-500/20 disabled:opacity-50"
+                className="w-full py-5 bg-purple-600 hover:bg-purple-500 text-foreground rounded-2xl font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-xl shadow-purple-500/20 disabled:opacity-50"
               >
                 {isSubmitting ? (
                   "Sending..."
@@ -202,7 +202,7 @@ const ContactPage = () => {
                   initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
                   animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-black/40 z-20 flex flex-col items-center justify-center p-8 text-center"
+                  className="absolute inset-0 bg-background/40 z-20 flex flex-col items-center justify-center p-8 text-center"
                 >
                   <motion.div
                     initial={{ scale: 0 }}

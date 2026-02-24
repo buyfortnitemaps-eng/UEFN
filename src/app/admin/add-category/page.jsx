@@ -166,7 +166,7 @@ const AddCategory = () => {
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
               placeholder="Enter Category Name (e.g. Box Fight, Tycoon)"
-              className="w-full bg-[#0d0d0f] border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm text-white"
+              className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm text-foreground"
             />
           </div>
           <button
@@ -197,7 +197,7 @@ const AddCategory = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-white/5 border-b border-white/5">
+                <tr className="bg-background border-b border-white/5">
                   <th className="p-5 text-xs font-black uppercase text-gray-500 tracking-widest">
                     Category Name
                   </th>
@@ -234,17 +234,17 @@ const AddCategory = () => {
                       key={cat._id}
                       className="border-b border-white/5 hover:bg-white/2 transition-colors group"
                     >
-                      <td className="p-5 font-bold text-sm text-white">
+                      <td className="p-5 font-bold text-sm text-foreground">
                         {cat.name}
                       </td>
                       <td className="p-5 text-xs text-gray-500">{cat?.totalProduct} Products</td>
                       <td className="p-5 text-right space-x-2">
-                        <button onClick={() => handleEditClick(cat)} className="p-2.5 bg-white/5 hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all">
+                        <button onClick={() => handleEditClick(cat)} className="p-2.5 bg-background hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all">
                           <Edit3 size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(cat._id)}
-                          className="p-2.5 bg-white/5 hover:bg-red-600/20 text-gray-400 hover:text-red-500 rounded-xl transition-all"
+                          className="p-2.5 bg-background hover:bg-red-600/20 text-gray-400 hover:text-red-500 rounded-xl transition-all"
                         >
                           <Trash2 size={16} />
                         </button>
