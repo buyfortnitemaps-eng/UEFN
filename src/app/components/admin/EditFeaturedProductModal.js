@@ -214,6 +214,7 @@ const EditFeaturedProductModal = ({ product, onClose, refresh }) => {
                   Asset Title
                 </label>
                 <input
+                  placeholder="Write your product Title"
                   required
                   type="text"
                   value={formData.title}
@@ -446,6 +447,7 @@ const EditFeaturedProductModal = ({ product, onClose, refresh }) => {
                   Description
                 </label>
                 <textarea
+                  placeholder="Write your product description"
                   required
                   rows={4}
                   value={formData.description}
@@ -497,7 +499,7 @@ const EditFeaturedProductModal = ({ product, onClose, refresh }) => {
                         handleFaqChange(index, "question", e.target.value)
                       }
                       placeholder="e.g. Is it updated?"
-                      className="w-full bg-background border border-white/10 rounded-xl py-2.5 px-4 text-xs font-bold outline-none focus:border-yellow-500 text-foreground"
+                      className="w-full bg-background placeholder:text-foreground border border-blue-600 rounded-xl py-2.5 px-4 text-xs font-bold outline-none focus:border-yellow-500 text-foreground"
                     />
                   </div>
                   <div className="space-y-1">
@@ -510,14 +512,14 @@ const EditFeaturedProductModal = ({ product, onClose, refresh }) => {
                         handleFaqChange(index, "answer", e.target.value)
                       }
                       placeholder="Answer details..."
-                      className="w-full bg-background border border-white/10 rounded-xl py-2.5 px-4 text-xs outline-none focus:border-yellow-500 text-gray-300 h-20 resize-none"
+                      className="w-full bg-background placeholder:text-foreground border border-blue-600 rounded-xl py-2.5 px-4 text-xs outline-none focus:border-yellow-500 text-gray-300 h-20 resize-none"
                     />
                   </div>
                 </div>
               ))}
             </div>
             {faqs.length === 0 && (
-              <div className="text-center py-10 border-2 border-dashed border-white/5 rounded-[2rem]">
+              <div className="text-center py-10 border-2 border-dashed border-white/5 rounded-4xl">
                 <p className="text-gray-600 font-bold uppercase text-[10px] tracking-widest italic">
                   No FAQs available for this spotlight.
                 </p>

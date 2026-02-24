@@ -212,6 +212,7 @@ const EditProductModal = ({ product, onClose, refresh }) => {
                   Asset Title
                 </label>
                 <input
+                  placeholder="Write your product title"
                   required
                   type="text"
                   value={formData.title}
@@ -273,7 +274,7 @@ const EditProductModal = ({ product, onClose, refresh }) => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-black uppercase text-purple-400 tracking-widest ml-1 text-white">
+                  <label className="text-[10px] font-black uppercase text-purple-400 tracking-widest ml-1">
                     Price ($)
                   </label>
                   <input
@@ -415,6 +416,7 @@ const EditProductModal = ({ product, onClose, refresh }) => {
                   Description
                 </label>
                 <textarea
+                  placeholder="Write your product description"
                   rows={4}
                   value={formData.description}
                   onChange={(e) =>
@@ -465,7 +467,7 @@ const EditProductModal = ({ product, onClose, refresh }) => {
                         handleFaqChange(index, "question", e.target.value)
                       }
                       placeholder="e.g. Is it updated?"
-                      className="w-full bg-background border border-white/10 rounded-xl py-2.5 px-4 text-xs font-bold outline-none focus:border-purple-500 text-white"
+                      className="w-full bg-background placeholder:text-foreground border border-blue-600 rounded-xl py-2.5 px-4 text-xs font-bold outline-none focus:border-purple-500 text-white"
                     />
                   </div>
                   <div className="space-y-1">
@@ -478,14 +480,14 @@ const EditProductModal = ({ product, onClose, refresh }) => {
                         handleFaqChange(index, "answer", e.target.value)
                       }
                       placeholder="Answer details..."
-                      className="w-full bg-background border border-white/10 rounded-xl py-2.5 px-4 text-xs outline-none focus:border-purple-500 text-gray-300 h-20 resize-none"
+                      className="w-full bg-background placeholder:text-foreground border border-blue-600 rounded-xl py-2.5 px-4 text-xs outline-none focus:border-purple-500 text-gray-300 h-20 resize-none"
                     />
                   </div>
                 </div>
               ))}
             </div>
             {faqs.length === 0 && (
-              <div className="text-center py-10 border-2 border-dashed border-white/5 rounded-[2rem]">
+              <div className="text-center py-10 border-2 border-dashed border-white/5 rounded-4xl">
                 <p className="text-gray-600 font-bold uppercase text-[10px] tracking-widest italic">
                   No FAQs available for this asset.
                 </p>

@@ -273,13 +273,13 @@ const AddProduct = () => {
                     placeholder="Question (e.g. Is it updated?)"
                     value={faq.question}
                     onChange={(e) => handleFaqChange(index, "question", e.target.value)}
-                    className="w-full bg-background border border-white/10 rounded-xl py-2 px-4 text-xs font-bold outline-none focus:border-purple-500 text-white"
+                    className="w-full bg-background border placeholder:text-foreground border-blue-600 rounded-xl py-2 px-4 text-xs font-bold outline-none focus:border-purple-500 text-white"
                   />
                   <textarea
                     placeholder="Answer..."
                     value={faq.answer}
                     onChange={(e) => handleFaqChange(index, "answer", e.target.value)}
-                    className="w-full bg-background border border-white/10 rounded-xl py-2 px-4 text-xs outline-none focus:border-purple-500 text-gray-400 h-20 resize-none"
+                    className="w-full bg-background placeholder:text-foreground border border-blue-600 rounded-xl py-2 px-4 text-xs outline-none focus:border-purple-500 text-gray-400 h-20 resize-none"
                   />
                 </div>
               ))}
