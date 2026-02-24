@@ -114,7 +114,7 @@ const handleDownload = async (asset) => {
             {/* ================== DESKTOP TABLE ================== */}
             <div className="hidden md:block bg-white/4 border border-white/5 rounded-3xl overflow-hidden">
               <table className="w-full">
-                <thead className="bg-background text-gray-400 text-xs uppercase tracking-widest">
+                <thead className="bg-background text-foreground text-xs uppercase tracking-widest">
                   <tr>
                     <th className="p-5 text-left">Asset</th>
                     <th className="p-5 text-left">Title</th>
@@ -160,7 +160,7 @@ const handleDownload = async (asset) => {
                         {/* ডেক্সটপ ভিউতে টেবিলের ভেতরের বাটনটি এভাবে পরিবর্তন করুন */}
                         <button
                           onClick={() => handleDownload(asset)} // window.open এর বদলে ফাংশন কল করুন
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-background hover:bg-background border border-white/5 hover:border-purple-500/30 text-gray-300 hover:text-purple-400 transition-all"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-background hover:bg-background border border-white/5 hover:border-purple-500/30 text-foreground hover:text-purple-400 transition-all"
                         >
                           <Download size={16} />
                           <span className="text-xs font-bold uppercase tracking-wider">
