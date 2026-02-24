@@ -20,7 +20,7 @@ export default function GameTypes() {
 
   if (loading)
     return (
-      <div className="min-h-[300px] flex items-center justify-center text-foreground italic uppercase font-black animate-pulse tracking-widest text-xs">
+      <div className="min-h-75 flex items-center justify-center text-foreground italic uppercase font-black animate-pulse tracking-widest text-xs">
         Loading Assets...
       </div>
     );
@@ -47,7 +47,7 @@ export default function GameTypes() {
             >
               <motion.div
                 whileHover={{ y: -5 }}
-                className="group bg-card-bg border border-border-color p-5 md:p-6 rounded-[2rem] hover:border-purple-500/50 transition-all duration-300 relative overflow-hidden shadow-sm"
+                className="group bg-card-bg border border-border-color p-5 md:p-6 rounded-4xl hover:border-purple-500/50 transition-all duration-300 relative overflow-hidden shadow-sm"
               >
                 {/* Subtle Background Icon */}
                 <div className="absolute -top-2 -right-2 p-4 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-10 transition-opacity">

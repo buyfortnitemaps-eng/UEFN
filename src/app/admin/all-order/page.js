@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import {
   Package,
-  Clock,
   Search,
   Loader2,
   DollarSign,
@@ -224,7 +223,7 @@ const AdminOrders = () => {
                 filteredOrders.map((order) => (
                   <tr
                     key={order._id.$oid || order._id}
-                    className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group"
+                    className="border-b border-white/5 hover:bg-white/2 transition-colors group"
                   >
                     <td className="p-6">
                       <div className="flex flex-col">

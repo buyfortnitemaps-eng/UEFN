@@ -95,7 +95,7 @@ export default function ProductDetail() {
             <div className="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
               <button
                 onClick={() => setActiveImg(product.image?.url)}
-                className={`min-w-[120px] h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === product.image?.url ? "border-purple-500 scale-95" : "border-border-color"}`}
+                className={`min-w-30 h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === product.image?.url ? "border-purple-500 scale-95" : "border-border-color"}`}
               >
                 <img src={product.image?.url} className="w-full h-full object-cover" alt="thumb" />
               </button>
@@ -104,7 +104,7 @@ export default function ProductDetail() {
                 <button
                   key={idx}
                   onClick={() => setActiveImg(img.url)}
-                  className={`min-w-[120px] h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === img.url ? "border-purple-500 scale-95" : "border-border-color"}`}
+                  className={`min-w-30 h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === img.url ? "border-purple-500 scale-95" : "border-border-color"}`}
                 >
                   <img src={img.url} className="w-full h-full object-cover" alt="thumb" />
                 </button>
@@ -118,7 +118,7 @@ export default function ProductDetail() {
                   <PlayCircle size={20} />
                   <span>Video Preview</span>
                 </div>
-                <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-background aspect-video shadow-2xl">
+                <div className="rounded-4xl overflow-hidden border border-white/5 bg-background aspect-video shadow-2xl">
                   <iframe
                     className="w-full h-full"
                     src={`https://www.youtube.com/embed/${product.youtubeId}`}

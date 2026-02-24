@@ -77,7 +77,7 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Side: Media (Gallery & YouTube) */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-background aspect-video relative group">
+            <div className="rounded-4xl overflow-hidden border border-white/5 bg-background aspect-video relative group">
               <img
                 src={activeImg}
                 className="w-full h-full object-cover transition-transform duration-700"
@@ -94,7 +94,7 @@ export default function ProductDetail() {
             <div className="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
               <button
                 onClick={() => setActiveImg(product.image?.url)}
-                className={`min-w-[120px] h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === product.image?.url ? "border-purple-500 scale-95" : "border-border-color"}`}
+                className={`min-w-30 h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === product.image?.url ? "border-purple-500 scale-95" : "border-border-color"}`}
               >
                 <img
                   src={product.image?.url}
@@ -107,7 +107,7 @@ export default function ProductDetail() {
                 <button
                   key={idx}
                   onClick={() => setActiveImg(img.url)}
-                  className={`min-w-[120px] h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === img.url ? "border-purple-500 scale-95" : "border-border-color"}`}
+                  className={`min-w-30 h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImg === img.url ? "border-purple-500 scale-95" : "border-border-color"}`}
                 >
                   <img
                     src={img.url}
@@ -125,7 +125,7 @@ export default function ProductDetail() {
                   <PlayCircle size={20} />
                   <span>Video Preview</span>
                 </div>
-                <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-background aspect-video shadow-2xl">
+                <div className="rounded-4xl overflow-hidden border border-white/5 bg-background aspect-video shadow-2xl">
                   <iframe
                     className="w-full h-full"
                     src={`https://www.youtube.com/embed/${product.youtubeId}`}
@@ -177,7 +177,7 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <p className="text-gray-400 text-sm leading-relaxed bg-white/5 p-6 rounded-[2rem] border border-white/5">
+            <p className="text-gray-400 text-sm leading-relaxed bg-white/5 p-6 rounded-4xl border border-white/5">
               {product.description}
             </p>
 
