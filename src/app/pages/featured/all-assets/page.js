@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Link from "next/link";
@@ -15,7 +16,7 @@ export default function AllAssets() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeTag, setActiveTag] = useState("all");
   const [loading, setLoading] = useState(true);
-  
+
   // Pagination States
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -42,7 +43,7 @@ export default function AllAssets() {
       console.error("Fetch error:", error);
     } finally {
       setLoading(false);
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // পেজ চেঞ্জ হলে উপরে স্ক্রল হবে
+      window.scrollTo({ top: 0, behavior: "smooth" }); // পেজ চেঞ্জ হলে উপরে স্ক্রল হবে
     }
   };
 
@@ -79,7 +80,13 @@ export default function AllAssets() {
     <div className="min-h-screen bg-background pt-32 pb-20 px-6 md:px-10 relative overflow-hidden">
       {/* Background Dots & Glows (Your existing code) */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]" style={{ backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`, backgroundSize: "28px 28px" }} />
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
       </div>
 
@@ -93,9 +100,14 @@ export default function AllAssets() {
             {tags.map((tag) => (
               <button
                 key={tag.id}
-                onClick={() => { setActiveTag(tag.id); setCurrentPage(1); }}
+                onClick={() => {
+                  setActiveTag(tag.id);
+                  setCurrentPage(1);
+                }}
                 className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
-                  activeTag === tag.id ? "bg-purple-600 text-foreground shadow-lg shadow-purple-500/20" : "text-gray-400 hover:text-foreground"
+                  activeTag === tag.id
+                    ? "bg-purple-600 text-foreground shadow-lg shadow-purple-500/20"
+                    : "text-gray-400 hover:text-foreground"
                 }`}
               >
                 {tag.label}
@@ -111,25 +123,54 @@ export default function AllAssets() {
             <AnimatePresence mode="popLayout">
               {filteredProducts.map((product) => (
                 <motion.div
-                  layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} key={product._id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  key={product._id}
                   className="glass-card rounded-[2.5rem] overflow-hidden group border border-border-color hover:border-purple-500/50 transition-all duration-300 flex flex-col hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] hover:-translate-y-2"
                 >
-                  <Link href={`/pages/featured/${product._id}`} className="block h-60 relative overflow-hidden bg-gray-900">
-                    <img src={product.image?.url} alt={product.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center font-black text-[10px] uppercase tracking-widest text-white">View Details</div>
+                  <Link
+                    href={`/pages/featured/${product._id}`}
+                    className="block h-60 relative overflow-hidden bg-gray-900"
+                  >
+                    <img
+                      src={product.image?.url}
+                      alt={product.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center font-black text-[10px] uppercase tracking-widest text-white">
+                      View Details
+                    </div>
                   </Link>
 
                   <div className="p-6 flex flex-col grow">
                     <Link href={`/pages/featured/${product._id}`}>
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase tracking-tighter">{product.title}</h3>
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase tracking-tighter">
+                        {product.title}
+                      </h3>
                     </Link>
-                    <p className="text-gray-400 text-xs mb-6 line-clamp-2 h-8 leading-relaxed">{product.description}</p>
+                    <p className="text-gray-400 text-xs mb-6 h-12 leading-relaxed">
+                      {product.description?.length > 120
+                        ? `${product.description.slice(0, 120)}...`
+                        : product.description}
+                    </p>
                     <div className="flex items-center justify-between border-t border-border-color pt-5 mt-auto">
                       <div>
-                        <p className="text-gray-500 text-[9px] uppercase font-black tracking-widest mb-1">Price</p>
-                        <span className="text-2xl font-black text-foreground">${product.isDiscount ? product.discountPrice : product.price}</span>
+                        <p className="text-gray-500 text-[9px] uppercase font-black tracking-widest mb-1">
+                          Price
+                        </p>
+                        <span className="text-2xl font-black text-foreground">
+                          $
+                          {product.isDiscount
+                            ? product.discountPrice
+                            : product.price}
+                        </span>
                       </div>
-                      <button onClick={() => handleAddToCart(product)} className={`p-4 rounded-2xl transition-all active:scale-90 ${cart.find((i) => i._id === product._id) ? "bg-green-600 shadow-lg shadow-green-600/20" : "bg-purple-600 hover:bg-purple-500 shadow-lg shadow-purple-600/20"}`}>
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className={`p-4 rounded-2xl transition-all active:scale-90 ${cart.find((i) => i._id === product._id) ? "bg-green-600 shadow-lg shadow-green-600/20" : "bg-purple-600 hover:bg-purple-500 shadow-lg shadow-purple-600/20"}`}
+                      >
                         <ShoppingCart size={20} className="text-white" />
                       </button>
                     </div>
@@ -144,22 +185,22 @@ export default function AllAssets() {
         {!loading && totalPages > 1 && (
           <div className="mt-20 flex justify-center items-center gap-4">
             <button
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="p-4 rounded-2xl bg-card-bg border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
             >
               <ChevronLeft size={20} />
             </button>
-            
+
             <div className="flex gap-2">
               {[...Array(totalPages)].map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentPage(i + 1)}
                   className={`w-12 h-12 rounded-2xl font-black text-xs transition-all ${
-                    currentPage === i + 1 
-                    ? "bg-purple-600 text-white shadow-lg shadow-purple-600/30" 
-                    : "bg-card-bg border border-border-color text-gray-500 hover:border-purple-500/50"
+                    currentPage === i + 1
+                      ? "bg-purple-600 text-white shadow-lg shadow-purple-600/30"
+                      : "bg-card-bg border border-border-color text-gray-500 hover:border-purple-500/50"
                   }`}
                 >
                   {i + 1}
@@ -168,7 +209,9 @@ export default function AllAssets() {
             </div>
 
             <button
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
               disabled={currentPage === totalPages}
               className="p-4 rounded-2xl bg-card-bg border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
             >
@@ -178,8 +221,14 @@ export default function AllAssets() {
         )}
       </div>
 
-      <CartSuccessModal isOpen={showSuccessModal} onClose={() => setShowSuccessModal(false)} productName={lastAddedItem} />
-      {showLoginModal && <LoginAlertModal onClose={() => setShowLoginModal(false)} />}
+      <CartSuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        productName={lastAddedItem}
+      />
+      {showLoginModal && (
+        <LoginAlertModal onClose={() => setShowLoginModal(false)} />
+      )}
     </div>
   );
 }

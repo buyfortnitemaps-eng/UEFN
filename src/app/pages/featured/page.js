@@ -199,8 +199,10 @@ const FeaturedSection = () => {
                       {product.title}
                     </h3>
                   </Link>
-                  <p className="text-gray-400 text-xs mb-6 line-clamp-2 h-8 leading-relaxed">
-                    {product.description}
+                  <p className="text-gray-400 text-xs mb-6 h-12 leading-relaxed">
+                    {product.description?.length > 120
+                      ? `${product.description.slice(0, 120)}...`
+                      : product.description}
                   </p>
 
                   <div className="flex items-center justify-between border-t border-border-color pt-4">
