@@ -18,14 +18,18 @@ const FeaturedProducts = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
 
   const fetchFeatured = async () => {
-    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/products/featured");
+    const res = await fetch(
+      "https://uefn-maps-server.onrender.com/api/v1/products/featured",
+    );
     const data = await res.json();
     const sortedData = (data.data || []).reverse();
     setFeaturedProducts(sortedData);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
+    const res = await fetch(
+      "https://uefn-maps-server.onrender.com/api/v1/categories",
+    );
     const data = await res.json();
     setCategories(data.data);
   };
@@ -73,6 +77,23 @@ const FeaturedProducts = () => {
 
   return (
     <div className="max-w-7xl mx-auto mt-10 p-4 md:p-6 text-foreground min-h-screen">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic">
@@ -87,7 +108,7 @@ const FeaturedProducts = () => {
       </div>
 
       {/* Desktop Table View (Visible only on md screens and up) */}
-      <div className="hidden md:block bg-background border border-white/5 rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
+      <div className="hidden md:block  border border-white/5 rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
         <table className="w-full text-left">
           <thead className="bg-white/10">
             <tr>
@@ -168,7 +189,7 @@ const FeaturedProducts = () => {
         {featuredProducts.map((product) => (
           <div
             key={product._id}
-            className="bg-background border border-white/5 rounded-3xl p-5 backdrop-blur-md relative overflow-hidden"
+            className=" border border-white/5 rounded-3xl p-5 backdrop-blur-md relative overflow-hidden"
           >
             {/* Background Glow for Premium/Trending */}
             <div
@@ -273,7 +294,7 @@ const ActionButton = ({ icon, color, onClick, title }) => (
   <button
     onClick={onClick}
     title={title}
-    className={`p-3 bg-background hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all inline-flex items-center justify-center`}
+    className={`p-3  hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all inline-flex items-center justify-center`}
   >
     {icon}
   </button>

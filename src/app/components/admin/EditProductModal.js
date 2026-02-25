@@ -184,6 +184,23 @@ const EditProductModal = ({ product, onClose, refresh }) => {
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-background/95 backdrop-blur-md">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       <div className="bg-card-bg border border-white/5 w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-[2.5rem] shadow-2xl animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="sticky top-0 bg-card-bg p-6 border-b border-white/5 flex justify-between items-center z-20">

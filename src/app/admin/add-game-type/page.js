@@ -108,6 +108,23 @@ const AddGameType = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-10">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       {/* --- Add Game Type Form --- */}
       <section>
         <div className="mb-6">

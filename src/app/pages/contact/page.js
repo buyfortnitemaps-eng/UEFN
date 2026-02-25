@@ -40,6 +40,23 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-32 pb-20 px-6">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* --- Contact Hidden SEO --- */}
@@ -78,7 +95,7 @@ const ContactPage = () => {
                 {
                   icon: <Mail className="text-purple-500" />,
                   label: "Email",
-                  value: "support@uefnmaps.com",
+                  value: "webuefnmap@gmail.com",
                 },
                 {
                   icon: <Phone className="text-purple-500" />,
@@ -93,7 +110,7 @@ const ContactPage = () => {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-4 bg-background p-6 rounded-3xl border border-white/5"
+                  className="flex items-center gap-4 bg-background p-6 rounded-3xl border border-border-color"
                 >
                   <div className="p-3 bg-purple-500/10 rounded-2xl">
                     {item.icon}
@@ -113,14 +130,14 @@ const ContactPage = () => {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-background border border-white/5 p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden"
+            className="border border-border-color p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden"
           >
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/10 blur-[100px] rounded-full" />
 
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                  <label className="text-xs font-bold text-foreground uppercase tracking-widest">
                     Name
                   </label>
                   <input
@@ -129,12 +146,12 @@ const ContactPage = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                    className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
                     placeholder="John Doe"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                  <label className="text-xs font-bold text-foreground uppercase tracking-widest">
                     Email
                   </label>
                   <input
@@ -144,14 +161,14 @@ const ContactPage = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                    className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
                     placeholder="john@example.com"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                <label className="text-xs font-bold text-foreground uppercase tracking-widest">
                   Phone
                 </label>
                 <input
@@ -160,13 +177,13 @@ const ContactPage = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                  className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
                   placeholder="+1..."
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                <label className="text-xs font-bold text-foreground uppercase tracking-widest">
                   Message
                 </label>
                 <textarea
@@ -176,7 +193,7 @@ const ContactPage = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full bg-background border border-white/5 rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all resize-none"
+                  className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all resize-none"
                   placeholder="Tell us about your project..."
                 />
               </div>

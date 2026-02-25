@@ -75,6 +75,23 @@ const ManageLegals = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 text-foreground min-h-screen mt-10">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       <h1 className="text-3xl font-black mb-8 text-purple-500 uppercase italic">
         Manage Legal Pages
       </h1>

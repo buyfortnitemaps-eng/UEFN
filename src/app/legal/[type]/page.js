@@ -33,13 +33,15 @@ const LegalPage = () => {
   useEffect(() => {
     const fetchLegalData = async () => {
       try {
-        const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/legals`);
+        const res = await fetch(
+          `https://uefn-maps-server.onrender.com/api/v1/legals`,
+        );
         const result = await res.json();
 
         const currentData = result.data.find(
           (item) =>
             item.type.toLowerCase().replace(/\s+/g, "-") ===
-            decodeURIComponent(type)
+            decodeURIComponent(type),
         );
 
         setData(currentData);
@@ -72,10 +74,26 @@ const LegalPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-32 pb-20 px-4 md:px-6 relative">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-purple-600/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -89,10 +107,6 @@ const LegalPage = () => {
           <h1 className="text-4xl md:text-6xl font-black uppercase italic tracking-tight mb-4">
             {data.type}
           </h1>
-
-          <p className="text-gray-500 font-medium">
-            Last Updated: {new Date(data.updatedAt).toLocaleDateString()}
-          </p>
         </motion.div>
 
         {/* Content */}

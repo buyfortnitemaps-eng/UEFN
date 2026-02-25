@@ -42,7 +42,7 @@ const FeaturedSection = () => {
           "https://uefn-maps-server.onrender.com/api/v1/products/featured",
         );
         const data = await res.json();
-        const sortedData = (data.data || []).reverse(); 
+        const sortedData = (data.data || []).reverse();
         setProducts(sortedData);
         setFilteredProducts(data.data || []);
       } catch (error) {
@@ -82,6 +82,23 @@ const FeaturedSection = () => {
 
   return (
     <section className="py-20 px-6 max-w-7xl mx-auto relative">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       {/* Header & Filter Tabs */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8 px-2">
         {/* Left Side: Title & Info Text */}
@@ -150,7 +167,11 @@ const FeaturedSection = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 key={product._id}
-                className="bg-background border border-white/5 rounded-3xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group relative"
+                className="glass-card rounded-[2.5rem] overflow-hidden group 
+                   border border-border-color hover:border-purple-500/50 
+                   transition-all duration-500 flex flex-col 
+                   hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] 
+                   hover:-translate-y-2 "
               >
                 {/* Image Section */}
                 <Link

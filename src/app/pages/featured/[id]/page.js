@@ -61,17 +61,98 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4">
-        <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-        <p className="font-bold uppercase tracking-widest animate-pulse">
-          Loading Asset Details...
-        </p>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 animate-pulse">
+    
+    {/* Left Side: Media Skeleton */}
+    <div className="lg:col-span-7 space-y-6">
+      {/* Main Image Placeholder */}
+      <div className="rounded-4xl bg-white/5 border border-white/5 aspect-video relative overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
       </div>
+
+      {/* Gallery Thumbnails Skeleton */}
+      <div className="flex gap-4 overflow-x-auto pb-2">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="min-w-30 h-20 rounded-2xl bg-white/5 border border-white/5 flex-shrink-0" />
+        ))}
+      </div>
+
+      {/* Video Section Skeleton */}
+      <div className="mt-10 space-y-4">
+        <div className="w-32 h-4 bg-white/5 rounded-md" />
+        <div className="rounded-4xl bg-white/5 border border-white/5 aspect-video" />
+      </div>
+    </div>
+
+    {/* Right Side: Details Skeleton */}
+    <div className="lg:col-span-5 space-y-8">
+      <div className="space-y-4">
+        {/* Category & Title */}
+        <div className="w-24 h-6 bg-white/5 rounded-lg" />
+        <div className="space-y-3">
+          <div className="w-full h-12 bg-white/5 rounded-xl" />
+          <div className="w-2/3 h-12 bg-white/5 rounded-xl" />
+        </div>
+
+        {/* Price Skeleton */}
+        <div className="py-2 space-y-2">
+          <div className="w-12 h-3 bg-white/5 rounded-md" />
+          <div className="w-32 h-14 bg-white/10 rounded-xl" />
+        </div>
+      </div>
+
+      {/* Description Box Skeleton */}
+      <div className="p-6 bg-white/5 rounded-4xl border border-white/5 space-y-3">
+        <div className="w-full h-3 bg-white/5 rounded-full" />
+        <div className="w-full h-3 bg-white/5 rounded-full" />
+        <div className="w-4/5 h-3 bg-white/5 rounded-full" />
+      </div>
+
+      {/* Stats Grid Skeleton */}
+      <div className="grid grid-cols-2 gap-4">
+        {[1, 2].map((i) => (
+          <div key={i} className="bg-white/5 p-4 rounded-2xl border border-white/5 flex items-center gap-3">
+            <div className="w-8 h-8 bg-white/10 rounded-full" />
+            <div className="space-y-2">
+              <div className="w-12 h-2 bg-white/5 rounded-md" />
+              <div className="w-20 h-4 bg-white/5 rounded-md" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Action Button Skeleton */}
+      <div className="pt-6 space-y-4">
+        <div className="w-full h-16 bg-white/10 rounded-2xl" />
+        <div className="flex justify-center gap-6">
+          <div className="w-24 h-3 bg-white/5 rounded-full" />
+          <div className="w-24 h-3 bg-white/5 rounded-full" />
+        </div>
+      </div>
+    </div>
+  </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-24 pb-12 px-4 md:px-10">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       <div className="max-w-7xl mx-auto">
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">

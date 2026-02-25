@@ -4,8 +4,8 @@
   /* --- Light Mode Variables --- */
   --background: #ffffff;
   --foreground: #111827;
-  --card-bg: rgba(255, 255, 255, 0.7); 
-  --border-color: rgba(0, 0, 0, 0.04); 
+  --card-bg: rgba(230, 220, 126, 0); 
+  --border-color: rgba(0, 0, 0, 0.432); 
   --text-muted: #4b5563;
   --legal-heading: #111827;
   
@@ -13,13 +13,22 @@
 }
 
 .dark {
-  --background: #0a0a0b;
+  --background: #0a0a0b; /* এটি ব্যাকআপ হিসেবে সলিড থাকুক */
   --foreground: #ffffff;
-  --card-bg: rgba(17, 17, 19, 0.6); 
-  --border-color: rgba(255, 255, 255, 0.05);
+  --card-bg: rgba(137, 0, 201, 0); /* কার্ডগুলোকে কিছুটা ট্রান্সপারেন্ট করা হয়েছে */
+  --border-color: rgb(255, 255, 255); 
   --text-muted: #9ca3af;
   --legal-heading: #ffffff;
-  --bg-gradient: radial-gradient(circle at top center, #16161a 0%, #0a0a0b 100%);
+
+  /* ডার্ক মোডের জন্য কালারফুল গ্রেডিয়েন্ট ভেরিয়েবল */
+  --bg-gradient: radial-gradient(circle at 0% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                 radial-gradient(circle at 50% 50%, #0a0a0b 0%, #050505 100%);
+}
+
+.dark body {
+  background: var(--bg-gradient);
+  background-attachment: fixed; /* স্ক্রল করার সময় গ্রেডিয়েন্ট স্থির থাকবে */
 }
 
 @theme inline {

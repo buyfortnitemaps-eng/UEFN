@@ -40,59 +40,123 @@ export default function MyAssetsPage() {
     fetchMyAssets();
   }, []);
 
-const handleDownload = async (asset) => {
-  try {
-    const token = await auth.currentUser.getIdToken();
-    const response = await fetch(`https://uefn-maps-server.onrender.com/api/v1/products/download-link`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        s3Key: asset.s3Key,
-        productId: asset._id,
-      }),
-    });
+  const handleDownload = async (asset) => {
+    try {
+      const token = await auth.currentUser.getIdToken();
+      const response = await fetch(
+        `https://uefn-maps-server.onrender.com/api/v1/products/download-link`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            s3Key: asset.s3Key,
+            productId: asset._id,
+          }),
+        },
+      );
 
-    const data = await response.json();
-    console.log("Full Server Response:", data); // এখানে এখন ডাটা দেখতে পাবেন
+      const data = await response.json();
+      console.log("Full Server Response:", data); // এখানে এখন ডাটা দেখতে পাবেন
 
-    if (data.success && data.downloadUrl) {
-      // সরাসরি উইন্ডো ওপেন করলে পপ-আপ ব্লকার আটকাতে পারে
-      // তাই নিচের এই ট্রিকটি ব্যবহার করুন
-      const link = document.createElement("a");
-      link.href = data.downloadUrl;
-      link.setAttribute("download", ""); // ফাইল নেম অটোমেটিক নিবে
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      alert("Error: " + data.message);
+      if (data.success && data.downloadUrl) {
+        // সরাসরি উইন্ডো ওপেন করলে পপ-আপ ব্লকার আটকাতে পারে
+        // তাই নিচের এই ট্রিকটি ব্যবহার করুন
+        const link = document.createElement("a");
+        link.href = data.downloadUrl;
+        link.setAttribute("download", ""); // ফাইল নেম অটোমেটিক নিবে
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        alert("Error: " + data.message);
+      }
+    } catch (error) {
+      console.error("Critical Download Error:", error);
+      alert("Check server logs or connection.");
     }
-  } catch (error) {
-    console.error("Critical Download Error:", error);
-    alert("Check server logs or connection.");
-  }
-};
+  };
 
   // বাটন ডিজাইন:
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center text-purple-500 font-black tracking-widest animate-pulse">
-        LOADING VAULT...
+      <div className="hidden md:block bg-white/4 border border-white/5 rounded-3xl overflow-hidden animate-pulse">
+        
+
+        <table className="w-[80%] mx-auto">
+          {/* Table Header Placeholder */}
+          <thead className="bg-background">
+            <tr>
+              {["Asset", "Title", "Price", "Action"].map((header, i) => (
+                <th key={i} className="p-5">
+                  <div className="h-3 bg-white/5 rounded-full w-12" />
+                </th>
+              ))}
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-white/5">
+            {[1, 2, 3, 4, 5].map((row) => (
+              <tr key={row}>
+                {/* ASSET IMAGE SKELETON */}
+                <td className="p-5">
+                  <div className="w-10 h-10 rounded-xl bg-white/5" />
+                </td>
+
+                {/* TITLE/LICENSE SKELETON */}
+                <td className="p-5">
+                  <div className="w-32 h-6 bg-white/5 rounded-lg" />
+                </td>
+
+                {/* PRICE SKELETON */}
+                <td className="p-5">
+                  <div className="w-12 h-4 bg-white/5 rounded-md" />
+                </td>
+
+                {/* ACTION BUTTON SKELETON */}
+                <td className="p-5 text-right">
+                  <div className="inline-flex w-28 h-10 bg-white/5 rounded-xl ml-auto" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Shimmer Effect Overlay */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="w-full h-full bg-linear-to-r from-transparent via-white/2 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+        </div>
       </div>
     );
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-28 pb-24 px-4 sm:px-6 md:px-10">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 border-b border-white/5 pb-6">
           <div>
             <h1 className="text-3xl sm:text-4xl font-black tracking-tight uppercase">
-              My <span className="text-purple-500">Vault</span>
+              My <span className="text-purple-500">Assets</span>
             </h1>
             <p className="text-gray-500 text-sm mt-2 uppercase tracking-widest">
               Owned Assets • {assets.length}
@@ -104,7 +168,7 @@ const handleDownload = async (asset) => {
         {assets.length === 0 ? (
           <div className="text-center py-28 bg-white/4 rounded-3xl border border-dashed border-border-color">
             <Package size={46} className="mx-auto mb-4 text-gray-700" />
-            <h2 className="text-xl font-bold text-gray-300">Vault Empty</h2>
+            <h2 className="text-xl font-bold text-gray-300">Assets Empty</h2>
             <p className="text-gray-500 mt-2 text-sm">
               You don't own any assets yet.
             </p>

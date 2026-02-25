@@ -72,7 +72,9 @@ const Shope = () => {
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/categories`);
+        const res = await fetch(
+          `https://uefn-maps-server.onrender.com/api/v1/categories`,
+        );
         const data = await res.json();
         if (data.success) {
           setCategories([{ name: "All", _id: "All" }, ...data.data]);
@@ -112,6 +114,23 @@ const Shope = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-28 pb-20 px-6 font-sans">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       {/* --- Shope Hidden SEO --- */}
       <section className="sr-only">
         <h2>Premium UEFN Map Store and Creator Shope</h2>
@@ -239,7 +258,11 @@ const Shope = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       whileHover={{ y: -8 }}
-                      className="flex flex-col bg-card-bg border border-white/5 rounded-[2.5rem] overflow-hidden group hover:border-purple-500/40 transition-all duration-500 shadow-2xl h-full"
+                      className="glass-card rounded-[2.5rem] overflow-hidden group 
+                   border border-border-color hover:border-purple-500/50 
+                   transition-all duration-500 flex flex-col 
+                   hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] 
+                   hover:-translate-y-2 "
                     >
                       {/* --- Image Section: Fixed Height & Width --- */}
                       <div className="relative h-44 overflow-hidden bg-[#16161a]">

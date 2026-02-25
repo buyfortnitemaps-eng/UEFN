@@ -57,7 +57,9 @@ const AllProducts = () => {
   };
 
   const fetchCategories = async () => {
-    const res = await fetch("https://uefn-maps-server.onrender.com/api/v1/categories");
+    const res = await fetch(
+      "https://uefn-maps-server.onrender.com/api/v1/categories",
+    );
     const data = await res.json();
     setCategories(data.data);
   };
@@ -80,10 +82,13 @@ const AllProducts = () => {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure? Image will also be deleted!")) return;
     const token = await auth.currentUser.getIdToken();
-    const res = await fetch(`https://uefn-maps-server.onrender.com/api/v1/products/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      `https://uefn-maps-server.onrender.com/api/v1/products/${id}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
     if (res.ok) fetchProducts();
   };
 
@@ -91,6 +96,23 @@ const AllProducts = () => {
 
   return (
     <div className="max-w-7xl mt-10 mx-auto p-4 md:p-6 text-foreground min-h-screen">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       {/* Header & Filter Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
         <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
@@ -101,13 +123,13 @@ const AllProducts = () => {
           <Filter size={18} className="ml-2 text-purple-500 shrink-0" />
           <select
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="bg-transparent outline-none p-2 text-xs md:text-sm font-bold uppercase tracking-widest cursor-pointer w-full"
+            className=" outline-none p-2 text-xs md:text-sm font-bold uppercase tracking-widest cursor-pointer w-full"
           >
-            <option value="all" className="bg-card-bg">
+            <option value="all" className="bg-background">
               All Categories
             </option>
             {categories.map((cat) => (
-              <option key={cat._id} value={cat._id} className="bg-card-bg">
+              <option key={cat._id} value={cat._id} className="bg-background">
                 {cat.name}
               </option>
             ))}
@@ -116,9 +138,9 @@ const AllProducts = () => {
       </div>
 
       {/* Desktop Table View (Hidden on Mobile) */}
-      <div className="hidden md:block bg-background border border-white/5 rounded-4xl overflow-hidden backdrop-blur-md overflow-x-auto">
+      <div className="hidden md:block border border-white/5 rounded-4xl overflow-hidden backdrop-blur-md overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-background">
+          <thead className="">
             <tr>
               <th className="p-6 text-xs font-black uppercase text-gray-400">
                 Asset
@@ -199,7 +221,7 @@ const AllProducts = () => {
         {filteredProducts.map((product) => (
           <div
             key={product._id}
-            className="bg-background border border-white/5 rounded-3xl p-5 backdrop-blur-md"
+            className=" border border-white/5 rounded-3xl p-5 backdrop-blur-md"
           >
             <div className="flex items-center gap-4 mb-4">
               <img

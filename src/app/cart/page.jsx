@@ -59,6 +59,23 @@ export default function CartPage() {
 
     return (
         <div className="min-h-screen bg-background text-foreground pt-24 pb-40 px-4 sm:px-6">
+            {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+            <div className="fixed inset-0 pointer-events-none z-0">
+                {/* 1. DOT GRID BACKGROUND */}
+                <div
+                    className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+                        backgroundSize: "28px 28px",
+                    }}
+                />
+
+                {/* 2. TOP GLOW LIGHT */}
+                <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+                {/* 3. BOTTOM GLOW LIGHT */}
+                <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+            </div>
             <div className="max-w-7xl mx-auto mb-10">
                 <div className="flex items-center justify-between border-b border-white/5 pb-6">
                     <div className="flex items-center gap-4">

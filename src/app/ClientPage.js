@@ -11,14 +11,14 @@ import {
   ChevronRight,
 } from "lucide-react";
 import ContactPage from "./pages/contact/page";
-import GameModes from "./pages/game-modes/page"
+import GameModes from "./pages/game-modes/page";
 
 import FeaturedSection from "./pages/featured/page";
 import Link from "next/link";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-purple-500">
+    <div className="min-h-screen bg-bg-gradient text-foreground selection:bg-purple-500">
       {/* --- Hidden SEO Keywords for Search Engines --- */}
       <section className="sr-only">
         <h1>Premium Fortnite UEFN Maps and Creative 2.0 Store</h1>
@@ -37,9 +37,9 @@ const HomePage = () => {
         </ul>
 
         <p>
-          Explore the best UEFN creator Shope for high-end UEFN templates,
-          Verse scripts, and custom Fortnite map design services. Hire UEFN
-          creators for viral Fortnite maps and popular UEFN islands.
+          Explore the best UEFN creator Shope for high-end UEFN templates, Verse
+          scripts, and custom Fortnite map design services. Hire UEFN creators
+          for viral Fortnite maps and popular UEFN islands.
         </p>
       </section>
 
@@ -230,7 +230,7 @@ const HomePage = () => {
             </div>
             <h4 className="text-xl font-bold mb-2">
               {" "}
-              Optimized for Publishing with Optimized for Publishing
+              Optimized for Publishing
             </h4>
             <p className="text-gray-500">
               Powered by AWS S3 to handle files up to 5GB with ultra-fast speed.
@@ -348,7 +348,49 @@ const HomePage = () => {
         </div>
       </section>
 
-      <ContactPage />
+      {/* --- CTA Section (Replacement 4) --- */}
+      <section className="py-40 max-w-7xl mx-auto text-center relative z-20">
+        {" "}
+        {/* z-20 নিশ্চিত করা হয়েছে */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="glass-card border border-white/5 p-12 md:p-24 rounded-[4rem] relative overflow-hidden group shadow-2xl"
+        >
+          {/* Background Glow */}
+          <div className="absolute top-0 left-0 w-full h-full bg-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+          <h2 className="text-5xl md:text-6xl font-black mb-8 leading-none uppercase italic relative z-10">
+            Have a Vision for a <br />{" "}
+            <span className="text-purple-500">UEFN Map?</span>
+          </h2>
+          <p className="text-gray-400 mb-12 text-xl max-w-2xl mx-auto leading-relaxed font-medium relative z-10">
+            We’re available for custom map creation, bug fixing, Verse
+            programming, and long-term creator collaborations.
+          </p>
+
+          {/* বাটন লজিক আপডেট */}
+          <div className="relative z-30">
+            {" "}
+            {/* বাটনকে সবার উপরে রাখার জন্য z-30 */}
+            <Link href="/pages/contact" className="inline-block">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-purple-600 text-white px-16 py-6 rounded-2xl font-black text-xl hover:bg-purple-500 hover:shadow-[0_0_50px_rgba(168,85,247,0.4)] transition-all cursor-pointer uppercase tracking-widest italic"
+              >
+                👉 Get in Touch
+              </motion.button>
+            </Link>
+          </div>
+        </motion.div>
+        {/* --- Legal Disclaimer --- */}
+        <p className="mt-12 text-[10px] font-bold text-gray-600 uppercase tracking-widest max-w-xl mx-auto opacity-50 relative z-10">
+          Not affiliated with Epic Games or Fortnite. UEFN and Fortnite are
+          trademarks of Epic Games.
+        </p>
+      </section>
 
       {/* call to action */}
       <section className="py-24 px-6 bg-transparent relative overflow-hidden">

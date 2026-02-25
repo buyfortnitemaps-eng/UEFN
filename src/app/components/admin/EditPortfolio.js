@@ -73,6 +73,23 @@ const EditPortfolioModal = ({ project, onClose, refresh }) => {
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* 1. DOT GRID BACKGROUND */}
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+
+        {/* 3. BOTTOM GLOW LIGHT */}
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
       <div className="bg-card-bg border border-white/5 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8 shadow-2xl">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-black uppercase italic">

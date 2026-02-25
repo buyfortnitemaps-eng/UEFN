@@ -10,7 +10,7 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
       <aside className="hidden lg:flex flex-col w-68 border-r border-border-color bg-background sticky top-0 h-screen">
         <SidebarContent />
       </aside>
-
+    
       {/* Mobile Sidebar (Drawer) */}
       <motion.aside 
         initial={{ x: "-100%" }}

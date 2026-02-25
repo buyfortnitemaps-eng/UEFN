@@ -18,11 +18,6 @@ const SidebarContent = ({ setIsMobileMenuOpen }) => {
 
   const menuItems = [
     {
-      name: "Overview",
-      icon: <LayoutDashboard size={20} />,
-      href: "/admin/dashboard",
-    },
-    {
       name: "All Order",
       icon: <LayoutDashboard size={20} />,
       href: "/admin/all-order",
