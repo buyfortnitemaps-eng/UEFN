@@ -1,5 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
+
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,6 +11,8 @@ import {
   ChevronDown,
   LayoutGrid,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useCart } from "../lib/CartContext";
 import { useAuth } from "../context/AuthContext";
@@ -17,11 +20,7 @@ import LoginAlertModal from "../components/LoginAlertModal";
 import CartSuccessModal from "../components/CartSuccessModal";
 import Link from "next/link";
 
-const ShopeClient = ({
-  initialProducts,
-  initialHasMore,
-  initialCategories,
-}) => {
+const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
   const [products, setProducts] = useState(initialProducts);
   const [categories] = useState([
     { name: "All", _id: "All" },
@@ -30,57 +29,59 @@ const ShopeClient = ({
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("newest");
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(initialHasMore);
+
+  // Pagination States
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
-  const [loadMoreLoading, setLoadMoreLoading] = useState(false);
+  const limit = 12;
 
   const isInitialMount = useRef(true);
-
   const { user } = useAuth();
   const { addToCart, cart } = useCart();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState("");
 
-  const fetchProducts = useCallback(
-    async (isLoadMore = false) => {
-      try {
-        if (isLoadMore) setLoadMoreLoading(true);
-        else setLoading(true);
+  const totalPages = Math.ceil(totalProducts / limit);
 
-        const currentPage = isLoadMore ? page + 1 : 1;
-        const url = `https://uefn-maps-server.vercel.app/api/v1/products/client?page=${currentPage}&limit=12&category=${activeCategory}&search=${search}&sort=${sortBy}`;
+  const fetchProducts = useCallback(async () => {
+    try {
+      setLoading(true);
+      const url = `https://uefn-maps-server.vercel.app/api/v1/products/client?page=${currentPage}&limit=${limit}&category=${activeCategory}&search=${search}&sort=${sortBy}`;
 
-        const res = await fetch(url);
-        const data = await res.json();
+      const res = await fetch(url);
+      const data = await res.json();
 
-        if (isLoadMore) {
-          setProducts((prev) => [...prev, ...data.data]);
-          setPage(currentPage);
-        } else {
-          setProducts(data.data || []);
-          setPage(1);
-        }
-        setHasMore(data.meta?.hasMore || false);
-      } catch (error) {
-        console.error("Fetch Error:", error);
-      } finally {
-        setLoading(false);
-        setLoadMoreLoading(false);
+      if (data.success) {
+        setProducts(data.data || []);
+        setTotalProducts(data.meta.total || 0);
       }
-    },
-    [activeCategory, search, page, sortBy],
-  );
+    } catch (error) {
+      console.error("Fetch Error:", error);
+    } finally {
+      setLoading(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [activeCategory, search, currentPage, sortBy]);
 
-  // ফিল্টার চেঞ্জ হলে API কল (প্রথমবার লোড বাদে)
+  // ফিল্টার বা সার্চ চেঞ্জ হলে পেজ ১-এ নিয়ে আসা
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    } else {
+      if (!isInitialMount.current) fetchProducts();
+    }
+  }, [activeCategory, search, sortBy]);
+
+  // শুধুমাত্র পেজ চেঞ্জ হলে ফেচ করা
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
     }
     fetchProducts();
-  }, [activeCategory, search, sortBy]);
+  }, [currentPage]);
 
   const handleAddToCart = (item) => {
     if (!user) return setShowLoginModal(true);
@@ -118,8 +119,8 @@ const ShopeClient = ({
       </div>
 
       <main className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
-        <section className="grid grid-cols-1 md:grid-cols-2 my-3">
+        {/* Header Section (Same as before) */}
+        <section className="grid grid-cols-1 md:grid-cols-2 my-3 items-end gap-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <LayoutGrid size={24} className="text-purple-500" />
@@ -148,7 +149,6 @@ const ShopeClient = ({
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
               />
             </div>
-
             <div className="relative w-full md:w-80">
               <Search
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
@@ -164,7 +164,7 @@ const ShopeClient = ({
           </div>
         </section>
 
-        <div className="flex flex-col lg:flex-row gap-10">
+        <div className="flex flex-col lg:flex-row gap-10 mt-10">
           {/* Sidebar */}
           <aside className="w-full lg:w-64 lg:sticky lg:top-28 h-fit space-y-6">
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
@@ -189,18 +189,17 @@ const ShopeClient = ({
             </div>
           </aside>
 
-          {/* Grid */}
+          {/* Product Grid */}
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
               <AnimatePresence mode="popLayout">
-                {loading && !loadMoreLoading
+                {loading
                   ? [...Array(6)].map((_, i) => <ProductSkeleton key={i} />)
                   : products.map((product) => {
                       const pId = product._id?.$oid || product._id;
                       const isInCart = cart.some(
                         (i) => (i._id?.$oid || i._id) === pId,
                       );
-
                       return (
                         <motion.div
                           layout
@@ -225,7 +224,6 @@ const ShopeClient = ({
                               {product.category?.name || "UEFN Asset"}
                             </div>
                           </div>
-
                           <div className="p-8 flex flex-col grow">
                             <Link href={`marketplace/${product._id}`}>
                               <h3 className="text-xl font-bold text-foreground mb-2 line-clamp-1 group-hover:text-purple-400 transition-colors">
@@ -247,9 +245,8 @@ const ShopeClient = ({
                                       ? product.discountPrice
                                       : product.price}
                                   </span>
-
                                   {product.isDiscount && (
-                                    <span className="text-sm text-gray-500 line-through font-medium">
+                                    <span className="text-sm text-gray-500 line-through">
                                       ${product.price}
                                     </span>
                                   )}
@@ -257,7 +254,7 @@ const ShopeClient = ({
                               </div>
                               <button
                                 onClick={() => handleAddToCart(product)}
-                                className={`p-4 rounded-2xl transition-all shadow-2xl active:scale-90 ${isInCart ? "bg-green-600 text-white shadow-green-500/20" : "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-500/30"}`}
+                                className={`p-4 rounded-2xl transition-all active:scale-90 ${isInCart ? "bg-green-600 text-white shadow-green-500/20" : "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-500/30"}`}
                               >
                                 {isInCart ? (
                                   <CheckCircle2 size={22} />
@@ -273,14 +270,41 @@ const ShopeClient = ({
               </AnimatePresence>
             </div>
 
-            {hasMore && (
-              <div className="mt-16 text-center">
+            {/* --- NEW NUMBERED PAGINATION --- */}
+            {!loading && totalPages > 1 && (
+              <div className="mt-20 flex justify-center items-center gap-3">
                 <button
-                  onClick={() => fetchProducts(true)}
-                  disabled={loadMoreLoading}
-                  className="px-12 py-4 bg-background border border-white/5 rounded-2xl hover:border-purple-500 transition-all font-black uppercase text-[10px] tracking-widest disabled:opacity-50"
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="p-4 rounded-2xl bg-card-bg/40 border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
                 >
-                  {loadMoreLoading ? "Fetching Data..." : "Load More Assets →"}
+                  <ChevronLeft size={20} />
+                </button>
+
+                <div className="flex gap-2">
+                  {[...Array(totalPages)].map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentPage(i + 1)}
+                      className={`w-12 h-12 rounded-2xl font-black text-xs transition-all ${
+                        currentPage === i + 1
+                          ? "bg-purple-600 text-white shadow-lg shadow-purple-600/30"
+                          : "bg-card-bg/40 border border-border-color text-gray-500 hover:border-purple-500/50"
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(p + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="p-4 rounded-2xl bg-card-bg/40 border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
+                >
+                  <ChevronRight size={20} />
                 </button>
               </div>
             )}

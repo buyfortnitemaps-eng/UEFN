@@ -35,7 +35,7 @@ const ChatWidget = () => {
   const unlockAudio = () => {
     if (isAudioUnlocked.current) return;
 
-    audioRef.current = new Audio("/notification.mp3");
+    audioRef.current = new Audio("/");
     audioRef.current.volume = 1;
 
     audioRef.current

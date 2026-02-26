@@ -67,11 +67,11 @@ export default function Hero() {
           <div className="flex flex-wrap gap-6 text-sm text-muted-foreground font-medium">
             <div className="flex items-center gap-2">
               <ShieldCheck className="text-green-500" size={18} />
-              Secure PAYMENT
+              Secure Payment
             </div>
             <div>2100+ Creators</div>
-            <div>1000+ MAPS</div>
-            <div>VERSE SUPPORT</div>
+            <div>1000+ Maps</div>
+            <div>Verse Support</div>
           </div>
         </div>
 

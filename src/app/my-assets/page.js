@@ -146,10 +146,10 @@ export default function MyAssetsPage() {
         />
 
         {/* 2. TOP GLOW LIGHT */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-300/20 blur-[180px] rounded-full" />
 
         {/* 3. BOTTOM GLOW LIGHT */}
-        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-300/15 blur-[150px] rounded-full" />
       </div>
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}

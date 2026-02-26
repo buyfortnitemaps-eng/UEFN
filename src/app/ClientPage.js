@@ -34,8 +34,7 @@ const HomePage = () => {
               Optimized for Publishing
             </h4>
             <p className="text-gray-500">
-              Powered by AWS S3 to handle files up to 5GB with ultra-fast speed.
-              With Clean projects that are easy to customize and publish in UEFN
+              Clean projects that are easy to customize and publish in UEFN
             </p>
           </div>
           <div className="flex flex-col items-center">
@@ -187,7 +186,7 @@ const HomePage = () => {
           </div>
         </motion.div>
         {/* --- Legal Disclaimer --- */}
-        <p className="mt-12 text-[10px] font-bold text-gray-400 uppercase tracking-widest max-w-xl mx-auto opacity-50 relative z-10">
+        <p className="mt-12 text-[10px] font-bold text-foreground uppercase tracking-widest max-w-xl mx-auto relative z-10">
           Not affiliated with Epic Games or Fortnite. UEFN and Fortnite are
           trademarks of Epic Games.
         </p>

@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -263,7 +261,7 @@ const AboutUs = () => {
           </div>
         </motion.div>
         {/* --- Legal Disclaimer --- */}
-        <p className="mt-12 text-[10px] font-bold text-gray-400 uppercase tracking-widest max-w-xl mx-auto opacity-50 relative z-10">
+        <p className="mt-12 text-[10px] font-bold text-foreground uppercase tracking-widest max-w-xl mx-auto  relative z-10">
           Not affiliated with Epic Games or Fortnite. UEFN and Fortnite are
           trademarks of Epic Games.
         </p>
