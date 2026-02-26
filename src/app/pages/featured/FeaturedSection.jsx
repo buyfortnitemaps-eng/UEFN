@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, Search } from "lucide-react";
+import { ShoppingCart, Search, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "../../lib/CartContext";
 import { useAuth } from "../../context/AuthContext";
@@ -53,29 +54,53 @@ export default function ClientFeaturedContent({ initialProducts }) {
   return (
     <>
       {/* Search & Filter UI */}
-      <div className="flex flex-col gap-4 items-end mb-8 relative z-10">
-        <div className="relative w-full max-w-sm">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground opacity-50" size={16} />
-          <input
-            type="text"
-            placeholder="Search assets..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-card-bg border border-border-color rounded-2xl py-2.5 pl-10 pr-4 text-xs focus:border-purple-500 outline-none text-foreground shadow-sm"
-          />
+      <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-12 gap-8 px-2 relative z-10">
+
+        {/* Left Side: Title & Info Text */}
+        <div className="max-w-xl w-full lg:w-auto text-center lg:text-left">
+          <div className="flex items-center justify-center lg:justify-start gap-2 mb-3">
+            <Sparkles size={20} className="text-yellow-500 shrink-0" />
+            <h2 className="text-xl md:text-2xl font-black text-foreground leading-tight italic uppercase tracking-tighter">
+              The most downloaded UEFN templates this week{" "}
+              <span className="text-purple-500">WITH</span>
+            </h2>
+          </div>
+          <p className="text-muted-foreground text-[10px] md:text-xs font-black tracking-[0.2em] uppercase opacity-70">
+            PURCHASE MAP • VERSE • 3D ASSET • THUMBNAIL
+          </p>
         </div>
-        <div className="flex bg-card-bg p-1.5 rounded-2xl border border-border-color backdrop-blur-md gap-1 overflow-x-auto no-scrollbar">
-          {tags.map((tag) => (
-            <button
-              key={tag.id}
-              onClick={() => setActiveTag(tag.id)}
-              className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeTag === tag.id ? "bg-purple-600 text-white shadow-lg" : "text-muted-foreground hover:bg-white/5"
-              }`}
-            >
-              {tag.label}
-            </button>
-          ))}
+
+        {/* Right Side Column: Search Bar (Top) & Filters (Bottom) */}
+        <div className="flex flex-col gap-4 w-full lg:w-auto items-center lg:items-end">
+
+          {/* Search Bar */}
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground opacity-50" size={16} />
+            <input
+              type="text"
+              placeholder="Search assets..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-card-bg border border-border-color rounded-2xl py-2.5 pl-10 pr-4 text-xs focus:border-purple-500 outline-none text-foreground shadow-sm transition-all"
+            />
+          </div>
+
+          {/* Tags/Filters */}
+          <div className="flex bg-card-bg p-1.5 rounded-2xl border border-border-color backdrop-blur-md gap-1 overflow-x-auto no-scrollbar w-full lg:w-auto justify-center lg:justify-end">
+            {tags.map((tag) => (
+              <button
+                key={tag.id}
+                onClick={() => setActiveTag(tag.id)}
+                className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap active:scale-95 ${activeTag === tag.id
+                    ? "bg-purple-600 text-white shadow-lg"
+                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                  }`}
+              >
+                {tag.label}
+              </button>
+            ))}
+          </div>
+
         </div>
       </div>
 

@@ -318,21 +318,6 @@ const FeaturedSection = async () => {
         <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
       </div>
 
-      {/* Header Section */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8 px-2 relative z-10">
-        <div className="max-w-xl">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles size={20} className="text-yellow-500 shrink-0" />
-            <h2 className="text-xl md:text-2xl font-black text-foreground leading-tight italic uppercase tracking-tighter">
-              The most downloaded UEFN templates this week{" "}
-              <span className="text-purple-500">WITH</span>
-            </h2>
-          </div>
-          <p className="text-muted-foreground text-[10px] md:text-xs font-black tracking-[0.2em] uppercase opacity-70">
-            PURCHASE MAP • VERSE • 3D ASSET • THUMBNAIL
-          </p>
-        </div>
-      </div>
 
       {/* Filtering, Searching এবং Grid-এর জন্য আমরা একটি ক্লায়েন্ট কম্পোনেন্ট ব্যবহার করব 
           যাতে ISR-এর ডেটা পাস করে দেওয়া হবে।
