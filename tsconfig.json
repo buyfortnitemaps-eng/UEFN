@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "src/app/admin/add-category/page.jsx", "src/app/admin/layout.jsx", "src/app/components/admin/Sidebar.jsx", "src/app/components/admin/Topbar.js", "src/app/admin/add-product/page.jsx", "src/app/components/AnimatedBackground.jsx"  ],
+, "src/app/admin/add-category/page.jsx", "src/app/admin/layout.jsx", "src/app/components/admin/Sidebar.jsx", "src/app/components/admin/Topbar.js", "src/app/admin/add-product/page.jsx", "src/app/components/AnimatedBackground.jsx", "src/app/components/home/Hero.jsx"  ],
   "exclude": ["node_modules"]
 }

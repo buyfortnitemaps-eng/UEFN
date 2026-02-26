@@ -151,7 +151,7 @@ const Login = () => {
 
                   {user && mongoUser?.role === "admin" && (
                     <Link
-                      href="/admin/dashboard"
+                      href="/admin/all-order"
                       className="w-full bg-white text-black py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-purple-600 hover:text-foreground transition-all"
                     >
                       Go to Admin Dashboard <ArrowRight size={18} />
