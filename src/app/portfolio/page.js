@@ -117,10 +117,10 @@ const AboutUs = () => {
       {/* --- Main Studio Story (Optional Upgrade 2) --- */}
       <section className="max-w-4xl mx-auto text-center mb-32 relative z-10 border-y border-white/5 py-16">
         <p className="text-forground text-xl leading-relaxed font-medium italic">
-          "We started this studio to help UEFN creators skip repetitive setup
+          We started this studio to help UEFN creators skip repetitive setup
           and focus on building great gameplay. Every project we ship is
           structured, optimized, and designed to be easy to extend—so you can
-          move faster without cutting corners."
+          move faster without cutting corners.
         </p>
       </section>
 
@@ -263,7 +263,7 @@ const AboutUs = () => {
           </div>
         </motion.div>
         {/* --- Legal Disclaimer --- */}
-        <p className="mt-12 text-[10px] font-bold text-gray-600 uppercase tracking-widest max-w-xl mx-auto opacity-50 relative z-10">
+        <p className="mt-12 text-[10px] font-bold text-gray-400 uppercase tracking-widest max-w-xl mx-auto opacity-50 relative z-10">
           Not affiliated with Epic Games or Fortnite. UEFN and Fortnite are
           trademarks of Epic Games.
         </p>

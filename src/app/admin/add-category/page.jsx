@@ -139,7 +139,7 @@ const AddCategory = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10">
+    <div className="max-w-4xl mx-auto space-y-10 mt-20">
       {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* 1. DOT GRID BACKGROUND */}

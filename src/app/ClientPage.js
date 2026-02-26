@@ -187,7 +187,7 @@ const HomePage = () => {
           </div>
         </motion.div>
         {/* --- Legal Disclaimer --- */}
-        <p className="mt-12 text-[10px] font-bold text-gray-600 uppercase tracking-widest max-w-xl mx-auto opacity-50 relative z-10">
+        <p className="mt-12 text-[10px] font-bold text-gray-400 uppercase tracking-widest max-w-xl mx-auto opacity-50 relative z-10">
           Not affiliated with Epic Games or Fortnite. UEFN and Fortnite are
           trademarks of Epic Games.
         </p>
