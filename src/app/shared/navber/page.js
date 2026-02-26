@@ -119,7 +119,7 @@ const Navbar = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search assets..."   className="w-full h-full bg-transparent pl-10 pr-4 text-sm text-white placeholder:text-white/20 outline-none transition-all"
+              placeholder="Search assets..."   className="w-full h-full bg-transparent pl-10 pr-4 text-sm text-white placeholder:text-forground outline-none transition-all border border-border-color rounded-2xl"
             />
           </div>
 
