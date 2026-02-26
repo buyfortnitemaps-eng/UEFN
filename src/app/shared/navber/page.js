@@ -110,38 +110,35 @@ const Navbar = () => {
         </Link>
 
         {/* --- Global Search Bar --- */}
-        <div ref={searchRef} className="flex-1 max-w-md relative mx-2">
-          <div className="relative group">
+        <div className="relative flex-1 max-w-md group">
+          {/* সার্চ ইনপুট কন্টেইনার */}
+          <div className="relative flex items-center h-10 w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-purple-500/50 rounded-xl bg-white/5 border border-white/10 overflow-hidden">
             <Search
-              className={`absolute left-3 md:left-4 top-1/2 -translate-y-1/2 transition-colors ${searchQuery ? "text-purple-400" : "text-muted-foreground"}`}
-              size={18}
+              className="absolute left-3 text-white/40 group-focus-within:text-purple-400 transition-colors"
+              size={16}
             />
             <input
               type="text"
-              placeholder="Search for items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-card-bg border border-border-color rounded-xl md:rounded-2xl py-3 md:py-3.5 pl-11 md:pl-14 pr-4 text-sm md:text-base focus:border-purple-500/50 outline-none transition-all text-foreground placeholder:text-muted-foreground/50 shadow-inner"
+              placeholder="Search assets..."   className="w-full h-full bg-transparent pl-10 pr-4 text-sm text-white placeholder:text-white/20 outline-none transition-all"
             />
-            {isSearching && (
-              <Loader2
-                className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 animate-spin text-purple-500"
-                size={18}
-              />
-            )}
           </div>
 
-          {/* Search Results Overlay */}
+          {/* সার্চ রেজাল্ট ড্রপডাউন */}
           <AnimatePresence>
             {searchQuery.length > 0 && (
               <motion.div
-                initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 15, scale: 0.98 }}
-                /* w-full mobile-e kaj korbe, md:left-0 PC-te position fix rakhbe */
-                className="absolute top-full mt-3 left-0 w-full bg-linear-to-b from-[#1e1b4b] via-[#1e1b4b] to-[#0f172a] border border-white/10 backdrop-blur-3xl rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] overflow-hidden z-150"
+                exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                /* ১. মোবাইলে 'fixed' ব্যবহার করা হয়েছে যাতে নেভিগেশন বারের ছোট উইডথ-এ আটকে না থাকে।
+           ২. 'w-[calc(100vw-2rem)]' দিয়ে দুইপাশে অল্প গ্যাপ রেখে পুরো উইডথ দেওয়া হয়েছে।
+           ৩. পিসিতে (md:) আবার 'absolute' এবং নরমাল উইডথ-এ ফিরে যাবে।
+        */
+                className="fixed md:absolute top-[70px] md:top-full left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 mt-3 w-[calc(100vw-2rem)] md:w-[450px] bg-linear-to-b from-[#1e1b4b] via-[#1e1b4b] to-[#0f172a] border border-white/10 backdrop-blur-3xl rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden z-[999]"
               >
-                <div className="max-h-[70vh] md:max-h-125 overflow-y-auto custom-scrollbar p-2 md:p-3">
+                <div className="max-h-[65vh] md:max-h-125 overflow-y-auto custom-scrollbar p-2 md:p-3">
                   {isSearching ? (
                     <div className="p-12 flex flex-col items-center gap-4">
                       <Loader2
@@ -153,18 +150,19 @@ const Navbar = () => {
                       </p>
                     </div>
                   ) : searchResults.length > 0 ? (
-                    <div className="grid gap-1.5">
+                    <div className="grid gap-1.5 w-full">
                       {searchResults.map((item) => (
                         <Link
                           key={item._id}
+                          onClick={() => setSearchQuery("")} // ক্লিক করলে ড্রপডাউন বন্ধ হবে
                           href={
                             item.featureTag
                               ? `/pages/featured/${item._id}`
                               : `/marketplace/${item._id}`
                           }
-                          className="flex items-center gap-4 p-3 hover:bg-white/10 border border-white/5 md:border-transparent md:hover:border-white/10 rounded-xl transition-all group"
+                          className="flex items-center gap-4 p-3 hover:bg-white/10 border border-white/5 md:border-transparent md:hover:border-white/10 rounded-xl transition-all group w-full"
                         >
-                          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-white/5">
+                          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-white/5 shadow-lg">
                             <img
                               src={item.image?.url}
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -181,15 +179,15 @@ const Navbar = () => {
                                 ${item.price}
                               </span>
                               {item.featureTag && (
-                                <span className="text-[9px] py-0.5 px-2 bg-purple-500 text-white rounded-md uppercase font-black">
-                                  HOT
+                                <span className="text-[9px] py-0.5 px-2 bg-purple-600 text-white rounded-md uppercase font-black shadow-lg">
+                                  {item.featureTag}
                                 </span>
                               )}
                             </div>
                           </div>
 
                           <ChevronRight
-                            className="text-white/20 group-hover:text-purple-400 transition-colors hidden xs:block"
+                            className="text-white/20 group-hover:text-purple-400 transition-colors"
                             size={18}
                           />
                         </Link>
