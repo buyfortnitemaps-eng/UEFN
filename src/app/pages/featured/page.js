@@ -281,8 +281,7 @@
 // export default FeaturedSection;
 
 
-/* eslint-disable @next/next/no-img-element */
-import { ShoppingCart, Sparkles, ArrowRight } from "lucide-react";
+import {  ArrowRight } from "lucide-react";
 import Link from "next/link";
 import ClientFeaturedContent from "./FeaturedSection"; // আমরা লজিকটি আলাদা ফাইলে নিয়ে যাব
 
