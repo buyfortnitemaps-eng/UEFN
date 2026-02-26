@@ -6,7 +6,6 @@ import {
   Menu,
   X,
   ShoppingBag,
-  Gamepad2,
   LogOut,
   LayoutDashboard,
   Wallet,
@@ -16,7 +15,6 @@ import {
   ChevronRight,
   Search,
   Loader2,
-  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -131,12 +129,7 @@ const Navbar = () => {
               <motion.div
                 initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                /* ১. মোবাইলে 'fixed' ব্যবহার করা হয়েছে যাতে নেভিগেশন বারের ছোট উইডথ-এ আটকে না থাকে।
-           ২. 'w-[calc(100vw-2rem)]' দিয়ে দুইপাশে অল্প গ্যাপ রেখে পুরো উইডথ দেওয়া হয়েছে।
-           ৩. পিসিতে (md:) আবার 'absolute' এবং নরমাল উইডথ-এ ফিরে যাবে।
-        */
-                className="fixed md:absolute top-[70px] md:top-full left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 mt-3 w-[calc(100vw-2rem)] md:w-[450px] bg-linear-to-b from-[#1e1b4b] via-[#1e1b4b] to-[#0f172a] border border-white/10 backdrop-blur-3xl rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden z-[999]"
+                exit={{ opacity: 0, y: 10, scale: 0.98 }} className="fixed md:absolute top-17.5 md:top-full left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 mt-3 w-[calc(100vw-2rem)] md:w-112.5 bg-linear-to-b from-[#1e1b4b] via-[#1e1b4b] to-[#0f172a] border border-white/10 backdrop-blur-3xl rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden z-999"
               >
                 <div className="max-h-[65vh] md:max-h-125 overflow-y-auto custom-scrollbar p-2 md:p-3">
                   {isSearching ? (
@@ -281,7 +274,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Controls */}
-        <div className="md:hidden flex items-center gap-2 relative z-[130]">
+        <div className="md:hidden flex items-center gap-2 relative z-130">
           <Link href="/cart" className="relative p-2 text-muted-foreground">
             <ShoppingBag size={24} />
             {cart.length > 0 && (
@@ -308,14 +301,14 @@ const Navbar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-background/90 backdrop-blur-md z-[110] md:hidden"
+              className="fixed inset-0 bg-background/90 backdrop-blur-md z-110 md:hidden"
             />
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 w-[80%] max-w-xs h-screen bg-background z-[120] md:hidden border-l border-border-color shadow-2xl flex flex-col"
+              className="fixed top-0 right-0 w-[80%] max-w-xs h-screen bg-background z-120 md:hidden border-l border-border-color shadow-2xl flex flex-col"
             >
               <div className="flex-1 overflow-y-auto p-6 pt-24 space-y-8">
                 {user && (
