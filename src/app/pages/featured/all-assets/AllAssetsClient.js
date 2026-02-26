@@ -108,35 +108,35 @@ export default function AllAssetsClient({
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
-  {/* Title Section */}
-  <div className="w-full md:w-auto">
-    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase text-foreground mb-2 md:mb-4 tracking-tighter italic">
-      All <span className="text-purple-500">Featured Assets</span>
-    </h1>
-  </div>
+          {/* Title Section */}
+          <div className="w-full md:w-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase text-foreground mb-2 md:mb-4 tracking-tighter italic">
+              All <span className="text-purple-500">Featured Assets</span>
+            </h1>
+          </div>
 
-  {/* Filter Tabs Container */}
-  <div className="w-full md:w-auto overflow-hidden">
-    <div className="flex bg-card-bg/40 p-1 rounded-2xl border border-border-color w-full md:w-fit backdrop-blur-md overflow-x-auto no-scrollbar shadow-sm scroll-smooth">
-      {tags.map((tag) => (
-        <button
-          key={tag.id}
-          onClick={() => {
-            setActiveTag(tag.id);
-            setCurrentPage(1);
-          }}
-          className={`flex-1 md:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap active:scale-95 ${
-            activeTag === tag.id
-              ? "bg-purple-600 text-white shadow-lg"
-              : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-          }`}
-        >
-          {tag.label}
-        </button>
-      ))}
-    </div>
-  </div>
-</div>
+          {/* Filter Tabs Container */}
+          <div className="w-full md:w-auto overflow-hidden">
+            <div className="flex bg-card-bg/40 p-1 rounded-2xl border border-border-color w-full md:w-fit backdrop-blur-md overflow-x-auto no-scrollbar shadow-sm scroll-smooth">
+              {tags.map((tag) => (
+                <button
+                  key={tag.id}
+                  onClick={() => {
+                    setActiveTag(tag.id);
+                    setCurrentPage(1);
+                  }}
+                  className={`flex-1 md:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap active:scale-95 ${
+                    activeTag === tag.id
+                      ? "bg-purple-600 text-white shadow-lg"
+                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                  }`}
+                >
+                  {tag.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
