@@ -20,7 +20,7 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
       >
         <button 
           onClick={() => setIsMobileMenuOpen(false)}
-          className="absolute top-6 right-6 p-2 bg-background rounded-xl text-gray-400 z-50"
+          className="absolute top-6 right-6 p-2 bg-background rounded-xl text-forground z-50"
         >
           <X size={20} />
         </button>

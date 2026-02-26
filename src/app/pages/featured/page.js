@@ -199,7 +199,7 @@
 //                       {product.title}
 //                     </h3>
 //                   </Link>
-//                   <p className="text-gray-400 text-xs mb-6 h-12 leading-relaxed">
+//                   <p className="text-forground text-xs mb-6 h-12 leading-relaxed">
 //                     {product.description?.length > 120
 //                       ? `${product.description.slice(0, 120)}...`
 //                       : product.description}
@@ -303,7 +303,9 @@ const FeaturedSection = async () => {
   const initialProducts = await getFeaturedProducts();
 
   return (
-    <section className="py-20 px-6 max-w-7xl mx-auto relative">
+    <div className=" pt-32 pb-24 px-6 transition-colors duration-300 bg-background">
+      
+    <section className="max-w-7xl mx-auto relative z-10">
       {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div
@@ -335,6 +337,7 @@ const FeaturedSection = async () => {
         </Link>
       </div>
     </section>
+    </div>
   );
 };
 

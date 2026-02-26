@@ -256,12 +256,12 @@ const AddCategory = () => {
                       </td>
                       <td className="p-5 text-xs text-gray-500">{cat?.totalProduct} Products</td>
                       <td className="p-5 text-right space-x-2">
-                        <button onClick={() => handleEditClick(cat)} className="p-2.5 bg-background hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all">
+                        <button onClick={() => handleEditClick(cat)} className="p-2.5 bg-background hover:bg-blue-600/20 text-forground hover:text-blue-500 rounded-xl transition-all">
                           <Edit3 size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(cat._id)}
-                          className="p-2.5 bg-background hover:bg-red-600/20 text-gray-400 hover:text-red-500 rounded-xl transition-all"
+                          className="p-2.5 bg-background hover:bg-red-600/20 text-forground hover:text-red-500 rounded-xl transition-all"
                         >
                           <Trash2 size={16} />
                         </button>

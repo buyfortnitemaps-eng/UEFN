@@ -136,7 +136,7 @@ const SignUp = () => {
             /* --- ইউজার লগইন থাকলে এই বাটনটি দেখাবে --- */
             <div className="space-y-6">
               <div className="p-6 bg-background border border-white/5 rounded-2xl text-center">
-                <p className="text-gray-400 text-sm mb-4 font-medium italic">
+                <p className="text-forground text-sm mb-4 font-medium italic">
                   You are already signed in. To create a new account, please
                   sign out first.
                 </p>

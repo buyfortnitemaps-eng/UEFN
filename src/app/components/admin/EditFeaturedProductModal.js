@@ -216,7 +216,7 @@ const EditFeaturedProductModal = ({ product, onClose, refresh }) => {
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-background rounded-full transition-colors text-gray-400"
+            className="p-2 hover:bg-background rounded-full transition-colors text-forground"
           >
             <X size={24} />
           </button>

@@ -139,7 +139,7 @@ const AdminChat = () => {
               <button
                 key={id}
                 onClick={() => setSelectedUser(id)}
-                className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${selectedUser === id ? "bg-background text-purple-400 border border-purple-600/30" : "hover:bg-background text-gray-400"}`}
+                className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${selectedUser === id ? "bg-background text-purple-400 border border-purple-600/30" : "hover:bg-background text-forground"}`}
               >
                 <div className="h-9 w-9 rounded-full bg-linear-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-foreground shrink-0">
                   <User size={18} />

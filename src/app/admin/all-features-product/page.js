@@ -112,19 +112,19 @@ const FeaturedProducts = () => {
         <table className="w-full text-left">
           <thead className="bg-white/10">
             <tr>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Asset
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Tag Type
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Price
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Type
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400 text-right">
+              <th className="p-6 text-xs font-black uppercase text-forground text-right">
                 Actions
               </th>
             </tr>
@@ -294,7 +294,7 @@ const ActionButton = ({ icon, color, onClick, title }) => (
   <button
     onClick={onClick}
     title={title}
-    className={`p-3  hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all inline-flex items-center justify-center`}
+    className={`p-3  hover:bg-${color}-600/20 text-forground hover:text-${color}-500 rounded-xl transition-all inline-flex items-center justify-center`}
   >
     {icon}
   </button>

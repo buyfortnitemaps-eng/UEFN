@@ -142,19 +142,19 @@ const AllProducts = () => {
         <table className="w-full text-left">
           <thead className="">
             <tr>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Asset
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Category
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Price
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400">
+              <th className="p-6 text-xs font-black uppercase text-forground">
                 Type
               </th>
-              <th className="p-6 text-xs font-black uppercase text-gray-400 text-right">
+              <th className="p-6 text-xs font-black uppercase text-forground text-right">
                 Actions
               </th>
             </tr>
@@ -289,7 +289,7 @@ const AllProducts = () => {
             <h3 className="text-2xl font-black uppercase mb-2 leading-none">
               Upgrade Asset
             </h3>
-            <p className="text-gray-400 text-sm mb-6 font-medium">
+            <p className="text-forground text-sm mb-6 font-medium">
               Spotlight category for{" "}
               <span className="text-purple-400 italic">
                 {productToUpgrade?.title}
@@ -345,7 +345,7 @@ const ActionButton = ({ icon, color, onClick, title }) => (
   <button
     onClick={onClick}
     title={title}
-    className={`p-3 bg-background hover:bg-${color}-600/20 text-gray-400 hover:text-${color}-500 rounded-xl transition-all`}
+    className={`p-3 bg-background hover:bg-${color}-600/20 text-forground hover:text-${color}-500 rounded-xl transition-all`}
   >
     {icon}
   </button>

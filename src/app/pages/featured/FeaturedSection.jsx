@@ -92,8 +92,8 @@ export default function ClientFeaturedContent({ initialProducts }) {
                 key={tag.id}
                 onClick={() => setActiveTag(tag.id)}
                 className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap active:scale-95 ${activeTag === tag.id
-                    ? "bg-purple-600 text-white shadow-lg"
-                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                  ? "bg-purple-600 text-white shadow-lg"
+                  : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                   }`}
               >
                 {tag.label}
@@ -122,13 +122,23 @@ export default function ClientFeaturedContent({ initialProducts }) {
                 <Link href={`/pages/featured/${product._id}`}>
                   <h3 className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase">{product.title}</h3>
                 </Link>
-                <p className="text-gray-400 text-xs mb-6 h-12 leading-relaxed">
+                <p className="text-forground text-xs mb-6 h-12 leading-relaxed">
                   {product.description?.length > 120 ? `${product.description.slice(0, 120)}...` : product.description}
                 </p>
                 <div className="flex items-center justify-between border-t border-border-color pt-4">
                   <div>
                     <p className="text-gray-500 text-[9px] uppercase font-black tracking-widest mb-1">Price</p>
-                    <span className="text-2xl font-black text-foreground">${product.isDiscount ? product.discountPrice : product.price}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-black text-foreground">
+                        ${product.isDiscount ? product.discountPrice : product.price}
+                      </span>
+
+                      {product.isDiscount && (
+                        <span className="text-sm text-gray-500 line-through font-medium">
+                          ${product.price}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <button onClick={() => handleAddToCart(product)} className={`p-4 rounded-2xl transition-all ${cart.find(i => i._id === product._id) ? "bg-green-600 shadow-green-600/20" : "bg-purple-600 shadow-purple-600/20"}`}>
                     <ShoppingCart size={20} className="text-white" />

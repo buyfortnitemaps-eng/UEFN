@@ -33,7 +33,7 @@ const CartSuccessModal = ({ isOpen, onClose, productName }) => {
             <h3 className="text-2xl font-bold text-foreground mb-2">
               Added to Cart!
             </h3>
-            <p className="text-gray-400 mb-8 text-sm leading-relaxed">
+            <p className="text-forground mb-8 text-sm leading-relaxed">
               <span className="text-purple-400 font-semibold">
                 {productName}
               </span>{" "}

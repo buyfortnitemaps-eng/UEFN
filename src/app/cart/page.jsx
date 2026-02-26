@@ -84,7 +84,7 @@ export default function CartPage() {
                         </div>
                         <div>
                             <h1 className="text-3xl sm:text-4xl font-black tracking-tight uppercase">Your Vault</h1>
-                            <p className="text-gray-400 text-sm">{cart.length} asset{cart.length !== 1 && "s"} ready for deployment</p>
+                            <p className="text-forground text-sm">{cart.length} asset{cart.length !== 1 && "s"} ready for deployment</p>
                         </div>
                     </div>
                     <Link href="/marketplace">
@@ -98,7 +98,7 @@ export default function CartPage() {
             {cart.length === 0 ? (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-3xl mx-auto text-center py-28 border border-dashed border-border-color rounded-3xl">
                     <ShoppingBag size={42} className="mx-auto mb-5 text-purple-500" />
-                    <p className="text-gray-400 text-lg mb-6">Your vault is empty. Start collecting powerful assets.</p>
+                    <p className="text-forground text-lg mb-6">Your vault is empty. Start collecting powerful assets.</p>
                     <Link href="/marketplace">
                         <button className="bg-purple-600 hover:bg-purple-500 px-10 py-3 rounded-xl font-bold transition">Browse Shope</button>
                     </Link>
@@ -114,7 +114,7 @@ export default function CartPage() {
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <h3 className="font-bold text-foreground truncate">{item.title}</h3>
-                                        <p className="text-xs text-gray-400 mt-1">Seller: {item.seller?.name}</p>
+                                        <p className="text-xs text-forground mt-1">Seller: {item.seller?.name}</p>
                                         <div className="mt-2 text-purple-400 font-black text-lg">${item.price}</div>
                                     </div>
                                     <button onClick={() => removeFromCart(item._id)} className="opacity-60 hover:opacity-100 hover:bg-red-500/20 text-red-400 p-3 rounded-xl transition">
@@ -129,7 +129,7 @@ export default function CartPage() {
                         <div className="sticky top-28 bg-white/4 border border-white/5 p-8 rounded-3xl">
                             <h2 className="font-bold text-lg mb-8 uppercase tracking-widest">Checkout</h2>
                             <div className="space-y-4 mb-6">
-                                <div className="flex justify-between text-gray-400">
+                                <div className="flex justify-between text-forground">
                                     <span>Subtotal</span>
                                     <span>${subtotal.toFixed(2)}</span>
                                 </div>
@@ -164,7 +164,7 @@ export default function CartPage() {
             {cart.length > 0 && (
                 <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur border-t border-border-color p-4 flex items-center justify-between">
                     <div>
-                        <p className="text-xs text-gray-400">Total</p>
+                        <p className="text-xs text-forground">Total</p>
                         <p className="text-xl font-black text-purple-400">${total.toFixed(2)}</p>
                     </div>
 

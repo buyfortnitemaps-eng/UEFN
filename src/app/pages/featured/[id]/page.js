@@ -258,7 +258,7 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <p className="text-gray-400 text-sm leading-relaxed bg-white/5 p-6 rounded-4xl border border-white/5">
+            <p className="text-forground text-sm leading-relaxed bg-white/5 p-6 rounded-4xl border border-white/5">
               {product.description}
             </p>
 
@@ -361,7 +361,7 @@ export default function ProductDetail() {
 
                   {openFaq === index && (
                     <div className="px-6 pb-6 animate-in slide-in-from-top-2 duration-300">
-                      <p className="text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                      <p className="text-forground leading-relaxed border-t border-white/5 pt-4">
                         {faq.answer}
                       </p>
                     </div>

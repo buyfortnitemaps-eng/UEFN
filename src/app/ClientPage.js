@@ -11,11 +11,9 @@ import Link from "next/link";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-bg-gradient text-foreground selection:bg-purple-500">
-      
-
+    <div className="min-h-screen text-foreground bg-background overflow-auto">
       {/* --- WHY US SECTION --- */}
-      <section className="py-20 bg-white/2 border-y border-white/5 px-6">
+      <section className="py-20 border-y border-white/5 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6">
@@ -62,7 +60,7 @@ const HomePage = () => {
           >
             Loved by <span className="text-purple-500">UEFN</span> Creators
           </motion.h2>
-          <p className="text-gray-400 max-w-lg mx-auto leading-relaxed">
+          <p className="text-forground max-w-lg mx-auto leading-relaxed">
             Don't just take our word for it. Join thousands of satisfied
             developers building the future of Fortnite.
           </p>
@@ -168,7 +166,7 @@ const HomePage = () => {
             Have a Vision for a <br />{" "}
             <span className="text-purple-500">UEFN Map?</span>
           </h2>
-          <p className="text-gray-400 mb-12 text-xl max-w-2xl mx-auto leading-relaxed font-medium relative z-10">
+          <p className="text-forground mb-12 text-xl max-w-2xl mx-auto leading-relaxed font-medium relative z-10">
             We’re available for custom map creation, bug fixing, Verse
             programming, and long-term creator collaborations.
           </p>

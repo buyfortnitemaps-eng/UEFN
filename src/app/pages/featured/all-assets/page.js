@@ -106,7 +106,7 @@
 //                 className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
 //                   activeTag === tag.id
 //                     ? "bg-purple-600 text-foreground shadow-lg shadow-purple-500/20"
-//                     : "text-gray-400 hover:text-foreground"
+//                     : "text-forground hover:text-foreground"
 //                 }`}
 //               >
 //                 {tag.label}
@@ -149,7 +149,7 @@
 //                         {product.title}
 //                       </h3>
 //                     </Link>
-//                     <p className="text-gray-400 text-xs mb-6 h-12 leading-relaxed">
+//                     <p className="text-forground text-xs mb-6 h-12 leading-relaxed">
 //                       {product.description?.length > 120
 //                         ? `${product.description.slice(0, 120)}...`
 //                         : product.description}

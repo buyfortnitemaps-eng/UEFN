@@ -119,7 +119,7 @@ const ShopeClient = ({
 
       <main className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <section className="mb-12 flex flex-col md:row justify-between items-end gap-6">
+        <section className="grid grid-cols-1 md:grid-cols-2 my-3">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <LayoutGrid size={24} className="text-purple-500" />
@@ -240,9 +240,20 @@ const ShopeClient = ({
                                 <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1">
                                   Price
                                 </span>
-                                <span className="text-2xl font-black text-foreground">
-                                  ${product.price}
-                                </span>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-2xl font-black text-foreground">
+                                    $
+                                    {product.isDiscount
+                                      ? product.discountPrice
+                                      : product.price}
+                                  </span>
+
+                                  {product.isDiscount && (
+                                    <span className="text-sm text-gray-500 line-through font-medium">
+                                      ${product.price}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                               <button
                                 onClick={() => handleAddToCart(product)}

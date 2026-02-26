@@ -116,7 +116,7 @@ const AboutUs = () => {
 
       {/* --- Main Studio Story (Optional Upgrade 2) --- */}
       <section className="max-w-4xl mx-auto text-center mb-32 relative z-10 border-y border-white/5 py-16">
-        <p className="text-gray-400 text-xl leading-relaxed font-medium italic">
+        <p className="text-forground text-xl leading-relaxed font-medium italic">
           "We started this studio to help UEFN creators skip repetitive setup
           and focus on building great gameplay. Every project we ship is
           structured, optimized, and designed to be easy to extend—so you can
@@ -184,7 +184,7 @@ const AboutUs = () => {
                 </h2>
               </div>
 
-              <p className="text-gray-400 leading-relaxed text-lg">
+              <p className="text-forground leading-relaxed text-lg">
                 {project.description}
               </p>
 
@@ -242,7 +242,7 @@ const AboutUs = () => {
             Have a Vision for a <br />{" "}
             <span className="text-purple-500">UEFN Map?</span>
           </h2>
-          <p className="text-gray-400 mb-12 text-xl max-w-2xl mx-auto leading-relaxed font-medium relative z-10">
+          <p className="text-forground mb-12 text-xl max-w-2xl mx-auto leading-relaxed font-medium relative z-10">
             We’re available for custom map creation, bug fixing, Verse
             programming, and long-term creator collaborations.
           </p>

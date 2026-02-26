@@ -8,11 +8,18 @@ import { ShoppingCart, ShieldCheck, Sparkles } from "lucide-react";
 export default function Hero() {
   return (
     <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-background transition-colors duration-300">
-      {/* GRID BACKGROUND - Changed to be theme-aware */}
-      <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.07] bg-[radial-gradient(circle_at_center,var(--foreground)_1px,transparent_1px)] bg-size-[28px_28px]" />
-
-      {/* GLOW LIGHT */}
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-255 h-125 bg-purple-600/20 blur-[180px] rounded-full pointer-events-none" />
+      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+      </div>
 
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
         {/* LEFT CONTENT */}

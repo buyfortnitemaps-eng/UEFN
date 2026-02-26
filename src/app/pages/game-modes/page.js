@@ -6,18 +6,19 @@ import { motion } from "framer-motion";
 
 export default function GameTypesClient({ gameTypes }) {
   return (
-    <div className="relative pt-32 pb-24 px-6 transition-colors duration-300">
-      <div
-        className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-        }}
-      />
-
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-125 bg-purple-600/20 blur-[180px] rounded-full pointer-events-none" />
-      <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-100 bg-purple-600/15 blur-[150px] rounded-full pointer-events-none" />
-
+    <div className=" pt-32 pb-24 px-6 transition-colors duration-300 bg-background">
+           {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-200/20 blur-[180px] rounded-full" />
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-200/15 blur-[150px] rounded-full" />
+      </div>
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-12">
           <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-foreground italic leading-none">

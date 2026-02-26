@@ -62,7 +62,7 @@ const NotFound = () => {
           
           <button 
             onClick={() => window.history.back()}
-            className="flex items-center gap-2 bg-background border border-white/5 px-8 py-4 rounded-2xl font-black hover:bg-white/10 transition-all text-gray-400 hover:text-foreground"
+            className="flex items-center gap-2 bg-background border border-white/5 px-8 py-4 rounded-2xl font-black hover:bg-white/10 transition-all text-forground hover:text-foreground"
           >
             <ArrowLeft size={20} /> Previous Zone
           </button>

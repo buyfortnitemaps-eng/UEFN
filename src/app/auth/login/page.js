@@ -148,7 +148,7 @@ const Login = () => {
             /* --- সাইনআউট সেকশন --- */
             <div className="space-y-6">
               <div className="p-6 bg-background border border-white/5 rounded-3xl text-center">
-                <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                <p className="text-forground text-sm mb-6 leading-relaxed">
                   You are currently signed in. You can manage your assets or
                   switch to another account.
                 </p>

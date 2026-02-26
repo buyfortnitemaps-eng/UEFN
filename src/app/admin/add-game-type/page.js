@@ -229,13 +229,13 @@ const AddGameType = () => {
                       <td className="p-5 text-right space-x-2">
                         <button 
                           onClick={() => handleEditClick(type)} 
-                          className="p-2.5 bg-background hover:bg-blue-600/20 text-gray-400 hover:text-blue-500 rounded-xl transition-all"
+                          className="p-2.5 bg-background hover:bg-blue-600/20 text-forground hover:text-blue-500 rounded-xl transition-all"
                         >
                           <Edit3 size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(type._id)}
-                          className="p-2.5 bg-background hover:bg-red-600/20 text-gray-400 hover:text-red-500 rounded-xl transition-all"
+                          className="p-2.5 bg-background hover:bg-red-600/20 text-forground hover:text-red-500 rounded-xl transition-all"
                         >
                           <Trash2 size={16} />
                         </button>

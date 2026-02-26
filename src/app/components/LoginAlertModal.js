@@ -9,7 +9,7 @@ const LoginAlertModal = ({ onClose }) => {
           <LogIn className="text-purple-500" size={32} />
         </div>
         <h2 className="text-xl font-bold mb-2">Login Required</h2>
-        <p className="text-gray-400 text-sm mb-8">
+        <p className="text-forground text-sm mb-8">
           Please login to your account to add assets to your cart and complete purchases.
         </p>
         <div className="flex flex-col gap-3">

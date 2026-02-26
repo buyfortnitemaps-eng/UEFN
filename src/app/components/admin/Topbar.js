@@ -14,7 +14,7 @@ const Topbar = ({ setIsMobileMenuOpen }) => {
       <div className="flex items-center gap-4">
         <button 
           onClick={() => setIsMobileMenuOpen(true)} 
-          className="lg:hidden p-2.5 bg-background rounded-xl text-gray-400 hover:text-foreground transition-colors"
+          className="lg:hidden p-2.5 bg-background rounded-xl text-forground hover:text-foreground transition-colors"
         >
           <Menu size={22} />
         </button>
@@ -32,7 +32,7 @@ const Topbar = ({ setIsMobileMenuOpen }) => {
       {/* Profile & Notifications */}
       <div className="flex items-center gap-6">
         {/* Notifications */}
-        <button className="hidden sm:flex p-2.5 bg-white/2 hover:bg-background border border-white/5 rounded-xl text-gray-400 relative transition-all">
+        <button className="hidden sm:flex p-2.5 bg-white/2 hover:bg-background border border-white/5 rounded-xl text-forground relative transition-all">
           <Bell size={20} />
           <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-purple-500 rounded-full border-2 border-[#0a0a0b]" />
         </button>

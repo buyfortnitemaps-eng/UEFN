@@ -229,7 +229,7 @@ export default function ProductDetail() {
           {/* Right Side: Product Details */}
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-4">
-              <span className="bg-background border border-white/5 text-gray-400 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest">
+              <span className="bg-background border border-white/5 text-forground px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest">
                 Category: {product.category?.name || "UEFN Asset"}
               </span>
 
@@ -264,7 +264,7 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <p className="text-gray-400 text-sm md:text-base leading-relaxed bg-background p-6 rounded-3xl border border-white/5">
+            <p className="text-forground text-sm md:text-base leading-relaxed bg-background p-6 rounded-3xl border border-white/5">
               {product.description}
             </p>
 
@@ -365,7 +365,7 @@ export default function ProductDetail() {
 
                   {openFaq === index && (
                     <div className="px-6 pb-6 animate-in slide-in-from-top-2 duration-300">
-                      <div className="border-t border-white/5 pt-4 text-gray-400 text-sm md:text-base leading-relaxed">
+                      <div className="border-t border-white/5 pt-4 text-forground text-sm md:text-base leading-relaxed">
                         {faq.answer}
                       </div>
                     </div>

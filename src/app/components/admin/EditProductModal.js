@@ -214,7 +214,7 @@ const EditProductModal = ({ product, onClose, refresh }) => {
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-background rounded-full transition-colors text-gray-400 hover:text-white"
+            className="p-2 hover:bg-background rounded-full transition-colors text-forground hover:text-white"
           >
             <X size={24} />
           </button>

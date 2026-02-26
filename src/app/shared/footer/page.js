@@ -93,19 +93,19 @@ const Footer = () => {
             <div className="flex gap-4 mb-6">
               <a
                 href="https://x.com/Uefnmapcom"
-                className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-foreground transition-all"
+                className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-forground hover:bg-purple-600 hover:text-foreground transition-all"
               >
                 <Twitter size={18} />
               </a>
               <a
                 href="https://www.youtube.com/@UEFNMAP"
-                className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-foreground transition-all"
+                className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-forground hover:bg-purple-600 hover:text-foreground transition-all"
               >
                 <Youtube size={18} />
               </a>
               <a
                 href="https://discord.gg/Wv7GhuKTG3"
-                className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-foreground transition-all"
+                className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-forground hover:bg-purple-600 hover:text-foreground transition-all"
               >
                 <BsDiscord size={18} />
               </a>

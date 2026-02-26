@@ -173,7 +173,7 @@ export default function AllAssetsClient({
                         {product.title}
                       </h3>
                     </Link>
-                    <p className="text-gray-400 text-xs mb-6 h-12 leading-relaxed opacity-70">
+                    <p className="text-forground text-xs mb-6 h-12 leading-relaxed opacity-70">
                       {product.description?.length > 120
                         ? `${product.description.slice(0, 120)}...`
                         : product.description}
@@ -183,12 +183,20 @@ export default function AllAssetsClient({
                         <p className="text-gray-500 text-[9px] uppercase font-black tracking-widest mb-1">
                           Price
                         </p>
-                        <span className="text-2xl font-black text-foreground">
-                          $
-                          {product.isDiscount
-                            ? product.discountPrice
-                            : product.price}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl font-black text-foreground">
+                            $
+                            {product.isDiscount
+                              ? product.discountPrice
+                              : product.price}
+                          </span>
+
+                          {product.isDiscount && (
+                            <span className="text-sm text-gray-500 line-through font-medium">
+                              ${product.price}
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <button
                         onClick={() => handleAddToCart(product)}

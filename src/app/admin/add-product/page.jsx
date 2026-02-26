@@ -229,7 +229,7 @@ const AddProduct = () => {
                 <div className="border-2 border-dashed border-white/20 rounded-3xl p-10 text-center bg-card-bg/50">
                   <input type="file" required accept="image/*" onChange={handleThumbnailChange} className="absolute inset-0 opacity-0 cursor-pointer" />
                   <ImageIcon className="mx-auto text-gray-500 mb-2" size={40} />
-                  <p className="text-xs text-gray-400 font-bold uppercase italic">Upload Thumbnail</p>
+                  <p className="text-xs text-forground font-bold uppercase italic">Upload Thumbnail</p>
                 </div>
               ) : (
                 <div className="relative rounded-3xl overflow-hidden border-2 border-purple-500 shadow-xl">
@@ -296,7 +296,7 @@ const AddProduct = () => {
                     placeholder="Answer..."
                     value={faq.answer}
                     onChange={(e) => handleFaqChange(index, "answer", e.target.value)}
-                    className="w-full bg-background placeholder:text-foreground border border-blue-600 rounded-xl py-2 px-4 text-xs outline-none focus:border-purple-500 text-gray-400 h-20 resize-none"
+                    className="w-full bg-background placeholder:text-foreground border border-blue-600 rounded-xl py-2 px-4 text-xs outline-none focus:border-purple-500 text-forground h-20 resize-none"
                   />
                 </div>
               ))}
