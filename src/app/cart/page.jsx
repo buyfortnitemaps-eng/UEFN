@@ -74,44 +74,31 @@ export default function CartPage() {
 
     // ৩. চেকআউট হ্যান্ডলার
     const handleCheckout = async () => {
-        if (loading || !paddle) return;
+        const user = auth.currentUser;
+        if (!user) return alert("Login first");
 
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-            alert("Please login to checkout");
+        const res = await fetch("https://uefn-maps-server.vercel.app/api/paddle/create-transaction", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    priceId: item.paddlePriceId,
+                    quantity: 1
+                })),
+                email: user.email
+            })
+        });
+
+        const data = await res.json();
+
+        if (!window.Paddle) {
+            alert("Paddle not loaded");
             return;
         }
 
-        // ভেরিফিকেশন: প্রতিটি আইটেমের Price ID আছে কিনা
-        const checkoutItems = cart
-            .filter(item => item.paddlePriceId)
-            .map(item => ({
-                priceId: item.paddlePriceId,
-                quantity: 1
-            }));
-
-        if (checkoutItems.length === 0) {
-            alert("Items are not ready for purchase. Please contact support.");
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            paddle.Checkout.open({
-                items: checkoutItems,
-                customer: { email: currentUser.email },
-                settings: {
-                    displayMode: "overlay",
-                    theme: "dark",
-                    locale: "en"
-                }
-            });
-        } catch (err) {
-            console.error("Paddle Open Error:", err);
-        }
-
-        setTimeout(() => setLoading(false), 2000);
+        window.Paddle.Checkout.open({
+            transactionId: data.data.id
+        });
     };
 
     return (
@@ -127,7 +114,7 @@ export default function CartPage() {
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-card-bg border border-border-color rounded-2xl text-purple-500"><ShoppingBag size={28} /></div>
                         <div>
-                            <h1 className="text-3xl sm:text-4xl font-black uppercase italic tracking-tighter">Your Vault</h1>
+                            <h1 className="text-3xl sm:text-4xl font-black uppercase italic tracking-tighter">Your Cart</h1>
                             <p className="text-muted-foreground text-sm">{cart.length} assets ready for deployment</p>
                         </div>
                     </div>
@@ -136,7 +123,7 @@ export default function CartPage() {
                 {cart.length === 0 ? (
                     <div className="max-w-3xl mx-auto text-center py-28 border border-dashed border-border-color rounded-3xl">
                         <ShoppingBag size={42} className="mx-auto mb-5 text-purple-500 opacity-30" />
-                        <p className="text-muted-foreground text-lg mb-6">Your vault is empty.</p>
+                        <p className="text-muted-foreground text-lg mb-6">Your Cart is empty.</p>
                         <Link href="/marketplace"><button className="bg-purple-600 px-10 py-3 rounded-xl font-bold uppercase italic">Browse Shop</button></Link>
                     </div>
                 ) : (

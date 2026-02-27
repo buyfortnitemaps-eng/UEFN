@@ -175,10 +175,10 @@ const AboutUs = () => {
             <div className="w-full lg:w-2/5 space-y-8">
               <div>
                 <span className="text-purple-500 font-black text-[10px] uppercase tracking-widest block mb-2">
-                  Project Showcase
+                  About Our Team & Work
                 </span>
                 <h2 className="text-4xl md:text-5xl font-black text-foreground leading-none italic uppercase">
-                  Featured Project: <br /> {project.title}
+                 {project.title}
                 </h2>
               </div>
 

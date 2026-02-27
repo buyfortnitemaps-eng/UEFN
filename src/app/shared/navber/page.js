@@ -34,6 +34,7 @@ const Navbar = () => {
   const searchRef = useRef(null);
 
   const { user, mongoUser } = useAuth();
+  console.log(mongoUser)
   const { cart, setCart } = useCart();
 
   // Search Logic

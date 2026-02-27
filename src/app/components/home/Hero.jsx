@@ -99,54 +99,54 @@ export default function Hero() {
             {/* Asset Grid */}
             <div className="grid grid-cols-2 gap-4">
               {/* CARD 1 - MAP */}
-              <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all overflow-hidden">
+              <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all ">
                 <img
-                  src="/map.jfif"
-                  className="h-28 w-full object-cover group-hover:scale-105 transition duration-500"
+                  src="/hero (1).png"
+                  className="h-28 w-full group-hover:scale-105 transition duration-500"
                   alt="Cyber Arena"
                 />
                 <div className="p-3">
                   <h4 className="text-sm font-bold text-foreground">
-                    Cyber Arena
+                    Publish-Ready Template
                   </h4>
-                  <p className="text-xs text-muted-foreground">
+                  {/* <p className="text-xs text-muted-foreground">
                     UEFN Map • 1.8GB
-                  </p>
+                  </p> */}
                 </div>
               </div>
 
               {/* CARD 2 - VERSE */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all overflow-hidden">
                 <img
-                  src="/props.jfif"
-                  className="h-28 w-full object-cover group-hover:scale-105 transition duration-500"
-                  alt="Inventory System"
+                  src="/hero (2).jpeg"
+                  className="h-28 w-full group-hover:scale-105 transition duration-500"
+                  alt="Verse System · Plug & Play"
                 />
                 <div className="p-3">
                   <h4 className="text-sm font-bold text-foreground">
-                    Inventory System
+                    Verse System · Plug & Play
                   </h4>
-                  <p className="text-xs text-muted-foreground">
+                  {/* <p className="text-xs text-muted-foreground">
                     Verse Script
-                  </p>
+                  </p> */}
                 </div>
               </div>
 
               {/* CARD 3 - PROPS */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all overflow-hidden col-span-2">
                 <img
-                  src="/verce.jfif"
-                  className="h-32 w-full object-cover group-hover:scale-105 transition duration-500"
-                  alt="Sci-Fi Props"
+                  src="/hero (3).jpeg"
+                  className="h-32 w-full group-hover:scale-105 transition duration-500"
+                  alt="Get You Own Editable Map"
                 />
                 <div className="p-3 flex justify-between items-center">
                   <div>
                     <h4 className="text-sm font-bold text-foreground">
-                      Sci-Fi Props Pack
+                      Get You Own Editable Map
                     </h4>
-                    <p className="text-xs text-muted-foreground">
+                    {/* <p className="text-xs text-muted-foreground">
                       320 Optimized Meshes
-                    </p>
+                    </p> */}
                   </div>
                   <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-lg bg-purple-500/20 text-purple-600 dark:text-purple-300">
                     Popular

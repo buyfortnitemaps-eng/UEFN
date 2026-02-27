@@ -217,7 +217,7 @@ const Login = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-foreground placeholder:text-gray-700 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-foreground placeholder:text-gray-400 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
                   />
                 </div>
 
@@ -233,7 +233,7 @@ const Login = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-12 text-foreground placeholder:text-gray-700 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
+                    className="w-full bg-card-bg border border-white/5 rounded-2xl py-4 pl-12 pr-12 text-foreground placeholder:text-gray-400 focus:outline-none focus:border-purple-500/50 transition-all font-medium text-sm"
                   />
                   <button
                     type="button"
