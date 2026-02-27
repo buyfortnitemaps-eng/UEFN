@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
@@ -17,89 +16,139 @@ export default function CartPage() {
     const [paddle, setPaddle] = useState(null);
     const router = useRouter();
 
-    const subtotal = cart.reduce((acc, item) => acc + (item.price || 0), 0);
+    const subtotal = cart.reduce((acc, item) => {
+        const itemPrice = item.isDiscount ? item.discountPrice : item.price;
+        return acc + (itemPrice || 0);
+    }, 0);
     const total = subtotal;
 
-    // ১. Paddle ইনিশিয়ালাইজ করা
-    useEffect(() => {
-        initializePaddle({
-            environment: 'sandbox', // Glory-র রিয়েল অ্যাকাউন্ট পেলে 'production' হবে
-            token: "test_1a4ec1f9df524f5570405eeb210",
-            eventCallback: (event) => {
-                if (event.name === "checkout.completed") {
-                    handleOrderSuccess(event.data);
+// ১. Paddle ইনিশিয়ালাইজ করা
+useEffect(() => {
+    initializePaddle({
+        environment: 'sandbox',
+        token: "test_1a4ec1f9df524f5570405eeb210",
+        eventCallback: async (event) => {
+            if (event.name === "checkout.completed") {
+                setLoading(true);
+                try {
+                    // ১. প্রথমে অর্ডার ডাটাবেসে সেভ করুন
+                    await handleOrderDatabaseStore(event.data);
+
+                    // ২. এখন ডাটাবেসের কার্ট মডেল থেকে প্রোডাক্ট ফিল্ড খালি করুন
+                    const currentUser = auth.currentUser;
+                    const token = await currentUser?.getIdToken();
+                    
+                    if (token) {
+                        await fetch("https://uefn-maps-server.vercel.app/api/v1/cart/clear-cart", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                products: [] // এখানে খালি অ্যারে পাঠানো হচ্ছে যাতে DB-তে products: [] হয়ে যায়
+                            })
+                        });
+                    }
+
+                    // ৩. লোকাল স্টেট এবং স্টোরেজ ক্লিনআপ
+                    setCart([]);
+                    localStorage.removeItem("uefn_cart");
+                    
+                    // ৪. রিডাইরেক্ট
+                    router.push("/my-assets");
+                } catch (err) {
+                    console.error("Cart Clear Error:", err);
+                } finally {
+                    setLoading(false);
                 }
             }
-        }).then((paddleInstance) => {
-            setPaddle(paddleInstance);
-        });
-    }, []);
-
-    // ২. পেমেন্ট সফল হওয়ার পর ব্যাকএন্ডে কনফার্ম করা
-    const handleOrderSuccess = async (paymentData) => {
-        setLoading(true);
-        try {
-            const currentUser = auth.currentUser;
-            if (!currentUser) return;
-
-            const token = await currentUser.getIdToken();
-            const tId = paymentData.transaction_id || paymentData.id;
-
-            const response = await fetch(`https://uefn-maps-server.vercel.app/api/v1/orders/confirm`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    products: cart,
-                    transactionId: tId,
-                    orderId: paymentData.id
-                })
-            });
-
-            const data = await response.json();
-            if (data.success) {
-                setCart([]);
-                localStorage.removeItem("uefn_cart");
-                router.push("/my-assets");
-            } else {
-                alert("Payment verified but order failed to save.");
-            }
-        } catch (error) {
-            console.error("Order confirmation error:", error);
-        } finally {
-            setLoading(false);
         }
-    };
+    }).then((paddleInstance) => {
+        if (paddleInstance) setPaddle(paddleInstance);
+    });
+}, [cart]);
 
-    // ৩. চেকআউট হ্যান্ডলার
-    const handleCheckout = async () => {
-        const user = auth.currentUser;
-        if (!user) return alert("Login first");
+ const handleOrderDatabaseStore = async (paymentData) => {
+    try {
+        const currentUser = auth.currentUser;
+        const token = await currentUser?.getIdToken();
 
-        const res = await fetch("https://uefn-maps-server.vercel.app/api/paddle/create-transaction", {
+        // স্কিমা অনুযায়ী ডাটা ফরম্যাট করা
+        const formattedProducts = cart.map(item => ({
+            productId: item._id, // আপনার মডেলে productId হিসেবে আছে
+            priceId: item.paddlePriceId || "manual_price" 
+        }));
+
+        await fetch("https://uefn-maps-server.vercel.app/api/v1/orders/checkout", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
             body: JSON.stringify({
-                items: cart.map(item => ({
-                    priceId: item.paddlePriceId,
-                    quantity: 1
-                })),
-                email: user.email
+                products: formattedProducts, 
+                transactionId: paymentData.id,
+                orderId: paymentData.id
             })
         });
+    } catch (err) {
+        console.error("Database store error:", err);
+    }
+};
+    // ২. চেকআউট হ্যান্ডলার
+    const handleCheckout = async () => {
+        const currentUser = auth.currentUser;
 
-        const data = await res.json();
-
-        if (!window.Paddle) {
-            alert("Paddle not loaded");
+        if (!currentUser) {
+            alert("Please login first to proceed with the checkout.");
             return;
         }
 
-        window.Paddle.Checkout.open({
-            transactionId: data.data.id
-        });
+        if (!paddle) {
+            alert("Paddle is still loading. Please wait a moment.");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // ব্যাকএন্ডে ট্রানজেকশন ক্রিয়েট করা
+            const res = await fetch("https://uefn-maps-server.vercel.app/api/paddle/create-transaction", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    items: cart.map(item => ({
+                        priceId: item.paddlePriceId,
+                        quantity: 1
+                    })),
+                    email: currentUser.email
+                })
+            });
+
+            const responseData = await res.json();
+
+            if (!res.ok) {
+                console.error("Backend Error Detail:", responseData);
+                throw new Error(responseData.error || "Failed to create transaction");
+            }
+
+            // ৩. Paddle Checkout ওপেন করা (ট্রানজেকশন আইডি দিয়ে)
+            paddle.Checkout.open({
+                transactionId: responseData.data.id,
+                settings: {
+                    displayMode: "overlay",
+                    theme: "dark",
+                    locale: "en"
+                }
+            });
+
+        } catch (error) {
+            console.error("Full Checkout Error:", error);
+            alert(error.message || "An error occurred during checkout.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -113,52 +162,73 @@ export default function CartPage() {
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="flex items-center justify-between border-b border-white/5 pb-6 mb-10">
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-card-bg border border-border-color rounded-2xl text-purple-500"><ShoppingBag size={28} /></div>
+                        <div className="p-3 bg-card-bg border border-border-color rounded-2xl text-purple-500">
+                            <ShoppingBag size={28} />
+                        </div>
                         <div>
                             <h1 className="text-3xl sm:text-4xl font-black uppercase italic tracking-tighter">Your Cart</h1>
-                            <p className="text-muted-foreground text-sm">{cart.length} assets ready for deployment</p>
+                            <p className="text-muted-foreground text-sm">{cart.length} asset{cart.length !== 1 ? 's' : ''} ready for deployment</p>
                         </div>
                     </div>
                 </div>
 
                 {cart.length === 0 ? (
-                    <div className="max-w-3xl mx-auto text-center py-28 border border-dashed border-border-color rounded-3xl">
+                    <div className="max-w-3xl mx-auto text-center py-28 border border-dashed border-border-color rounded-3xl backdrop-blur-sm">
                         <ShoppingBag size={42} className="mx-auto mb-5 text-purple-500 opacity-30" />
-                        <p className="text-muted-foreground text-lg mb-6">Your Cart is empty.</p>
-                        <Link href="/marketplace"><button className="bg-purple-600 px-10 py-3 rounded-xl font-bold uppercase italic">Browse Shop</button></Link>
+                        <p className="text-muted-foreground text-lg mb-6 italic">Your cart is empty. Start collecting powerful assets.</p>
+                        <Link href="/marketplace">
+                            <button className="bg-purple-600 hover:bg-purple-500 px-10 py-3 rounded-xl font-black uppercase tracking-widest transition-all">Browse Shop</button>
+                        </Link>
                     </div>
                 ) : (
                     <div className="grid lg:grid-cols-3 gap-10">
                         <div className="lg:col-span-2 space-y-4">
                             <AnimatePresence>
                                 {cart.map((item) => (
-                                    <motion.div key={item._id} layout initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center gap-4 bg-card-bg border border-border-color p-4 rounded-3xl group">
+                                    <motion.div key={item._id} layout initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center gap-4 bg-card-bg border border-border-color p-4 rounded-3xl group hover:border-purple-500/50 transition-all">
                                         <div className="w-24 h-24 rounded-2xl overflow-hidden shrink-0 border border-white/5">
-                                            <img src={item.image?.url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                            <img src={item.image?.url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <h3 className="font-bold text-lg truncate">{item.title}</h3>
-                                            <p className="text-[10px] text-muted-foreground uppercase mt-1">Provider: {item.seller?.name}</p>
-                                            <div className="mt-2 text-purple-400 font-black text-xl italic">${item.price}</div>
+                                            <h3 className="font-bold text-lg truncate tracking-tight">{item.title}</h3>
+                                            <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Provider: {item.seller?.name}</p>
+                                            <div className="mt-2 text-purple-400 font-black text-xl italic">${item.isDiscount ? item.discountPrice : item.price}</div>
                                         </div>
-                                        <button onClick={() => removeFromCart(item._id)} className="p-4 rounded-2xl text-red-500 hover:bg-red-500/10 transition-all"><Trash2 size={20} /></button>
+                                        <button onClick={() => removeFromCart(item._id)} className="p-4 rounded-2xl text-red-500 hover:bg-red-500/10 transition-all active:scale-90">
+                                            <Trash2 size={20} />
+                                        </button>
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
                         </div>
 
                         <div className="lg:block">
-                            <div className="sticky top-28 bg-card-bg border border-border-color p-8 rounded-[2.5rem] shadow-xl">
+                            <div className="sticky top-28 bg-card-bg border border-border-color p-8 rounded-[2.5rem] shadow-xl backdrop-blur-md">
                                 <h2 className="font-black text-xs mb-8 uppercase tracking-[0.3em] text-muted-foreground">Order Summary</h2>
                                 <div className="space-y-4 mb-8">
-                                    <div className="flex justify-between text-sm"><span className="text-muted-foreground uppercase font-bold">Subtotal</span><span className="font-black">${subtotal.toFixed(2)}</span></div>
-                                    <div className="flex justify-between items-center border-t border-border-color pt-6"><span className="text-xl font-black uppercase italic">Total</span><span className="text-3xl font-black text-purple-500 italic">${total.toFixed(2)}</span></div>
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-muted-foreground font-bold uppercase">Subtotal</span>
+                                        <span className="font-black">${subtotal.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center border-t border-border-color pt-6">
+                                        <span className="text-xl font-black uppercase italic">Total</span>
+                                        <span className="text-3xl font-black text-purple-500 italic">${total.toFixed(2)}</span>
+                                    </div>
                                 </div>
-                                <button onClick={handleCheckout} disabled={loading} className="w-full bg-purple-600 hover:bg-purple-500 py-5 rounded-2xl font-black uppercase flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-purple-600/20">
-                                    {loading ? <Loader2 className="animate-spin" /> : "Secure Checkout"}
-                                    {!loading && <ArrowRight />}
+
+                                <button
+                                    onClick={handleCheckout}
+                                    disabled={loading}
+                                    className={`w-full bg-purple-600 hover:bg-purple-500 py-5 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-lg shadow-purple-600/20 active:scale-95 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                >
+                                    {loading ? <Loader2 className="animate-spin" size={20} /> : "Secure Checkout"}
+                                    {!loading && <ArrowRight size={20} />}
                                 </button>
-                                <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-black uppercase text-muted-foreground opacity-50"><ShieldCheck size={14} className="text-green-500" />Secured Paddle Payment</div>
+
+                                <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-tighter text-muted-foreground opacity-50">
+                                    <ShieldCheck size={14} className="text-green-500" />
+                                    Powered by Paddle • Secure Encryption
+                                </div>
                             </div>
                         </div>
                     </div>

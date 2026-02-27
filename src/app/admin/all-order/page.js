@@ -8,6 +8,7 @@ import {
   User,
   ChevronRight,
   ChevronLeft,
+  Loader2,
 } from "lucide-react";
 import { auth } from "../../../../firebase";
 
@@ -22,7 +23,10 @@ const AdminOrders = () => {
   const fetchOrders = async (page) => {
     try {
       setLoading(true);
-      const token = await auth.currentUser.getIdToken();
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const token = await user.getIdToken();
       const res = await fetch(
         `https://uefn-maps-server.vercel.app/api/v1/orders/get-all-order?page=${page}&limit=${limit}`,
         {
@@ -36,7 +40,7 @@ const AdminOrders = () => {
         setTotalPages(data.meta.totalPages || 1);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error fetching orders:", error);
     } finally {
       setLoading(false);
     }
@@ -46,14 +50,10 @@ const AdminOrders = () => {
     fetchOrders(currentPage);
   }, [currentPage]);
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  // সার্চ লজিক আপডেট: এখন ID এবং User Name উভয় দিয়েই ফিল্টার হবে
+  // সার্চ ফিল্টার: ID, ইউজার নেম বা ইমেইল দিয়ে ফিল্টার
   const filteredOrders = orders.filter((order) => {
     const searchLower = searchTerm.toLowerCase();
-    const orderId = (order._id?.$oid || order._id).toString().toLowerCase();
+    const orderId = order._id?.toString().toLowerCase() || "";
     const userName = order.userId?.name?.toLowerCase() || "";
     const userEmail = order.userId?.email?.toLowerCase() || "";
 
@@ -66,98 +66,27 @@ const AdminOrders = () => {
 
   if (loading) {
     return (
-      <div className="space-y-8 animate-pulse">
-      {/* Stats Skeleton */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="glass-card p-6 rounded-3xl flex items-center gap-5 border border-border-color">
-            <div className="w-14 h-14 bg-white/5 rounded-2xl" />
-            <div className="space-y-2">
-              <div className="w-16 h-2 bg-white/5 rounded" />
-              <div className="w-24 h-6 bg-white/10 rounded" />
-            </div>
-          </div>
-        ))}
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-purple-500">
+        <Loader2 className="animate-spin mb-4" size={40} />
+        <p className="font-black uppercase tracking-widest text-xs">
+          Loading Vault Records...
+        </p>
       </div>
-
-      {/* Table Skeleton (Desktop) */}
-      <div className="hidden lg:block glass-card rounded-[2.5rem] overflow-hidden border border-border-color">
-        <div className="p-6 border-b border-border-color bg-white/5 flex justify-between">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="w-20 h-3 bg-white/10 rounded" />
-          ))}
-        </div>
-        <div className="divide-y divide-white/5">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="p-6 flex items-center justify-between">
-              <div className="w-24 h-4 bg-white/5 rounded" />
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/5" />
-                <div className="space-y-2">
-                  <div className="w-20 h-3 bg-white/10 rounded" />
-                  <div className="w-28 h-2 bg-white/5 rounded" />
-                </div>
-              </div>
-              <div className="flex -space-x-3">
-                {[1, 2].map((j) => (
-                  <div key={j} className="w-10 h-10 rounded-xl bg-white/5 border-2 border-background" />
-                ))}
-              </div>
-              <div className="w-16 h-6 bg-white/10 rounded-full" />
-              <div className="w-20 h-4 bg-white/5 rounded" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Card Skeleton (Mobile) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:hidden">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="glass-card rounded-[2rem] p-6 border border-border-color space-y-5">
-            <div className="flex justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/5" />
-                <div className="space-y-2">
-                  <div className="w-20 h-3 bg-white/10 rounded" />
-                  <div className="w-12 h-2 bg-white/5 rounded" />
-                </div>
-              </div>
-              <div className="w-12 h-6 bg-white/10 rounded" />
-            </div>
-            <div className="flex gap-2">
-              {[1, 2, 3].map((j) => (
-                <div key={j} className="w-12 h-12 rounded-xl bg-white/5" />
-              ))}
-            </div>
-            <div className="pt-4 border-t border-white/5 flex justify-between">
-              <div className="w-16 h-4 bg-white/10 rounded" />
-              <div className="w-20 h-3 bg-white/5 rounded" />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
     );
   }
 
   return (
     <div className="space-y-6 mt-10 md:space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
-      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+      {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* 1. DOT GRID BACKGROUND */}
         <div
-          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
             backgroundSize: "28px 28px",
           }}
         />
-
-        {/* 2. TOP GLOW LIGHT */}
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
-
-        {/* 3. BOTTOM GLOW LIGHT */}
-        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
       </div>
 
       {/* Header Section */}
@@ -167,7 +96,7 @@ const AdminOrders = () => {
             Order <span className="text-purple-500">History</span>
           </h2>
           <p className="text-muted-foreground text-xs md:text-sm italic">
-            Track and manage all customer transactions with ease.
+            Manage customer transactions and asset deployments.
           </p>
         </div>
 
@@ -178,7 +107,7 @@ const AdminOrders = () => {
           />
           <input
             type="text"
-            placeholder="Search Name, Email or Order ID..."
+            placeholder="Search Order ID, Name or Email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-card-bg border border-border-color rounded-2xl py-3.5 md:py-4 pl-12 pr-4 outline-none focus:border-purple-500 transition-all text-sm text-foreground shadow-xl backdrop-blur-md"
@@ -188,7 +117,7 @@ const AdminOrders = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-        <div className="glass-card p-6 rounded-3xl flex items-center gap-5 border border-border-color">
+        <div className="glass-card p-6 rounded-3xl flex items-center gap-5 border border-border-color bg-white/5 backdrop-blur-xl">
           <div className="p-4 bg-purple-500/10 rounded-2xl text-purple-500">
             <Package size={28} />
           </div>
@@ -201,13 +130,13 @@ const AdminOrders = () => {
             </h4>
           </div>
         </div>
-        <div className="glass-card p-6 rounded-3xl flex items-center gap-5 border border-border-color">
+        <div className="glass-card p-6 rounded-3xl flex items-center gap-5 border border-border-color bg-white/5 backdrop-blur-xl">
           <div className="p-4 bg-green-500/10 rounded-2xl text-green-500">
             <DollarSign size={28} />
           </div>
           <div>
             <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest">
-              Net Revenue
+              Revenue
             </p>
             <h4 className="text-2xl font-black text-foreground">
               $
@@ -219,20 +148,20 @@ const AdminOrders = () => {
         </div>
       </div>
 
-      {/* Desktop Table View */}
-      <div className="hidden lg:block glass-card rounded-[2.5rem] overflow-hidden border border-border-color shadow-2xl relative z-10">
+      {/* Table Section */}
+      <div className="hidden lg:block glass-card rounded-[2.5rem] overflow-hidden border border-border-color shadow-2xl relative z-10 bg-white/[0.02] backdrop-blur-md">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-white/5 border-b border-border-color">
                 <th className="p-6 text-[10px] font-black uppercase text-muted-foreground tracking-widest">
-                  Order / ID
+                  ID
                 </th>
                 <th className="p-6 text-[10px] font-black uppercase text-muted-foreground tracking-widest">
-                  Customer Info
+                  Customer
                 </th>
                 <th className="p-6 text-[10px] font-black uppercase text-muted-foreground tracking-widest">
-                  Items
+                  Assets
                 </th>
                 <th className="p-6 text-[10px] font-black uppercase text-muted-foreground tracking-widest text-center">
                   Amount
@@ -240,8 +169,8 @@ const AdminOrders = () => {
                 <th className="p-6 text-[10px] font-black uppercase text-muted-foreground tracking-widest">
                   Status
                 </th>
-                <th className="p-6 text-[10px] font-black uppercase text-muted-foreground tracking-widest text-right text-nowrap">
-                  Date & Time
+                <th className="p-6 text-[10px] font-black uppercase text-muted-foreground tracking-widest text-right">
+                  Date
                 </th>
               </tr>
             </thead>
@@ -250,30 +179,30 @@ const AdminOrders = () => {
                 <tr>
                   <td
                     colSpan="6"
-                    className="p-20 text-center text-muted-foreground italic font-bold uppercase text-xs"
+                    className="p-20 text-center text-muted-foreground font-bold uppercase text-xs"
                   >
-                    No records found.
+                    No records found
                   </td>
                 </tr>
               ) : (
                 filteredOrders.map((order) => (
                   <tr
-                    key={order._id?.$oid || order._id}
+                    key={order._id}
                     className="hover:bg-white/[0.02] transition-colors group"
                   >
                     <td className="p-6">
-                      <span className="text-xs font-black text-purple-400 font-mono">
-                        #{(order._id?.$oid || order._id).slice(-8)}
+                      <span className="text-xs font-black text-purple-400 font-mono uppercase">
+                        #{order._id.slice(-6)}
                       </span>
                     </td>
                     <td className="p-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center overflow-hidden shrink-0">
-                          {order.userId?.photoURL ? (
+                        <div className="w-9 h-9 rounded-full bg-purple-500/10 flex items-center justify-center overflow-hidden border border-purple-500/20">
+                          {order.userId?.image ? (
                             <img
-                              src={order.userId.photoURL}
-                              alt=""
+                              src={order.userId.image}
                               className="w-full h-full object-cover"
+                              alt=""
                             />
                           ) : (
                             <User size={16} className="text-purple-500" />
@@ -281,26 +210,28 @@ const AdminOrders = () => {
                         </div>
                         <div className="flex flex-col min-w-0">
                           <span className="text-sm font-black text-foreground truncate uppercase italic">
-                            {order.userId?.name || "Anonymous"}
+                            {order.userId?.name || "Unknown"}
                           </span>
-                          <span className="text-[10px] text-muted-foreground truncate opacity-70">
-                            {order.userId?.email || order.userId}
+                          <span className="text-[10px] text-muted-foreground truncate">
+                            {order.userId?.email}
                           </span>
                         </div>
                       </div>
                     </td>
                     <td className="p-6">
                       <div className="flex -space-x-3">
-                        {order.products.map((prod, idx) => (
+                        {order.products?.map((item, idx) => (
                           <div
                             key={idx}
-                            className="relative group/tool shrink-0"
+                            className="relative group/img shrink-0"
                           >
                             <img
-                              src={prod.image.url}
+                              src={
+                                item.productId?.image?.url || "/placeholder.png"
+                              }
                               alt=""
-                              className="w-10 h-10 rounded-xl border-2 border-background object-cover shadow-lg"
-                              title={prod.title}
+                              className="w-10 h-10 rounded-xl border-2 border-background object-cover shadow-lg hover:scale-110 transition-transform"
+                              title={item.productId?.title}
                             />
                           </div>
                         ))}
@@ -312,15 +243,11 @@ const AdminOrders = () => {
                       </span>
                     </td>
                     <td className="p-6">
-                      <div className="flex flex-col gap-1.5">
-                        <span
-                          className={`w-fit px-3 py-1 rounded-full text-[8px] font-black uppercase border ${order.paymentStatus === "paid" ? "bg-green-500/10 text-green-500 border-green-500/20" : "bg-red-500/10 text-red-500 border-red-500/20"}`}
-                        >
+                      <div className="flex flex-col gap-1">
+                        <span className="w-fit px-2 py-0.5 rounded-md text-[8px] font-black uppercase bg-green-500/10 text-green-500 border border-green-500/20">
                           {order.paymentStatus}
                         </span>
-                        <span
-                          className={`w-fit px-3 py-1 rounded-full text-[8px] font-black uppercase border ${order.status === "completed" ? "bg-blue-500/10 text-blue-500 border-blue-500/20" : "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"}`}
-                        >
+                        <span className="w-fit px-2 py-0.5 rounded-md text-[8px] font-black uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20">
                           {order.status}
                         </span>
                       </div>
@@ -328,14 +255,10 @@ const AdminOrders = () => {
                     <td className="p-6 text-right">
                       <div className="flex flex-col items-end">
                         <span className="text-xs font-bold text-foreground/90">
-                          {new Date(
-                            order.createdAt?.$date || order.createdAt,
-                          ).toLocaleDateString()}
+                          {new Date(order.createdAt).toLocaleDateString()}
                         </span>
                         <span className="text-[10px] text-muted-foreground italic">
-                          {new Date(
-                            order.createdAt?.$date || order.createdAt,
-                          ).toLocaleTimeString([], {
+                          {new Date(order.createdAt).toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
@@ -350,62 +273,7 @@ const AdminOrders = () => {
         </div>
       </div>
 
-      {/* Mobile/Tablet Card View */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:hidden relative z-10">
-        {filteredOrders.map((order) => (
-          <div
-            key={order._id?.$oid || order._id}
-            className="glass-card rounded-4xl p-6 border border-border-color space-y-5"
-          >
-            <div className="flex justify-between items-start">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
-                  <User size={18} className="text-purple-500" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-black text-foreground uppercase italic">
-                    {order.userId?.name || "Guest"}
-                  </h4>
-                  <p className="text-[10px] font-mono text-purple-400">
-                    #{(order._id?.$oid || order._id).slice(-8)}
-                  </p>
-                </div>
-              </div>
-              <span className="text-xl font-black text-foreground italic">
-                ${order.totalAmount}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2">
-              {order.products.map((prod, idx) => (
-                <img
-                  key={idx}
-                  src={prod.image.url}
-                  alt=""
-                  className="w-12 h-12 rounded-xl object-cover border border-white/10"
-                />
-              ))}
-            </div>
-
-            <div className="flex justify-between items-center pt-4 border-t border-white/5">
-              <div className="flex gap-2">
-                <span
-                  className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase ${order.paymentStatus === "paid" ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}
-                >
-                  {order.paymentStatus}
-                </span>
-              </div>
-              <p className="text-[10px] font-bold text-muted-foreground">
-                {new Date(
-                  order.createdAt?.$date || order.createdAt,
-                ).toLocaleDateString()}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* --- PAGINATION CONTROLS --- */}
+      {/* Pagination Controls */}
       {!loading && totalPages > 1 && (
         <div className="mt-12 flex justify-center items-center gap-3 relative z-20">
           <button
@@ -415,23 +283,17 @@ const AdminOrders = () => {
           >
             <ChevronLeft size={20} />
           </button>
-
           <div className="flex gap-2">
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`w-10 h-10 rounded-xl font-black text-xs transition-all ${
-                  currentPage === i + 1
-                    ? "bg-purple-600 text-white"
-                    : "bg-card-bg border border-border-color text-muted-foreground hover:border-purple-500/50"
-                }`}
+                className={`w-10 h-10 rounded-xl font-black text-xs transition-all ${currentPage === i + 1 ? "bg-purple-600 text-white" : "bg-card-bg border border-border-color text-muted-foreground"}`}
               >
                 {i + 1}
               </button>
             ))}
           </div>
-
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
