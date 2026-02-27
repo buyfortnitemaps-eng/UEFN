@@ -187,7 +187,7 @@ const AboutUs = () => {
               </p>
 
               {/* Belief-based Stats Boxes */}
-              <div className="grid grid-cols-1 gap-4">
+              {/* <div className="grid grid-cols-1 gap-4">
                 <div className="p-6 bg-white/2 border border-white/5 rounded-3xl flex items-center justify-between group hover:border-purple-500/30 transition-all">
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
                     Use Case
@@ -205,7 +205,7 @@ const AboutUs = () => {
                     UEFN Project + Verse Logic
                   </p>
                 </div>
-              </div>
+              </div> */}
 
               <div className="pt-4">
                 <Link href={"/marketplace"}>
