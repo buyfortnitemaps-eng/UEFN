@@ -66,7 +66,7 @@ const AdminOrders = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] text-purple-500">
+      <div className="flex flex-col items-center justify-center min-h-100 text-purple-500">
         <Loader2 className="animate-spin mb-4" size={40} />
         <p className="font-black uppercase tracking-widest text-xs">
           Loading Vault Records...
@@ -149,7 +149,7 @@ const AdminOrders = () => {
       </div>
 
       {/* Table Section */}
-      <div className="hidden lg:block glass-card rounded-[2.5rem] overflow-hidden border border-border-color shadow-2xl relative z-10 bg-white/[0.02] backdrop-blur-md">
+      <div className="hidden lg:block glass-card rounded-[2.5rem] overflow-hidden border border-border-color shadow-2xl relative z-10 bg-white/2 backdrop-blur-md">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -188,7 +188,7 @@ const AdminOrders = () => {
                 filteredOrders.map((order) => (
                   <tr
                     key={order._id}
-                    className="hover:bg-white/[0.02] transition-colors group"
+                    className="hover:bg-white/2 transition-colors group"
                   >
                     <td className="p-6">
                       <span className="text-xs font-black text-purple-400 font-mono uppercase">

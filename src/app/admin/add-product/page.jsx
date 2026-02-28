@@ -29,7 +29,7 @@ const AddProduct = () => {
     galleryImages: [],
     isDiscount: false,
     discountPrice: "",
-    faqs: [] // FAQ এর জন্য নতুন স্টেট
+    faqs: []
   });
 
   // FAQ হ্যান্ডলিং ফাংশন
@@ -71,14 +71,30 @@ const AddProduct = () => {
     }
   };
 
+  // গ্যালারি ইমেজ হ্যান্ডলিং
   const handleGalleryChange = (e) => {
     const files = Array.from(e.target.files);
-    setFormData({ ...formData, galleryImages: [...formData.galleryImages, ...files] });
+    // ফাইলগুলো মূল স্টেটে যোগ করা
+    setFormData(prev => ({
+      ...prev,
+      galleryImages: [...prev.galleryImages, ...files]
+    }));
+
+    // প্রিভিউ জেনারেট করা
     files.forEach(file => {
       const reader = new FileReader();
       reader.onloadend = () => setGalleryPreviews(prev => [...prev, reader.result]);
       reader.readAsDataURL(file);
     });
+  };
+
+  // গ্যালারি ইমেজ রিমুভ করার ফাংশন
+  const removeGalleryImage = (index) => {
+    const updatedImages = formData.galleryImages.filter((_, i) => i !== index);
+    const updatedPreviews = galleryPreviews.filter((_, i) => i !== index);
+
+    setFormData({ ...formData, galleryImages: updatedImages });
+    setGalleryPreviews(updatedPreviews);
   };
 
   const handleSubmit = async (e) => {
@@ -109,7 +125,7 @@ const AddProduct = () => {
         discountPrice: formData.isDiscount ? Number(formData.discountPrice) : 0,
         image: thumbData,
         gallery: galleryData,
-        faqs: formData.faqs, // পে-লোডে FAQ পাঠানো হচ্ছে
+        faqs: formData.faqs,
         seller: {
           name: mongoUser?.name || "Admin",
           email: mongoUser?.email,
@@ -128,7 +144,7 @@ const AddProduct = () => {
 
       if (res.ok) {
         alert("Asset Published Successfully! 🚀");
-        window.location.reload(); // সফল হলে পেজ রিলোড
+        window.location.reload();
       }
     } catch (err) {
       alert("Error: " + err.message);
@@ -144,23 +160,12 @@ const AddProduct = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 text-foreground mt-10 pb-20">
-      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* 1. DOT GRID BACKGROUND */}
-        <div
-          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
-          style={{
-            backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
-            backgroundSize: "28px 28px",
-          }}
-        />
-
-        {/* 2. TOP GLOW LIGHT */}
+        <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]" style={{ backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`, backgroundSize: "28px 28px" }} />
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
-
-        {/* 3. BOTTOM GLOW LIGHT */}
         <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
       </div>
+
       <h2 className="text-4xl font-black uppercase mb-10 tracking-tighter italic">
         Add New <span className="text-purple-500 font-black">Asset</span>
       </h2>
@@ -234,7 +239,7 @@ const AddProduct = () => {
               ) : (
                 <div className="relative rounded-3xl overflow-hidden border-2 border-purple-500 shadow-xl">
                   <img src={thumbnailPreview} alt="Preview" className="w-full h-48 object-cover" />
-                  <button type="button" onClick={() => setThumbnailPreview(null)} className="absolute top-2 right-2 bg-red-600 p-1.5 rounded-full text-white"><X size={16} /></button>
+                  <button type="button" onClick={() => { setThumbnailPreview(null); setFormData({ ...formData, thumbnail: null }) }} className="absolute top-2 right-2 bg-red-600 p-1.5 rounded-full text-white"><X size={16} /></button>
                 </div>
               )}
             </div>
@@ -242,13 +247,21 @@ const AddProduct = () => {
             <div className="mt-6">
               <label className="text-xs font-black text-purple-400 uppercase tracking-widest">Gallery Images</label>
               <div className="mt-2 grid grid-cols-4 gap-3">
-                <div className="relative border-2 border-dashed border-white/20 rounded-2xl h-20 flex items-center justify-center bg-card-bg/50">
+                <div className="relative border-2 border-dashed border-white/20 rounded-2xl h-20 flex items-center justify-center bg-card-bg/50 hover:bg-card-bg transition-all">
                   <input type="file" multiple accept="image/*" onChange={handleGalleryChange} className="absolute inset-0 opacity-0 cursor-pointer" />
                   <Images className="text-gray-500" size={24} />
                 </div>
                 {galleryPreviews.map((src, idx) => (
-                  <div key={idx} className="relative rounded-2xl overflow-hidden h-20 border border-white/5">
+                  <div key={idx} className="relative rounded-2xl overflow-hidden h-20 border border-white/5 group">
                     <img src={src} className="w-full h-full object-cover" alt="Gallery" />
+                    {/* Gallery Image Remove Button */}
+                    <button
+                      type="button"
+                      onClick={() => removeGalleryImage(idx)}
+                      className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white"
+                    >
+                      <X size={20} />
+                    </button>
                   </div>
                 ))}
               </div>

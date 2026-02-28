@@ -51,6 +51,8 @@ const AllProducts = () => {
       "https://uefn-maps-server.vercel.app/api/v1/products/all-products",
     );
     const data = await res.json();
+    
+    console.log(data)
     const sortedData = (data.data || []).reverse();
     setProducts(sortedData);
     setFilteredProducts(data.data);
@@ -177,7 +179,7 @@ const AllProducts = () => {
                 </td>
                 <td className="p-6">
                   <span className="bg-purple-500/10 text-purple-400 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-purple-500/20">
-                    {product.category.name}
+                    {product?.category?.name}
                   </span>
                 </td>
                 <td className="p-6 font-mono text-purple-400 font-bold">
@@ -235,7 +237,7 @@ const AllProducts = () => {
                 </h3>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="text-[10px] font-black uppercase text-purple-400 tracking-widest leading-none">
-                    {product.category.name}
+                    {product?.category?.name}
                   </span>
                   <span className="text-sm font-mono font-bold text-purple-400 leading-none">
                     ${product.price}

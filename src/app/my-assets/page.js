@@ -183,7 +183,7 @@ export default function MyAssetsPage() {
                         ${asset.price}
                       </td>
                       <td className="p-6 font-black text-purple-400 text-sm italic">
-                        {asset._id}
+                        {asset._id.slice(-6)}
                       </td>
                       <td className="p-6 text-right">
                         <button

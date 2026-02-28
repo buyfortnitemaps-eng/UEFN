@@ -63,16 +63,16 @@ const Footer = () => {
             <h4 className="text-foreground font-bold mb-6">Support</h4>
             <ul className="space-y-4 text-sm text-gray-500">
               <li>
-                <Link href="/legal/faqs">FAQs</Link>
+                <Link className="hover:text-purple-500" href="/legal/faqs">FAQs</Link>
               </li>
               <li>
-                <Link href="/legal/terms-of-service">Terms of Service</Link>
+                <Link className="hover:text-purple-500" href="/legal/terms-of-service">Terms of Service</Link>
               </li>
               <li>
-                <Link href="/legal/privacy-policy">Privacy Policy</Link>
+                <Link className="hover:text-purple-500" href="/legal/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <Link href="/legal/refund-policy">Refund Policy</Link>
+                <Link className="hover:text-purple-500" href="/legal/refund-policy">Refund Policy</Link>
               </li>
               
             </ul>
