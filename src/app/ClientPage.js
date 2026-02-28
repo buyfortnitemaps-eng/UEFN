@@ -1,15 +1,54 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Zap,
   ShieldCheck,
   Download,
   ChevronRight,
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 const HomePage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(
+        "https://uefn-maps-server.vercel.app/api/v1/contacts/send-message",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
+      if (res.ok) {
+        setShowSuccess(true);
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setTimeout(() => setShowSuccess(false), 5000);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen text-foreground bg-background overflow-auto">
       {/* --- WHY US SECTION --- */}
@@ -149,48 +188,189 @@ const HomePage = () => {
       </section>
 
       {/* --- CTA Section (Replacement 4) --- */}
-      <section className="py-40 max-w-7xl mx-auto text-center relative z-20">
-        {" "}
-        {/* z-20 নিশ্চিত করা হয়েছে */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="glass-card border border-white/5 p-12 md:p-24 rounded-[4rem] relative overflow-hidden group shadow-2xl"
-        >
-          {/* Background Glow */}
-          <div className="absolute top-0 left-0 w-full h-full bg-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+      <div className="min-h-screen bg-background text-foreground pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* --- Contact Hidden SEO --- */}
+            <section className="sr-only">
+              <h2>Contact UEFN Creator for Map Commissions</h2>
+              <p>
+                Get in touch for custom Fortnite map services, UEFN development
+                help, and specialized map design requests. We provide the best
+                Fortnite map support and UEFN creator services.
+              </p>
+              <ul>
+                <li>Hire UEFN developer for premium map projects</li>
+                <li>Support for purchased UEFN assets and Verse scripts</li>
+                <li>Request custom Fortnite Creative islands and game modes</li>
+                <li>Join our Discord for UEFN map design collaboration</li>
+              </ul>
+            </section>
 
-          <h2 className="text-5xl md:text-6xl font-black mb-8 leading-none uppercase italic relative z-10">
-            Have a Vision for a <br />{" "}
-            <span className="text-purple-500">UEFN Map?</span>
-          </h2>
-          <p className="text-forground mb-12 text-xl max-w-2xl mx-auto leading-relaxed font-medium relative z-10">
-            We’re available for custom map creation, bug fixing, Verse
-            programming, and long-term creator collaborations.
-          </p>
+            {/* Left Side: Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="space-y-8"
+            >
+              <div>
+                <h1 className="text-5xl font-black uppercase tracking-tighter mb-4">
+                  Get in <span className="text-purple-500">Touch</span>
+                </h1>
+                <p className="text-gray-500 text-lg">
+                  Have a project in mind or need help with UEFN? Drop a message!
+                </p>
+              </div>
 
-          {/* বাটন লজিক আপডেট */}
-          <div className="relative z-30">
-            {" "}
-            {/* বাটনকে সবার উপরে রাখার জন্য z-30 */}
-            <Link href="/pages/contact" className="inline-block">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-purple-600 text-white px-16 py-6 rounded-2xl font-black text-xl hover:bg-purple-500 hover:shadow-[0_0_50px_rgba(168,85,247,0.4)] transition-all cursor-pointer uppercase tracking-widest italic"
-              >
-                👉 Get in Touch
-              </motion.button>
-            </Link>
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: <Mail className="text-purple-500" />,
+                    label: "Email",
+                    value: "webuefnmap@gmail.com",
+                  },
+                  {
+                    icon: <Phone className="text-purple-500" />,
+                    label: "Phone",
+                    value: "+880 1953 558205",
+                  },
+                  {
+                    icon: <MapPin className="text-purple-500" />,
+                    label: "Office",
+                    value: "Dhaka, Bangladesh",
+                  },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-4 bg-background p-6 rounded-3xl border border-border-color"
+                  >
+                    <div className="p-3 bg-purple-500/10 rounded-2xl">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                        {item.label}
+                      </p>
+                      <p className="text-foreground font-bold">{item.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right Side: Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="border border-border-color p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden"
+            >
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/10 blur-[100px] rounded-full" />
+
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-foreground uppercase tracking-widest">
+                      Name
+                    </label>
+                    <input
+                      required
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-foreground uppercase tracking-widest">
+                      Email
+                    </label>
+                    <input
+                      required
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-foreground uppercase tracking-widest">
+                    Phone
+                  </label>
+                  <input
+                    required
+                    value={formData.phone}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
+                    className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all"
+                    placeholder="+1..."
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-foreground uppercase tracking-widest">
+                    Message
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                    className="w-full bg-background border border-border-color rounded-2xl py-4 px-6 focus:border-purple-500 outline-none transition-all resize-none"
+                    placeholder="Tell us about your project..."
+                  />
+                </div>
+
+                <button
+                  disabled={isSubmitting}
+                  className="w-full py-5 bg-purple-600 hover:bg-purple-500 text-foreground rounded-2xl font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-xl shadow-purple-500/20 disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      Send Message <Send size={18} />
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {/* Success Message Overlay */}
+              <AnimatePresence>
+                {showSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                    animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 bg-background/40 z-20 flex flex-col items-center justify-center p-8 text-center"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="bg-green-500/20 p-4 rounded-full mb-4"
+                    >
+                      <CheckCircle size={50} className="text-green-500" />
+                    </motion.div>
+                    <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
+                    <p className="text-gray-300">
+                      We'll get back to you within 24 hours.
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
-        </motion.div>
-        {/* --- Legal Disclaimer --- */}
-        <p className="mt-12 text-[10px] font-bold text-foreground uppercase tracking-widest max-w-xl mx-auto relative z-10">
-          Not affiliated with Epic Games or Fortnite. UEFN and Fortnite are
-          trademarks of Epic Games.
-        </p>
-      </section>
+        </div>
+      </div>
 
       {/* call to action */}
       <section className="py-24 px-6 bg-transparent relative overflow-hidden">

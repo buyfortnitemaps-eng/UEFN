@@ -25,7 +25,7 @@ export default function MyAssetsPage() {
           },
         );
         const data = await response.json();
-
+        console.log(data)
         if (data.success) {
           // পপুলেটেড ডাটা থেকে প্রোডাক্টগুলোকে বের করে আনা
           const allAssets = data.data.flatMap((order) =>
@@ -154,6 +154,7 @@ export default function MyAssetsPage() {
                     <th className="p-6">Asset</th>
                     <th className="p-6">Title</th>
                     <th className="p-6">Price</th>
+                    <th className="p-6">Order ID</th>
                     <th className="p-6 text-right">Action</th>
                   </tr>
                 </thead>
@@ -180,6 +181,9 @@ export default function MyAssetsPage() {
                       </td>
                       <td className="p-6 font-black text-purple-500 italic">
                         ${asset.price}
+                      </td>
+                      <td className="p-6 font-black text-purple-400 text-sm italic">
+                        {asset._id}
                       </td>
                       <td className="p-6 text-right">
                         <button

@@ -28,13 +28,26 @@ useEffect(() => {
         environment: 'sandbox',
         token: "test_1a4ec1f9df524f5570405eeb210",
         eventCallback: async (event) => {
+            // পেমেন্ট সফল হওয়ার সাথে সাথে
             if (event.name === "checkout.completed") {
+                
+                // 🔥 ১. সবচাইতে পাওয়ারফুল ক্লোজ মেথড (ম্যানুয়ালি Paddle ক্লোজ করা)
+                if (window.Paddle) {
+                    window.Paddle.Checkout.close();
+                }
+
+                // 🔥 ২. যদি উপরের মেথড কোনো কারণে মিস হয়, তবে DOM থেকে ফ্রেম রিমুভ করা
+                const paddleOverlay = document.querySelector('.paddle-checkout-overlay');
+                if (paddleOverlay) {
+                    paddleOverlay.remove();
+                    document.body.style.overflow = 'auto'; // স্ক্রল ব্যাক করা
+                }
+
                 setLoading(true);
                 try {
-                    // ১. প্রথমে অর্ডার ডাটাবেসে সেভ করুন
+                    // ৩. ডাটাবেসে সেভ এবং কার্ট ক্লিয়ার লজিক
                     await handleOrderDatabaseStore(event.data);
 
-                    // ২. এখন ডাটাবেসের কার্ট মডেল থেকে প্রোডাক্ট ফিল্ড খালি করুন
                     const currentUser = auth.currentUser;
                     const token = await currentUser?.getIdToken();
                     
@@ -45,29 +58,31 @@ useEffect(() => {
                                 "Content-Type": "application/json",
                                 "Authorization": `Bearer ${token}`
                             },
-                            body: JSON.stringify({
-                                products: [] // এখানে খালি অ্যারে পাঠানো হচ্ছে যাতে DB-তে products: [] হয়ে যায়
-                            })
+                            body: JSON.stringify({ products: [] })
                         });
                     }
 
-                    // ৩. লোকাল স্টেট এবং স্টোরেজ ক্লিনআপ
+                    // ৪. লোকাল স্টেট এবং রিডাইরেক্ট
                     setCart([]);
                     localStorage.removeItem("uefn_cart");
-                    
-                    // ৪. রিডাইরেক্ট
                     router.push("/my-assets");
+
                 } catch (err) {
                     console.error("Cart Clear Error:", err);
                 } finally {
                     setLoading(false);
                 }
             }
+
+            // যদি ইউজার পপ-আপটি ম্যানুয়ালি বন্ধ করে দেয়
+            if (event.name === "checkout.closed") {
+                setLoading(false);
+            }
         }
     }).then((paddleInstance) => {
         if (paddleInstance) setPaddle(paddleInstance);
     });
-}, [cart]);
+}, [cart, router]); // router এবং cart ডিপেন্ডেন্সি যোগ করুন
 
  const handleOrderDatabaseStore = async (paymentData) => {
     try {

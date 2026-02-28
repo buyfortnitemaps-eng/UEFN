@@ -19,13 +19,13 @@ const LegalPage = () => {
 
   const getIcon = (type) => {
     if (!type) return null;
-    if (type.includes("Privacy"))
+    if (type.toLowerCase().includes("privacy"))
       return <ShieldCheck size={40} className="text-purple-500" />;
-    if (type.includes("Terms"))
+    if (type.toLowerCase().includes("terms"))
       return <FileText size={40} className="text-blue-500" />;
-    if (type.includes("FAQ"))
+    if (type.toLowerCase().includes("faq"))
       return <HelpCircle size={40} className="text-green-500" />;
-    if (type.includes("Support"))
+    if (type.toLowerCase().includes("support"))
       return <Mail size={40} className="text-pink-500" />;
     return <RotateCcw size={40} className="text-orange-500" />;
   };
@@ -64,7 +64,7 @@ const LegalPage = () => {
   if (!data)
     return (
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-        <h1 className="text-2xl font-bold italic uppercase">
+        <h1 className="text-2xl font-bold italic uppercase tracking-tighter">
           404 | Content not found
         </h1>
       </div>
@@ -73,54 +73,106 @@ const LegalPage = () => {
   const cleanHTML = DOMPurify.sanitize(data.content);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-32 pb-20 px-4 md:px-6 relative">
-      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+    <div className="min-h-screen bg-background text-foreground pt-24 md:pt-32 pb-20 px-4 relative overflow-hidden">
+      {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* 1. DOT GRID BACKGROUND */}
         <div
-          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
             backgroundSize: "28px 28px",
           }}
         />
-
-        {/* 2. TOP GLOW LIGHT */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
-
-        {/* 3. BOTTOM GLOW LIGHT */}
-        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-full bg-purple-600/20 blur-[180px] rounded-full" />
       </div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-purple-600/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-14"
+          className="text-center mb-10 md:mb-14"
         >
-          <div className="inline-block p-4 bg-background rounded-3xl mb-6 border border-white/5">
+          <div className="inline-block p-4 bg-card-bg/50 backdrop-blur-md rounded-3xl mb-6 border border-white/10 shadow-xl">
             {getIcon(data.type)}
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black uppercase italic tracking-tight mb-4">
+          <h1 className="text-3xl md:text-6xl font-black uppercase italic tracking-tighter mb-4 leading-tight">
             {data.type}
           </h1>
+          <div className="h-1 w-20 bg-purple-600 mx-auto rounded-full" />
         </motion.div>
 
-        {/* Content */}
+        {/* Content Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
+          initial={{ opacity: 0, scale: 0.99 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="legal-content bg-card-bg border border-white/5 p-6 md:p-14 rounded-[3rem] shadow-2xl"
+          className="bg-card-bg/40 backdrop-blur-xl border border-white/5 p-5 md:p-14 rounded-4xl md:rounded-[3rem] shadow-2xl overflow-hidden"
         >
           <div
-            className="ql-editor custom-legal"
+            className="ql-editor prose prose-invert prose-purple max-w-full wrap-break-word overflow-x-hidden custom-legal-styles"
             dangerouslySetInnerHTML={{ __html: cleanHTML }}
           />
         </motion.div>
       </div>
+
+      {/* Internal CSS for Quill Content Reset */}
+      <style jsx global>{`
+        .custom-legal-styles {
+          color: rgba(255, 255, 255, 0.8);
+          line-height: 1.8;
+          font-size: 1rem;
+        }
+        .custom-legal-styles h1,
+        .custom-legal-styles h2,
+        .custom-legal-styles h3 {
+          color: #fff;
+          margin-top: 1.5em;
+          margin-bottom: 0.5em;
+          font-weight: 800;
+          text-transform: uppercase;
+        }
+        .custom-legal-styles p {
+          margin-bottom: 1.2em;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+        }
+        .custom-legal-styles img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 1rem;
+        }
+        .custom-legal-styles a {
+          color: #9333ea;
+          text-decoration: underline;
+          word-break: break-all;
+        }
+        .custom-legal-styles ul,
+        .custom-legal-styles ol {
+          padding-left: 1.5em;
+          margin-bottom: 1.2em;
+        }
+        .custom-legal-styles blockquote {
+          border-left: 4px solid #9333ea;
+          padding-left: 1em;
+          font-style: italic;
+          background: rgba(147, 51, 234, 0.05);
+          padding: 1rem;
+          border-radius: 0 1rem 1rem 0;
+        }
+        /* মোবাইল স্ক্রিনের জন্য টেবিল ফিক্স */
+        .custom-legal-styles table {
+          display: block;
+          width: 100%;
+          overflow-x: auto;
+          border-collapse: collapse;
+        }
+        @media (max-width: 768px) {
+          .custom-legal-styles {
+            font-size: 0.95rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };

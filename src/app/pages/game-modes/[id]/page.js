@@ -1,12 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ShoppingCart, ArrowLeft, Ghost } from "lucide-react";
+import {
+  ShoppingCart,
+  ArrowLeft,
+  Ghost,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import ProductSkeleton from "../../../components/productSclekton";
-
-// কার্ট এবং অথেনটিকেশন হুক ইম্পোর্ট
 import { useCart } from "../../../lib/CartContext";
 import { useAuth } from "../../../context/AuthContext";
 import CartSuccessModal from "../../../components/CartSuccessModal";
@@ -19,12 +24,37 @@ export default function GameModeDetail() {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const { user } = useAuth();
   const { addToCart, cart } = useCart();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState("");
+
+  const fetchProducts = async (page) => {
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `https://uefn-maps-server.vercel.app/api/v1/products/by-gametype/${id}?page=${page}&limit=12`,
+      );
+      const data = await res.json();
+      if (data.success) {
+        setProducts(data.data || []);
+        setTotalPages(data.meta.totalPages || 1);
+      }
+    } catch (err) {
+      console.error("Fetch failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (id) fetchProducts(currentPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [id, currentPage]);
 
   const handleAddToCart = (product) => {
     if (!user) {
@@ -36,47 +66,19 @@ export default function GameModeDetail() {
     setShowSuccessModal(true);
   };
 
-  useEffect(() => {
-    const fetchProductsByGameType = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(
-          `https://uefn-maps-server.vercel.app/api/v1/products/by-gametype/${id}`,
-        );
-        const data = await res.json();
-        if (data.success) {
-          setProducts((data.data || []).reverse());
-        }
-      } catch (err) {
-        console.error("Fetch failed:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (id) fetchProductsByGameType();
-  }, [id]);
-
   return (
-    <div className="min-h-screen relative transition-colors duration-300">
-      {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
+    <div className="min-h-screen relative">
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* 1. DOT GRID BACKGROUND */}
         <div
-          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage: `radial-gradient(circle at center, var(--foreground) 1px, transparent 1px)`,
             backgroundSize: "28px 28px",
           }}
         />
-
-        {/* 2. TOP GLOW LIGHT */}
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full max-w-250 h-full bg-purple-600/20 blur-[180px] rounded-full" />
-
-        {/* 3. BOTTOM GLOW LIGHT */}
-        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
       </div>
 
-      {/* --- SCROLLABLE CONTENT --- */}
       <div className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
@@ -102,13 +104,9 @@ export default function GameModeDetail() {
               products.map((product) => (
                 <div
                   key={product._id}
-                  /* কার্ডে বর্ডার, শ্যাডো এবং হোভার ইফেক্ট যোগ করা হয়েছে */
-                  className="glass-card rounded-[2.5rem] overflow-hidden group 
-                   border border-border-color hover:border-purple-500/50 
-                   transition-all duration-500 flex flex-col 
-                   hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] 
-                   hover:-translate-y-2 "
+                  className="glass-card rounded-[2.5rem] overflow-hidden group border border-border-color hover:border-purple-500/50 transition-all duration-500 flex flex-col hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] hover:-translate-y-2"
                 >
+                  {/* Card Content (Same as before) */}
                   <Link
                     href={
                       product.featureTag
@@ -122,7 +120,6 @@ export default function GameModeDetail() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                       alt={product.title}
                     />
-                    {/* ইমেজ ওভারলে গ্লো */}
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6 backdrop-blur-[2px]">
                       <span className="bg-white text-black px-5 py-2 rounded-full font-black text-[10px] uppercase tracking-widest shadow-xl">
                         View Details
@@ -131,55 +128,23 @@ export default function GameModeDetail() {
                   </Link>
 
                   <div className="p-8 flex flex-col grow relative">
-                    <Link
-                      href={
-                        product.featureTag
-                          ? `/pages/featured/${product._id}`
-                          : `/marketplace/${product._id}`
-                      }
-                    >
-                      <h3 className="text-2xl font-black uppercase italic text-foreground mb-3 group-hover:text-purple-500 transition-colors line-clamp-1 tracking-tighter">
-                        {product.title}
-                      </h3>
-                    </Link>
-
+                    <h3 className="text-2xl font-black uppercase italic text-foreground mb-3 group-hover:text-purple-500 transition-colors line-clamp-1 tracking-tighter">
+                      {product.title}
+                    </h3>
                     <p className="text-muted-foreground text-xs mb-8 h-10 opacity-70 leading-relaxed line-clamp-2">
-                      {product.description?.length > 80
-                        ? `${product.description.slice(0, 80)}...`
-                        : product.description ||
-                          "Premium UEFN template optimized for professional creators."}
+                      {product.description || "Premium UEFN template."}
                     </p>
 
                     <div className="flex justify-between items-center border-t border-border-color/50 pt-6 mt-auto">
-                      <div className="flex flex-col">
-                        <span className="text-[9px] font-black uppercase tracking-widest text-purple-500 mb-1">
-                          Pricing
-                        </span>
-                        <div className="flex items-center gap-2">
-                          {product.isDiscount ? (
-                            <>
-                              <span className="text-2xl font-black text-foreground">
-                                ${product.discountPrice}
-                              </span>
-                              <span className="text-sm text-muted-foreground line-through font-bold opacity-40">
-                                ${product.price}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-2xl font-black text-foreground">
-                              ${product.price}
-                            </span>
-                          )}
-                        </div>
+                      <div className="text-2xl font-black text-foreground">
+                        $
+                        {product.isDiscount
+                          ? product.discountPrice
+                          : product.price}
                       </div>
-
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className={`p-4 rounded-2xl transition-all active:scale-90 shadow-lg ${
-                          cart.find((i) => i._id === product._id)
-                            ? "bg-green-600 shadow-green-600/20"
-                            : "bg-purple-600 hover:bg-purple-500 shadow-purple-600/40 hover:rotate-3"
-                        }`}
+                        className={`p-4 rounded-2xl transition-all active:scale-90 shadow-lg ${cart.find((i) => i._id === product._id) ? "bg-green-600" : "bg-purple-600 hover:bg-purple-500"}`}
                       >
                         <ShoppingCart size={22} className="text-white" />
                       </button>
@@ -188,8 +153,7 @@ export default function GameModeDetail() {
                 </div>
               ))
             ) : (
-              /* Empty State */
-              <div className="col-span-full py-32 flex flex-col items-center justify-center bg-card-bg/20 border-2 border-dashed border-border-color rounded-[3rem] backdrop-blur-sm">
+              <div className="col-span-full py-32 flex flex-col items-center justify-center border-2 border-dashed border-border-color rounded-[3rem]">
                 <Ghost
                   size={60}
                   className="text-muted-foreground mb-4 opacity-10 animate-bounce"
@@ -200,6 +164,41 @@ export default function GameModeDetail() {
               </div>
             )}
           </div>
+
+          {/* Pagination Controls */}
+          {!loading && totalPages > 1 && (
+            <div className="mt-20 flex justify-center items-center gap-4">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="p-4 rounded-2xl bg-card-bg border border-border-color hover:border-purple-500 disabled:opacity-20 transition-all"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              <div className="flex gap-2">
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`w-12 h-12 rounded-2xl font-black transition-all ${currentPage === i + 1 ? "bg-purple-600 text-white" : "bg-card-bg border border-border-color text-muted-foreground"}`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+                className="p-4 rounded-2xl bg-card-bg border border-border-color hover:border-purple-500 disabled:opacity-20 transition-all"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
