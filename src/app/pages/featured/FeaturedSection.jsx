@@ -48,7 +48,7 @@ export default function ClientFeaturedContent({ initialProducts }) {
     { id: "all", label: "All Assets" },
     { id: "featured", label: "Featured" },
     { id: "premium", label: "Premium" },
-    { id: "trending", label: "Trending" },
+    { id: "bundle", label: "Bundle" },
   ];
 
   return (
@@ -86,19 +86,26 @@ export default function ClientFeaturedContent({ initialProducts }) {
           </div>
 
           {/* Tags/Filters */}
-          <div className="flex bg-card-bg p-1.5 rounded-2xl border border-border-color backdrop-blur-md gap-1 overflow-x-auto no-scrollbar w-full lg:w-auto justify-center lg:justify-end">
-            {tags.map((tag) => (
-              <button
-                key={tag.id}
-                onClick={() => setActiveTag(tag.id)}
-                className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap active:scale-95 ${activeTag === tag.id
-                  ? "bg-purple-600 text-white shadow-lg"
-                  : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-                  }`}
-              >
-                {tag.label}
-              </button>
-            ))}
+          <div className="w-full lg:w-auto">
+            <div className="flex bg-card-bg p-1.5 rounded-2xl border border-border-color backdrop-blur-md gap-1 
+    /* মোবাইল ফিক্স: স্ক্রল সক্ষম করা এবং জাস্টিফাই লেফট রাখা */
+    overflow-x-auto no-scrollbar justify-start lg:justify-end items-center">
+
+              {tags.map((tag) => (
+                <button
+                  key={tag.id}
+                  onClick={() => setActiveTag(tag.id)}
+                  className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all 
+          
+          whitespace-nowrap shrink-0 active:scale-95 ${activeTag === tag.id
+                      ? "bg-purple-600 text-white shadow-lg"
+                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                    }`}
+                >
+                  {tag.label}
+                </button>
+              ))}
+            </div>
           </div>
 
         </div>

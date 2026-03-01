@@ -21,30 +21,36 @@ const AllProducts = () => {
   const [productToUpgrade, setProductToUpgrade] = useState(null);
   const [featureTag, setFeatureTag] = useState("featured");
 
-  const handleUpgrade = async () => {
+const handleUpgrade = async () => {
     const token = await auth.currentUser.getIdToken();
     try {
-      const res = await fetch(
-        `https://uefn-maps-server.vercel.app/api/v1/products/upgrade/${productToUpgrade._id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ tag: featureTag }),
-        },
-      );
+        const res = await fetch(
+            `https://uefn-maps-server.vercel.app/api/v1/products/upgrade/${productToUpgrade._id}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ tag: featureTag }),
+            },
+        );
 
-      if (res.ok) {
-        alert("Product upgraded and moved to Featured list!");
-        setIsUpgradeModalOpen(false);
-        fetchProducts();
-      }
+        const data = await res.json(); // ব্যাকএন্ড থেকে রেসপন্স ডাটা নেয়া
+
+        if (res.ok) {
+            alert("Success! Product copied to Featured list.");
+            setIsUpgradeModalOpen(false);
+            fetchProducts();
+        } else {
+            // 🔥 ব্যাকএন্ড থেকে আসা সুনির্দিষ্ট এরর মেসেজ দেখানো (যেমন: Already Featured)
+            alert(data.message || "Something went wrong. Please try again.");
+        }
     } catch (error) {
-      console.error("Upgrade failed", error);
+        console.error("Upgrade failed", error);
+        alert("Connection failed! Please check your internet or server.");
     }
-  };
+};
 
   const fetchProducts = async () => {
     const res = await fetch(
@@ -314,8 +320,8 @@ const AllProducts = () => {
                   <option value="premium" className="bg-background">
                     Premium Selection
                   </option>
-                  <option value="trending" className="bg-background">
-                    Trending Now
+                  <option value="bundle" className="bg-background">
+                    Bundle
                   </option>
                 </select>
               </div>

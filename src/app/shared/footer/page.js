@@ -41,7 +41,7 @@ const Footer = () => {
                   href="/marketplace"
                   className="hover:text-purple-500 transition-colors"
                 >
-                  Shope
+                  Shop
                 </Link>
               </li>
               <li>

@@ -22,95 +22,94 @@ export default function CartPage() {
     }, 0);
     const total = subtotal;
 
-// ১. Paddle ইনিশিয়ালাইজ করা
-useEffect(() => {
-    initializePaddle({
-        environment: 'sandbox',
-        token: "test_1a4ec1f9df524f5570405eeb210",
-        eventCallback: async (event) => {
-            // পেমেন্ট সফল হওয়ার সাথে সাথে
-            if (event.name === "checkout.completed") {
-                
-                // 🔥 ১. সবচাইতে পাওয়ারফুল ক্লোজ মেথড (ম্যানুয়ালি Paddle ক্লোজ করা)
-                if (window.Paddle) {
-                    window.Paddle.Checkout.close();
-                }
+    // ১. Paddle ইনিশিয়ালাইজ করা
+    useEffect(() => {
+        initializePaddle({
+            environment: 'sandbox',
+            token: "test_1a4ec1f9df524f5570405eeb210",
+            eventCallback: async (event) => {
+                // পেমেন্ট সফল হওয়ার সাথে সাথে
+                if (event.name === "checkout.completed") {
 
-                // 🔥 ২. যদি উপরের মেথড কোনো কারণে মিস হয়, তবে DOM থেকে ফ্রেম রিমুভ করা
-                const paddleOverlay = document.querySelector('.paddle-checkout-overlay');
-                if (paddleOverlay) {
-                    paddleOverlay.remove();
-                    document.body.style.overflow = 'auto'; // স্ক্রল ব্যাক করা
-                }
-
-                setLoading(true);
-                try {
-                    // ৩. ডাটাবেসে সেভ এবং কার্ট ক্লিয়ার লজিক
-                    await handleOrderDatabaseStore(event.data);
-
-                    const currentUser = auth.currentUser;
-                    const token = await currentUser?.getIdToken();
-                    
-                    if (token) {
-                        await fetch("https://uefn-maps-server.vercel.app/api/v1/cart/clear-cart", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Authorization": `Bearer ${token}`
-                            },
-                            body: JSON.stringify({ products: [] })
-                        });
+                    // 🔥 ১. সবচাইতে পাওয়ারফুল ক্লোজ মেথড (ম্যানুয়ালি Paddle ক্লোজ করা)
+                    if (window.Paddle) {
+                        window.Paddle.Checkout.close();
                     }
 
-                    // ৪. লোকাল স্টেট এবং রিডাইরেক্ট
-                    setCart([]);
-                    localStorage.removeItem("uefn_cart");
-                    router.push("/my-assets");
+                    // 🔥 ২. যদি উপরের মেথড কোনো কারণে মিস হয়, তবে DOM থেকে ফ্রেম রিমুভ করা
+                    const paddleOverlay = document.querySelector('.paddle-checkout-overlay');
+                    if (paddleOverlay) {
+                        paddleOverlay.remove();
+                        document.body.style.overflow = 'auto'; // স্ক্রল ব্যাক করা
+                    }
 
-                } catch (err) {
-                    console.error("Cart Clear Error:", err);
-                } finally {
+                    setLoading(true);
+                    try {
+                        // ৩. ডাটাবেসে সেভ এবং কার্ট ক্লিয়ার লজিক
+                        await handleOrderDatabaseStore(event.data);
+
+                        const currentUser = auth.currentUser;
+                        const token = await currentUser?.getIdToken();
+
+                        if (token) {
+                            await fetch("https://uefn-maps-server.vercel.app/api/v1/cart/clear-cart", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": `Bearer ${token}`
+                                },
+                                body: JSON.stringify({ products: [] })
+                            });
+                        }
+
+                        // ৪. লোকাল স্টেট এবং রিডাইরেক্ট
+                        setCart([]);
+                        localStorage.removeItem("uefn_cart");
+                        router.push("/my-assets");
+
+                    } catch (err) {
+                        console.error("Cart Clear Error:", err);
+                    } finally {
+                        setLoading(false);
+                    }
+                }
+
+                // যদি ইউজার পপ-আপটি ম্যানুয়ালি বন্ধ করে দেয়
+                if (event.name === "checkout.closed") {
                     setLoading(false);
                 }
             }
-
-            // যদি ইউজার পপ-আপটি ম্যানুয়ালি বন্ধ করে দেয়
-            if (event.name === "checkout.closed") {
-                setLoading(false);
-            }
-        }
-    }).then((paddleInstance) => {
-        if (paddleInstance) setPaddle(paddleInstance);
-    });
-}, [cart, router]); // router এবং cart ডিপেন্ডেন্সি যোগ করুন
-
- const handleOrderDatabaseStore = async (paymentData) => {
-    try {
-        const currentUser = auth.currentUser;
-        const token = await currentUser?.getIdToken();
-
-        // স্কিমা অনুযায়ী ডাটা ফরম্যাট করা
-        const formattedProducts = cart.map(item => ({
-            productId: item._id, // আপনার মডেলে productId হিসেবে আছে
-            priceId: item.paddlePriceId || "manual_price" 
-        }));
-
-        await fetch("https://uefn-maps-server.vercel.app/api/v1/orders/checkout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                products: formattedProducts, 
-                transactionId: paymentData.id,
-                orderId: paymentData.id
-            })
+        }).then((paddleInstance) => {
+            if (paddleInstance) setPaddle(paddleInstance);
         });
-    } catch (err) {
-        console.error("Database store error:", err);
-    }
-};
+    }, [cart, router]); // router এবং cart ডিপেন্ডেন্সি যোগ করুন
+
+    const handleOrderDatabaseStore = async (paymentData) => {
+        try {
+            const currentUser = auth.currentUser;
+            const token = await currentUser?.getIdToken();
+
+            // ব্যাকএন্ড এখন 'productId' এবং 'priceId' আশা করছে
+            const formattedProducts = cart.map(item => ({
+                productId: item._id,
+                priceId: item.paddlePriceId || "manual_p_id"
+            }));
+
+            await fetch("https://uefn-maps-server.vercel.app/api/v1/orders/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    products: formattedProducts,
+                    transactionId: paymentData.id,
+                })
+            });
+        } catch (err) {
+            console.error("Order store error:", err);
+        }
+    };
     // ২. চেকআউট হ্যান্ডলার
     const handleCheckout = async () => {
         const currentUser = auth.currentUser;

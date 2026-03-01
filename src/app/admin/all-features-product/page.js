@@ -155,7 +155,7 @@ const FeaturedProducts = () => {
                   {product.gameType?.name}
                 </td>
                 <td className="p-6 text-right space-x-2">
-                  <ActionButton
+                  {/* <ActionButton
                     icon={<StarOff size={18} />}
                     color="orange"
                     title="Downgrade"
@@ -163,7 +163,7 @@ const FeaturedProducts = () => {
                       setCurrentProduct(product);
                       setIsDowngradeModalOpen(true);
                     }}
-                  />
+                  /> */}
                   <ActionButton
                     icon={<Edit3 size={18} />}
                     color="blue"
@@ -196,7 +196,7 @@ const FeaturedProducts = () => {
               className={`absolute top-0 right-0 w-24 h-24 blur-[60px] opacity-20 pointer-events-none ${
                 product.featureTag === "premium"
                   ? "bg-blue-500"
-                  : product.featureTag === "trending"
+                  : product.featureTag === "bundle"
                     ? "bg-orange-500"
                     : "bg-yellow-500"
               }`}
@@ -222,7 +222,7 @@ const FeaturedProducts = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-2">
-              <MobileActionBtn
+              {/* <MobileActionBtn
                 icon={<StarOff size={16} />}
                 label="Downgrade"
                 color="orange"
@@ -230,7 +230,7 @@ const FeaturedProducts = () => {
                   setCurrentProduct(product);
                   setIsDowngradeModalOpen(true);
                 }}
-              />
+              /> */}
               <MobileActionBtn
                 icon={<Edit3 size={16} />}
                 label="Edit"
@@ -277,7 +277,7 @@ const FeaturedProducts = () => {
 const TagBadge = ({ tag }) => {
   const styles = {
     premium: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    trending: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+    bundle: "bg-orange-500/10 text-orange-400 border-orange-500/20",
     default: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
   };
   const currentStyle = styles[tag] || styles.default;

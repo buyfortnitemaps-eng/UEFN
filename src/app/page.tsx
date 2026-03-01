@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 // // src/app/page.js (Server Component)
 // import ClientPage from "./ClientPage"; // আপনার আসল ক্লায়েন্ট পেজটি ইম্পোর্ট করুন
 

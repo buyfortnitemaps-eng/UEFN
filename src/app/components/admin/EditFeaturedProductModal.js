@@ -311,7 +311,7 @@ const EditFeaturedProductModal = ({ product, onClose, refresh }) => {
                   >
                     <option value="featured">Featured Asset</option>
                     <option value="premium">Premium Selection</option>
-                    <option value="trending">Trending Now</option>
+                    <option value="bundle">Bundle</option>
                   </select>
                 </div>
                 <div>

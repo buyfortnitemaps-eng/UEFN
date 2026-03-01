@@ -25,15 +25,16 @@ export default function MyAssetsPage() {
           },
         );
         const data = await response.json();
-        console.log(data)
+
         if (data.success) {
-          // পপুলেটেড ডাটা থেকে প্রোডাক্টগুলোকে বের করে আনা
           const allAssets = data.data.flatMap((order) =>
             order.products
-              .filter((item) => item.productId) // যদি কোনো প্রোডাক্ট ডাটাবেস থেকে ডিলিট হয়ে যায়
+              .filter((item) => item.productId) // পপুলেশন সফল হলে এটি অবজেক্ট হবে
               .map((item) => ({
-                ...item.productId, // টাইটেল, ইমেজ, সাক্কি এখানে আছে
+                // item.productId এখন একটি অবজেক্ট যাতে title, image, s3Key আছে
+                ...item.productId,
                 orderDate: order.createdAt,
+                transactionId: order.transactionId,
               })),
           );
           setAssets(allAssets);
@@ -51,9 +52,8 @@ export default function MyAssetsPage() {
   const handleDownload = async (asset) => {
     try {
       const user = auth.currentUser;
-      if (!user) return alert("Please login first");
+      const token = await user?.getIdToken();
 
-      const token = await user.getIdToken();
       const response = await fetch(
         `https://uefn-maps-server.vercel.app/api/v1/products/download-link`,
         {
@@ -70,20 +70,13 @@ export default function MyAssetsPage() {
       );
 
       const data = await response.json();
-
       if (data.success && data.downloadUrl) {
-        const link = document.createElement("a");
-        link.href = data.downloadUrl;
-        link.setAttribute("download", "");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        window.location.href = data.downloadUrl; // সরাসরি ডাউনলোড শুরু হবে
       } else {
         alert(data.message || "Download failed");
       }
     } catch (error) {
-      console.error("Critical Download Error:", error);
-      alert("Check server logs or connection.");
+      console.error("Download error:", error);
     }
   };
 

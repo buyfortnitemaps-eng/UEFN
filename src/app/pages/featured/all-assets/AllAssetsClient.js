@@ -88,7 +88,7 @@ export default function AllAssetsClient({
     { id: "all", label: "All Assets" },
     { id: "featured", label: "Featured" },
     { id: "premium", label: "Premium" },
-    { id: "trending", label: "Trending" },
+    { id: "bundle", label: "Bundle" },
   ];
 
   return (
