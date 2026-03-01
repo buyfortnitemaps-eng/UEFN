@@ -180,7 +180,11 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                   <button
                     key={categoryId}
                     onClick={() => setActiveCategory(categoryId)}
-                    className={`px-5 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-left transition-all duration-300 ${activeCategory === categoryId ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20 translate-x-1" : "bg-background text-gray-500 hover:bg-white/10 hover:text-foreground"}`}
+                    className={`px-5 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-left transition-all duration-300 whitespace-nowrap shrink-0 ${
+                      activeCategory === categoryId
+                        ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20 translate-x-1"
+                        : "bg-background text-gray-500 hover:bg-white/10 hover:text-foreground"
+                    }`}
                   >
                     {cat.name}
                   </button>
