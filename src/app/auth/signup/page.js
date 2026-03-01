@@ -62,7 +62,7 @@ const SignUp = () => {
       const dbResponse = await saveUserIntoDB(firebaseUser, formData.name);
 
       if (dbResponse && dbResponse.success) {
-        router.push("/assets");
+        router.push("/my-assets");
       } else {
         throw new Error("Database sync failed. Please try again.");
       }
@@ -82,7 +82,7 @@ const SignUp = () => {
     try {
       const res = await signInWithGoogle();
       await saveUserIntoDB(res.user);
-      router.push("/assets");
+      router.push("/my-assets");
     } catch (error) {
       console.error(error.message);
     }
@@ -148,7 +148,7 @@ const SignUp = () => {
                 </button>
               </div>
               <Link
-                href="/assets"
+                href="/my-assets"
                 className="block text-center text-purple-500 font-bold hover:underline"
               >
                 Go to My Assets →

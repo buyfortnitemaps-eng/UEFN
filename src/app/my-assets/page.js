@@ -7,10 +7,13 @@ import { Download, Package, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+import { useAuth } from "../context/AuthContext";
+import AdminOnly from "../components/admin/OnlyAdmin";
+
 export default function MyAssetsPage() {
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { user, mongoUser } = useAuth();
   useEffect(() => {
     const fetchMyAssets = async () => {
       try {
@@ -90,6 +93,8 @@ export default function MyAssetsPage() {
       </div>
     );
   }
+
+   if (!user) return <AdminOnly />;
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-28 pb-24 px-4 sm:px-6 md:px-10 relative overflow-hidden">

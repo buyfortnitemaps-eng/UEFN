@@ -19,7 +19,7 @@ const AdminOnly = () => {
         <div className="space-y-2">
           <h1 className="text-2xl font-black uppercase tracking-tighter text-foreground">Access Denied</h1>
           <p className="text-forground text-sm font-medium leading-relaxed">
-            This area is restricted to administrators only. You do not have the necessary permissions to view this page.
+            This area is restricted to Login User only. You do not have the necessary permissions to view this page.
           </p>
         </div>
 

@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState, useEffect } from "react";
-import { Trash2, Edit3, StarOff, Zap } from "lucide-react";
+import { Trash2, Edit3, Zap } from "lucide-react";
 import { auth } from "../../../../firebase";
 import { useAuth } from "../../context/AuthContext";
 import AdminOnly from "../../components/admin/OnlyAdmin";

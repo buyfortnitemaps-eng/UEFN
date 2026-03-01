@@ -155,7 +155,7 @@ const Login = () => {
                 <div className="flex flex-col gap-3">
                   {user && mongoUser?.role === "user" && (
                     <Link
-                      href="/assets"
+                      href="/my-assets"
                       className="w-full bg-white text-black py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-purple-600 hover:text-foreground transition-all"
                     >
                       Go to Assets <ArrowRight size={18} />
