@@ -117,7 +117,7 @@ const AboutUs = () => {
         <p className="text-forground text-xl leading-relaxed font-medium italic">
           We started this studio to help UEFN creators skip repetitive setup
           and focus on building great gameplay. Every project we ship is
-          structured, optimized, and designed to be easy to extend—so you can
+          structured, optimized, and designed to be easy to extend so you can
           move faster without cutting corners.
         </p>
       </section>

@@ -40,7 +40,7 @@ export default function Hero() {
           >
             Premium UEFN map templates, prefabs, and custom builds for
             creators in Fortnite instant delivery, secure files, and
-            ready-to-use inside Unreal Editor for Fortnite
+            ready to use inside Unreal Editor for Fortnite
           </motion.p>
 
           {/* CTA */}
@@ -107,7 +107,7 @@ export default function Hero() {
                 />
                 <div className="p-3">
                   <h4 className="text-sm font-bold text-foreground">
-                    Publish-Ready Template
+                    Publish Ready Template
                   </h4>
                   {/* <p className="text-xs text-muted-foreground">
                     UEFN Map • 1.8GB

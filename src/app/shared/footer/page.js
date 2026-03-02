@@ -20,7 +20,7 @@ const Footer = () => {
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed">
               Pre-built maps, premium Maps & assets, Verse programming, and
-              custom fixes—ready to download and easy to publish.
+              custom fixes ready to download and easy to publish.
             </p>
           </div>
 
