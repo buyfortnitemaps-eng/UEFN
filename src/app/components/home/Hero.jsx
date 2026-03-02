@@ -40,7 +40,11 @@ export default function Hero() {
           >
             Premium UEFN map templates, prefabs, and custom builds for
             creators in Fortnite instant delivery, secure files, and
+<<<<<<< HEAD
             ready to use inside Unreal Editor for Fortnite
+=======
+            ready-to-use inside Unreal Editor for Fortnite
+>>>>>>> 7c282dae6b040c4c16d9e3a8e2684fb6a1b3d0ac
           </motion.p>
 
           {/* CTA */}
@@ -53,7 +57,11 @@ export default function Hero() {
             <Link href={"/marketplace"}>
               <button className="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-semibold transition-all shadow-xl shadow-purple-500/25 flex items-center justify-center gap-2 active:scale-95">
                 <ShoppingCart size={20} />
+<<<<<<< HEAD
                 Browse Shop
+=======
+                Browse Shope
+>>>>>>> 7c282dae6b040c4c16d9e3a8e2684fb6a1b3d0ac
               </button>
             </Link>
             <Link href={"/portfolio"}>
