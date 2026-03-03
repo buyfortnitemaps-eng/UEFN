@@ -3,7 +3,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ShoppingCart, ShieldCheck, Sparkles } from "lucide-react";
+import { ShoppingCart, ShieldCheck, Sparkles, Zap, Download, Users } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -17,7 +17,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/5 bg-card-bg text-sm text-muted-foreground mb-6"
           >
             <Sparkles size={16} className="text-purple-500" />
-            Build for Fortnite UEFN Map Creators
+            Trusted by 2,100+ Fortnite UEFN Map Creators
           </motion.div>
 
           <motion.h1
@@ -26,9 +26,9 @@ export default function Hero() {
             transition={{ delay: 0.05 }}
             className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 text-foreground"
           >
-            Premium UEFN Map Templates <br />
+            Premium UEFN Map Templates for Fortnite <br />
             <span className="bg-linear-to-r from-purple-500 to-fuchsia-500 bg-clip-text text-transparent">
-            Build & Publish UEFN Maps
+              Build & Publish Maps 10x Faster
             </span>
           </motion.h1>
 
@@ -38,9 +38,9 @@ export default function Hero() {
             transition={{ delay: 0.1 }}
             className="text-muted-foreground text-lg md:text-xl max-w-xl mb-8 leading-relaxed"
           >
-            Premium UEFN map templates, prefabs, and custom builds for
-            creators in Fortnite instant delivery, secure files, and
-            ready to use inside Unreal Editor for Fortnite
+            Download <strong>ready-to-use UEFN map templates</strong>, <strong>Fortnite Creative prefabs</strong>, and complete map systems designed for Unreal Editor for Fortnite. 
+            Get <strong>instant delivery</strong> of professionally-built maps with <strong>Verse scripts included</strong>, optimized performance, and full documentation. 
+            Join <strong>2,100+ Fortnite creators</strong> who save time and publish better maps faster.
           </motion.p>
 
           {/* CTA */}
@@ -53,25 +53,35 @@ export default function Hero() {
             <Link href={"/marketplace"}>
               <button className="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-semibold transition-all shadow-xl shadow-purple-500/25 flex items-center justify-center gap-2 active:scale-95">
                 <ShoppingCart size={20} />
-                Browse Shop
+                Browse UEFN Map Templates
               </button>
             </Link>
             <Link href={"/portfolio"}>
-              <button className="px-8 py-4 rounded-xl border border-white/5 bg-card-bg text-foreground hover:bg-white/10 dark:hover:bg-white/5 font-semibold transition-all active:scale-95">
-                Our Team
+              <button className="px-8 py-4 rounded-xl border border-white/5 bg-card-bg text-foreground hover:bg-white/10 dark:hover:bg-white/5 font-semibold transition-all active:scale-95 flex items-center gap-2">
+                <Users size={20} />
+                View Our Team
               </button>
             </Link>
           </motion.div>
 
-          {/* TRUST BADGES */}
+          {/* TRUST BADGES - Improved with icons */}
           <div className="flex flex-wrap gap-6 text-sm text-muted-foreground font-medium">
             <div className="flex items-center gap-2">
               <ShieldCheck className="text-green-500" size={18} />
-              Secure Payment
+              Secure Payment & 24/7 Support
             </div>
-            <div>2100+ Creators</div>
-            <div>1000+ Maps</div>
-            <div>Verse Support</div>
+            <div className="flex items-center gap-2">
+              <Zap className="text-yellow-500" size={18} />
+              Instant Digital Delivery
+            </div>
+            <div className="flex items-center gap-2">
+              <Download className="text-blue-500" size={18} />
+              1,000+ UEFN Maps & Prefabs
+            </div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="text-purple-500" size={18} />
+              Includes Verse Code
+            </div>
           </div>
         </div>
 
@@ -92,7 +102,7 @@ export default function Hero() {
                 <div className="w-3 h-3 rounded-full bg-green-500/70" />
               </div>
               <div className="text-xs text-muted-foreground font-bold uppercase tracking-widest">
-                Shop Preview
+                UEFN Template Shop Preview
               </div>
             </div>
 
@@ -103,15 +113,15 @@ export default function Hero() {
                 <img
                   src="/uefn-map-template.png"
                   className="h-28 w-full group-hover:scale-105 transition duration-500"
-                  alt="Cyber Arena"
+                  alt="UEFN Map Template - Complete Fortnite Creative Map for Unreal Editor"
                 />
                 <div className="p-3">
                   <h4 className="text-sm font-bold text-foreground">
                     Publish Ready Template
                   </h4>
-                  {/* <p className="text-xs text-muted-foreground">
-                    UEFN Map • 1.8GB
-                  </p> */}
+                  <p className="text-xs text-muted-foreground">
+                    Complete UEFN Map • Ready to Publish
+                  </p>
                 </div>
               </div>
 
@@ -120,15 +130,15 @@ export default function Hero() {
                 <img
                   src="/UEFN Maps.jpeg"
                   className="h-28 w-full group-hover:scale-105 transition duration-500"
-                  alt="Verse System · Plug & Play"
+                  alt="UEFN Verse System - Plug and Play Scripts for Fortnite Maps"
                 />
                 <div className="p-3">
                   <h4 className="text-sm font-bold text-foreground">
                     Verse System · Plug & Play
                   </h4>
-                  {/* <p className="text-xs text-muted-foreground">
-                    Verse Script
-                  </p> */}
+                  <p className="text-xs text-muted-foreground">
+                    Advanced Verse Scripts Included
+                  </p>
                 </div>
               </div>
 
@@ -137,19 +147,19 @@ export default function Hero() {
                 <img
                   src="/fortnitetycoon.jpeg"
                   className="h-32 w-full group-hover:scale-105 transition duration-500"
-                  alt="Get You Own Editable Map"
+                  alt="Custom Editable Fortnite Map - Tycoon Game Mode Template for UEFN"
                 />
                 <div className="p-3 flex justify-between items-center">
                   <div>
                     <h4 className="text-sm font-bold text-foreground">
-                      Get You Own Editable Map
+                      Get Your Own Editable Map
                     </h4>
-                    {/* <p className="text-xs text-muted-foreground">
-                      320 Optimized Meshes
-                    </p> */}
+                    <p className="text-xs text-muted-foreground">
+                      Fully Customizable Fortnite Tycoon Map
+                    </p>
                   </div>
                   <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-lg bg-purple-500/20 text-purple-600 dark:text-purple-300">
-                    Popular
+                    Most Popular
                   </span>
                 </div>
               </div>
