@@ -101,7 +101,7 @@ export default function Hero() {
               {/* CARD 1 - MAP */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all ">
                 <img
-                  src="/hero (1).png"
+                  src="/uefn-map-template.png"
                   className="h-28 w-full group-hover:scale-105 transition duration-500"
                   alt="Cyber Arena"
                 />
@@ -118,7 +118,7 @@ export default function Hero() {
               {/* CARD 2 - VERSE */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all overflow-hidden">
                 <img
-                  src="/hero (2).jpeg"
+                  src="/UEFN Maps.jpeg"
                   className="h-28 w-full group-hover:scale-105 transition duration-500"
                   alt="Verse System · Plug & Play"
                 />
@@ -135,7 +135,7 @@ export default function Hero() {
               {/* CARD 3 - PROPS */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all overflow-hidden col-span-2">
                 <img
-                  src="/hero (3).jpeg"
+                  src="/fortnitetycoon.jpeg"
                   className="h-32 w-full group-hover:scale-105 transition duration-500"
                   alt="Get You Own Editable Map"
                 />
