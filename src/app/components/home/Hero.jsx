@@ -26,9 +26,9 @@ export default function Hero() {
             transition={{ delay: 0.05 }}
             className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 text-foreground"
           >
-            Premium UEFN Map Templates for Fortnite Creators <br />
+            Premium UEFN Map Templates <br />
             <span className="bg-linear-to-r from-purple-500 to-fuchsia-500 bg-clip-text text-transparent">
-            Build & Publish Maps 10x Faster
+            Build & Publish UEFN Maps
             </span>
           </motion.h1>
 
