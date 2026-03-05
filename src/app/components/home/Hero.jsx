@@ -8,25 +8,37 @@ import { ShoppingCart, ShieldCheck, Sparkles, Zap, Download, Users } from "lucid
 export default function Hero() {
   return (
     <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-background transition-colors duration-300">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/5 bg-card-bg text-sm text-muted-foreground mb-6"
+        >
+          <Sparkles size={16} className="text-purple-500" />
+          Trusted by 2,100+ Fortnite UEFN Map Creators
+        </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 text-foreground"
+        >
+          Premium UEFN Map Templates for Fortnite <br />
+
+        </motion.h1>
+      </div>
+
+
+
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
         {/* LEFT CONTENT */}
-        <div>
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/5 bg-card-bg text-sm text-muted-foreground mb-6"
-          >
-            <Sparkles size={16} className="text-purple-500" />
-            Trusted by 2,100+ Fortnite UEFN Map Creators
-          </motion.div>
-
+        <div >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
             className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 text-foreground"
           >
-            Premium UEFN Map Templates for Fortnite <br />
             <span className="bg-linear-to-r from-purple-500 to-fuchsia-500 bg-clip-text text-transparent">
               Build & Publish Maps 10x Faster
             </span>
@@ -38,8 +50,8 @@ export default function Hero() {
             transition={{ delay: 0.1 }}
             className="text-muted-foreground text-lg md:text-xl max-w-xl mb-8 leading-relaxed"
           >
-            Download <strong>ready-to-use UEFN map templates</strong>, <strong>Fortnite Creative prefabs</strong>, and complete map systems designed for Unreal Editor for Fortnite. 
-            Get <strong>instant delivery</strong> of professionally-built maps with <strong>Verse scripts included</strong>, optimized performance, and full documentation. 
+            Download <strong>ready-to-use UEFN map templates</strong>, <strong>Fortnite Creative prefabs</strong>, and complete map systems designed for Unreal Editor for Fortnite.
+            Get <strong>instant delivery</strong> of professionally-built maps with <strong>Verse scripts included</strong>, optimized performance, and full documentation.
             Join <strong>2,100+ Fortnite creators</strong> who save time and publish better maps faster.
           </motion.p>
 
