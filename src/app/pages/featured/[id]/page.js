@@ -73,7 +73,7 @@ export default function ProductDetail() {
       {/* Gallery Thumbnails Skeleton */}
       <div className="flex gap-4 overflow-x-auto pb-2">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="min-w-30 h-20 rounded-2xl bg-white/5 border border-white/5 flex-shrink-0" />
+          <div key={i} className="min-w-30 h-20 rounded-2xl bg-white/5 border border-white/5 shrink-0" />
         ))}
       </div>
 
@@ -244,7 +244,7 @@ export default function ProductDetail() {
                         : product.price}
                     </span>
                     {product.isDiscount && (
-                      <span className="text-xl text-gray-500 line-through font-bold">
+                      <span className="text-xl text-green-500 line-through font-bold">
                         ${product.price}
                       </span>
                     )}

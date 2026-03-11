@@ -141,7 +141,7 @@ export default function ClientFeaturedContent({ initialProducts }) {
                       </span>
 
                       {product.isDiscount && (
-                        <span className="text-sm text-gray-500 line-through font-medium">
+                        <span className="text-sm text-green-500 line-through font-medium">
                           ${product.price}
                         </span>
                       )}

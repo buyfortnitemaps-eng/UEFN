@@ -125,7 +125,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
             <div className="flex items-center gap-2 mb-2">
               <LayoutGrid size={24} className="text-purple-500" />
               <h1 className="text-4xl font-black uppercase tracking-tighter">
-                Shop
+                Shope
               </h1>
             </div>
             <p className="text-gray-500 text-sm italic">
@@ -250,7 +250,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                                       : product.price}
                                   </span>
                                   {product.isDiscount && (
-                                    <span className="text-sm text-gray-500 line-through">
+                                    <span className="text-sm text-green-500 line-through">
                                       ${product.price}
                                     </span>
                                   )}
