@@ -1,4 +1,4 @@
-import GameTypesClient from "./page";
+import GameTypesClient from "./GameTypesClient";
 
 async function getGameTypes() {
   const res = await fetch(
