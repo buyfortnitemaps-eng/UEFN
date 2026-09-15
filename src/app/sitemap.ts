@@ -1,149 +1,45 @@
 import type { MetadataRoute } from "next";
-import { apiUrl, SITE_ORIGIN } from "./lib/runtime-config";
+import { SITE_ORIGIN } from "./lib/runtime-config";
 import { getEntityId } from "./lib/entity-utils.mjs";
 import { uniqueFeaturedProducts } from "./lib/seo-utils.mjs";
+import { collectPages, listingUrl } from "./lib/catalog-seo.mjs";
+import { catalogRequest, getGameTypes, getLegals } from "./lib/catalog-data";
 
-type ApiItem = Record<string, unknown>;
-
-function isRecord(value: unknown): value is ApiItem {
-  return typeof value === "object" && value !== null;
-}
-
-async function fetchItems(url: string): Promise<ApiItem[]> {
-  try {
-    const response = await fetch(url, { next: { revalidate: 3600 } });
-
-    if (!response.ok) {
-      return [];
-    }
-
-    const payload: unknown = await response.json();
-    if (!isRecord(payload) || !Array.isArray(payload.data)) {
-      return [];
-    }
-
-    return payload.data.filter(isRecord);
-  } catch {
-    return [];
-  }
-}
-
-function getLastModified(item: ApiItem): Date | undefined {
-  const value = isRecord(item.updatedAt)
-    ? item.updatedAt.$date
-    : item.updatedAt;
-
-  if (typeof value !== "string") {
-    return undefined;
-  }
-
+type Item = Record<string, unknown>;
+function lastModified(item: Item): Date | undefined {
+  const value = typeof item.updatedAt === "object" && item.updatedAt !== null
+    ? (item.updatedAt as Record<string, unknown>).$date : item.updatedAt;
+  if (typeof value !== "string") return undefined;
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? undefined : date;
+  return Number.isNaN(date.getTime()) || date.getTime() > Date.now() ? undefined : date;
 }
-
-function dynamicEntries(
-  items: ApiItem[],
-  route: string,
-  priority: number,
-): MetadataRoute.Sitemap {
-  return items.flatMap((item) => {
-    const id = getEntityId(item);
-    if (!id) {
-      return [];
-    }
-
-    const lastModified = getLastModified(item);
-
-    return [
-      {
-        url: `${SITE_ORIGIN}${route}/${encodeURIComponent(id)}`,
-        ...(lastModified ? { lastModified } : {}),
-        changeFrequency: "weekly" as const,
-        priority,
-      },
-    ];
-  });
+function entry(path: string, item: Item = {}): MetadataRoute.Sitemap[number] {
+  const modified = lastModified(item);
+  return { url: new URL(path, SITE_ORIGIN).href, ...(modified ? { lastModified: modified } : {}) };
 }
-
+function pages(path: string, count: number): MetadataRoute.Sitemap {
+  return Array.from({ length: Math.ceil(count / 12) }, (_, index) => entry(listingUrl(path, index + 1)));
+}
 export const revalidate = 3600;
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [products, featuredProducts, gameTypes] = await Promise.all([
-    fetchItems(
-      apiUrl("products/client", {
-        page: 1,
-        limit: 1000,
-        category: "All",
-        sort: "newest",
-      }),
-    ),
-    fetchItems(apiUrl("products/featured", { page: 1, limit: 1000 })),
-    fetchItems(apiUrl("game-types")),
+  const [products, featured, modes, legals] = await Promise.all([
+    collectPages((page: number, limit: number) => catalogRequest("products/client", { page, limit, category: "All", sort: "newest" }, 3600)),
+    collectPages((page: number, limit: number) => catalogRequest("products/featured", { page, limit }, 3600)),
+    getGameTypes(), getLegals(),
   ]);
-
-  const staticEntries: MetadataRoute.Sitemap = [
-    { url: `${SITE_ORIGIN}/`, changeFrequency: "daily", priority: 1 },
-    {
-      url: `${SITE_ORIGIN}/marketplace`,
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_ORIGIN}/pages/featured`,
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_ORIGIN}/pages/featured/all-assets`,
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_ORIGIN}/pages/game-modes`,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_ORIGIN}/portfolio`,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${SITE_ORIGIN}/pages/contact`,
-      changeFrequency: "yearly",
-      priority: 0.5,
-    },
-    {
-      url: `${SITE_ORIGIN}/legal/terms-of-service`,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_ORIGIN}/legal/privacy-policy`,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_ORIGIN}/legal/refund-policy`,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_ORIGIN}/legal/faqs`,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_ORIGIN}/legal/contact-support`,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
+  const modeEntries = await Promise.all(modes.map(async (mode: { _id: string }) => {
+    const result = await catalogRequest(`products/by-gametype/${mode._id}`, { page: 1, limit: 12 });
+    if (!result.data.length) return [];
+    const totalPages = Math.max(1, result.meta?.totalPages || 1);
+    return Array.from({ length: totalPages }, (_, index) => entry(listingUrl(`/pages/game-modes/${mode._id}`, index + 1), mode));
+  }));
+  const entries = [
+    ...["/", "/marketplace", "/pages/featured", "/pages/featured/all-assets", "/pages/game-modes", "/portfolio", "/pages/contact"].map(path => entry(path)),
+    ...legals.map((item: { type: string }) => entry(`/legal/${encodeURIComponent(item.type.toLowerCase().replace(/\s+/g, "-"))}`, item)),
+    ...products.map((item: Item) => entry(`/marketplace/${getEntityId(item)}`, item)),
+    ...uniqueFeaturedProducts(products, featured).map((item: Item) => entry(`/pages/featured/${getEntityId(item)}`, item)),
+    ...pages("/marketplace", products.length), ...pages("/pages/featured/all-assets", featured.length),
+    ...modeEntries.flat(),
   ];
-
-  return [
-    ...staticEntries,
-    ...dynamicEntries(products, "/marketplace", 0.7),
-    ...dynamicEntries(uniqueFeaturedProducts(products, featuredProducts), "/pages/featured", 0.7),
-    ...dynamicEntries(gameTypes, "/pages/game-modes", 0.6),
-  ];
+  return [...new Map(entries.map(item => [item.url, item])).values()];
 }

@@ -4,7 +4,8 @@ import Link from "next/link";
 import { Gamepad2, ArrowRight, Layers } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function GameTypesClient({ gameTypes }) {
+export default function GameTypesClient({ gameTypes, standalone = false }) {
+  const Heading = standalone ? "h1" : "h2";
   return (
     <div className=" pt-32 pb-24 px-6 transition-colors duration-300 bg-background">
            {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
@@ -21,9 +22,9 @@ export default function GameTypesClient({ gameTypes }) {
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-12">
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-foreground italic leading-none">
+          <Heading className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-foreground italic leading-none">
             Browse by <span className="text-purple-500">Game Type</span>
-          </h2>
+          </Heading>
           <p className="text-muted-foreground mt-3 font-bold uppercase text-[9px] md:text-[10px] tracking-[0.2em] opacity-60">
             Find the perfect UEFN templates categorized by game mechanics
           </p>
@@ -33,7 +34,7 @@ export default function GameTypesClient({ gameTypes }) {
           {gameTypes.map((type) => (
             <Link
               key={type._id}
-              href={`/pages/game-modes/${type._id}?name=${type.name}`}
+              href={`/pages/game-modes/${type._id}`}
               className="block cursor-pointer"
             >
               <motion.div

@@ -30,7 +30,7 @@ const Footer = () => {
             <ul className="space-y-4 text-sm text-gray-500">
               <li>
                 <Link
-                  href="/my-assets"
+                  href="/marketplace"
                   className="hover:text-purple-500 transition-colors"
                 >
                   Browse All Assets
@@ -49,7 +49,7 @@ const Footer = () => {
                   href="/portfolio"
                   className="hover:text-purple-500 transition-colors"
                 >
-                  Aboute US
+                  About Us
                 </Link>
               </li>
               <li>
@@ -83,6 +83,7 @@ const Footer = () => {
             <h4 className="text-foreground font-bold mb-6">Stay Connected</h4>
             <div className="flex gap-4 mb-6">
               <a
+                aria-label="UEFNMAP on X"
                 href="https://x.com/Uefnmapcom"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -92,6 +93,7 @@ const Footer = () => {
               </a>
 
               <a
+                aria-label="UEFNMAP on YouTube"
                 href="https://www.youtube.com/@UEFNMAP"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -101,6 +103,7 @@ const Footer = () => {
               </a>
 
               <a
+                aria-label="Join the UEFNMAP Discord"
                 href="https://discord.gg/Wv7GhuKTG3"
                 target="_blank"
                 rel="noopener noreferrer"

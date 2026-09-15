@@ -1,8 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
- 
-
 "use client";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -11,8 +8,6 @@ import {
   ChevronDown,
   LayoutGrid,
   CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { useCart } from "../lib/CartContext";
 import { useAuth } from "../context/AuthContext";
@@ -20,24 +15,19 @@ import LoginAlertModal from "../components/LoginAlertModal";
 import CartSuccessModal from "../components/CartSuccessModal";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import SeoPagination from "../components/SeoPagination";
+import { listingUrl } from "../lib/catalog-seo.mjs";
 
-const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
-  const [products, setProducts] = useState(initialProducts);
-  const [categories] = useState([
-    { name: "All", _id: "All" },
-    ...initialCategories,
-  ]);
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("newest");
-
-  // Pagination States
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalProducts, setTotalProducts] = useState(initialTotal);
-  const [loading, setLoading] = useState(false);
+const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, initialCategories, query, currentPage }) => {
+  const categories = [{ name: "All", _id: "All" }, ...initialCategories];
+  const activeCategory = query.category;
+  const sortBy = query.sort;
+  const [search, setSearch] = useState(query.search);
+  const router = useRouter();
+  const loading = false;
   const limit = 12;
-
-  const isInitialMount = useRef(true);
+  const setFilters = (changes) => router.push(listingUrl("/marketplace", 1, { ...query, ...changes }));
   const { user } = useAuth();
   const { addToCart, cart } = useCart();
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -45,44 +35,6 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
   const [lastAddedItem, setLastAddedItem] = useState("");
 
   const totalPages = Math.ceil(totalProducts / limit);
-
-  const fetchProducts = useCallback(async () => {
-    try {
-      setLoading(true);
-      const url = `https://uefn-maps-server.vercel.app/api/v1/products/client?page=${currentPage}&limit=${limit}&category=${activeCategory}&search=${search}&sort=${sortBy}`;
-
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (data.success) {
-        setProducts(data.data || []);
-        setTotalProducts(data.meta.total || 0);
-      }
-    } catch (error) {
-      console.error("Fetch Error:", error);
-    } finally {
-      setLoading(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [activeCategory, search, currentPage, sortBy]);
-
-  // ফিল্টার বা সার্চ চেঞ্জ হলে পেজ ১-এ নিয়ে আসা
-  useEffect(() => {
-    if (currentPage !== 1) {
-      setCurrentPage(1);
-    } else {
-      if (!isInitialMount.current) fetchProducts();
-    }
-  }, [activeCategory, search, sortBy]);
-
-  // শুধুমাত্র পেজ চেঞ্জ হলে ফেচ করা
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    fetchProducts();
-  }, [currentPage]);
 
   const handleAddToCart = (item) => {
     if (!user) return setShowLoginModal(true);
@@ -125,8 +77,8 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <LayoutGrid size={24} className="text-purple-500" />
-              <h1 className="text-4xl font-black uppercase tracking-tighter">
-                Shop
+              <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
+                UEFN Marketplace
               </h1>
             </div>
             <p className="text-gray-500 text-sm italic">
@@ -138,7 +90,8 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
             <div className="relative group min-w-45">
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                aria-label="Sort assets"
+                onChange={(e) => setFilters({ sort: e.target.value })}
                 className="w-full bg-background border border-white/5 rounded-xl py-3 px-4 appearance-none focus:border-purple-500 outline-none transition-all cursor-pointer text-sm font-bold uppercase tracking-wider"
               >
                 <option value="newest">Newest First</option>
@@ -150,18 +103,21 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
               />
             </div>
-            <div className="relative w-full md:w-80">
+            <form className="relative w-full md:w-80" role="search" onSubmit={(event) => { event.preventDefault(); setFilters({ search }); }}>
               <Search
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
                 size={18}
               />
               <input
-                type="text"
+                type="search"
+                aria-label="Search assets"
+                value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full bg-background border border-white/5 rounded-xl py-3 pl-12 pr-4 focus:border-purple-500 outline-none transition-all placeholder:text-gray-600"
                 placeholder="Search assets..."
               />
-            </div>
+              <button type="submit" className="mt-2 text-sm text-purple-400 underline">Search</button>
+            </form>
           </div>
         </section>
 
@@ -180,7 +136,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                 return (
                   <button
                     key={categoryId}
-                    onClick={() => setActiveCategory(categoryId)}
+                    onClick={() => setFilters({ category: categoryId })}
                     className={`px-5 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-left transition-all duration-300 whitespace-nowrap shrink-0 ${
                       activeCategory === categoryId
                         ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20 translate-x-1"
@@ -208,7 +164,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                       return (
                         <motion.div
                           layout
-                          initial={{ opacity: 0 }}
+                          initial={false}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                           key={pId}
@@ -216,7 +172,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                         >
                           <div className="relative h-44 overflow-hidden bg-[#16161a]">
                             <Link
-                              href={`marketplace/${product._id}`}
+                              href={product.canonicalPath}
                               className="relative z-10 block w-full h-full"
                             >
                               <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
@@ -230,7 +186,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                             </div>
                           </div>
                           <div className="p-8 flex flex-col grow">
-                            <Link href={`marketplace/${product._id}`}>
+                            <Link href={product.canonicalPath}>
                               <h3 className="text-xl font-bold text-foreground mb-2 line-clamp-1 group-hover:text-purple-400 transition-colors">
                                 {product.title}
                               </h3>
@@ -258,6 +214,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                                 </div>
                               </div>
                               <button
+                                aria-label={`Add ${product.title} to cart`}
                                 onClick={() => handleAddToCart(product)}
                                 className={`p-4 rounded-2xl transition-all active:scale-90 ${isInCart ? "bg-green-600 text-white shadow-green-500/20" : "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-500/30"}`}
                               >
@@ -275,44 +232,9 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
               </AnimatePresence>
             </div>
 
-            {/* --- NEW NUMBERED PAGINATION --- */}
-            {!loading && totalPages > 1 && (
-              <div className="mt-20 flex justify-center items-center gap-3">
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="p-4 rounded-2xl bg-card-bg/40 border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-
-                <div className="flex gap-2">
-                  {[...Array(totalPages)].map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentPage(i + 1)}
-                      className={`w-12 h-12 rounded-2xl font-black text-xs transition-all ${
-                        currentPage === i + 1
-                          ? "bg-purple-600 text-white shadow-lg shadow-purple-600/30"
-                          : "bg-card-bg/40 border border-border-color text-gray-500 hover:border-purple-500/50"
-                      }`}
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
-                </div>
-
-                <button
-                  onClick={() =>
-                    setCurrentPage((p) => Math.min(p + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="p-4 rounded-2xl bg-card-bg/40 border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-            )}
+            {products.length === 0 && <p className="py-12 text-muted-foreground">No assets match these filters. Try another search or browse all categories.</p>}
+            <SeoPagination path="/marketplace" page={currentPage} totalPages={totalPages} filters={query} />
+            <Link className="block mt-10 text-purple-400 underline" href="/pages/game-modes">Browse templates by game type</Link>
           </div>
         </div>
       </main>

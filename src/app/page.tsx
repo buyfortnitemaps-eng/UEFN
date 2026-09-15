@@ -1,24 +1,16 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "./lib/catalog-seo.mjs";
 import Hero from "./components/home/Hero";
 import HomePage from "./ClientPage";
 import GameTypes from "./pages/game-modes/GameTypes";
-import FeaturedSection from "./pages/featured/page";
+import FeaturedSection from "./pages/featured/FeaturedServer";
 import JsonLd from "./components/JsonLd";
 import { SITE_ORIGIN } from "./lib/runtime-config";
 
-export const metadata: Metadata = {
-  title: { absolute: "UEFN Map Templates, Verse Scripts & Custom Maps | UEFNMAP" },
-  description:
-    "Explore UEFN map templates, Verse scripts and custom Fortnite map services. Compare projects and find assets for your next Fortnite Creative island.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: "UEFN Map Templates, Verse Scripts & Custom Maps | UEFNMAP",
-    description:
-      "Premium UEFN templates, Verse scripts, and custom Fortnite map services.",
-    type: "website",
-    url: "/",
-  },
-};
+export const metadata = pageMetadata({
+  title: "UEFN Map Templates, Verse Scripts & Custom Maps",
+  description: "Explore UEFN map templates, Verse scripts and custom Fortnite map services. Compare projects and find assets for your next Fortnite Creative island.",
+  path: "/",
+});
 
 export default function Page() {
   return (

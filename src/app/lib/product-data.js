@@ -35,6 +35,7 @@ export const getProductPageData = cache(async (id, kind = "marketplace") => {
 
 export async function getProductPageMetadata(id, kind = "marketplace") {
   const result = await getProductPageData(id, kind);
+  if (!result.available) throw new Error("Product catalog temporarily unavailable");
   if (result.product) return productMetadata(result.product, result.canonical);
   return {
     title: kind === "featured" ? "Featured UEFN Asset" : "UEFN Marketplace Asset",

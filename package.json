@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node tests/run.mjs"
+    "test": "node tests/run.mjs",
+    "seo:audit": "node scripts/audit-seo.mjs"
   },
   "dependencies": {
     "@paddle/paddle-js": "^1.6.2",
@@ -25,6 +26,7 @@
     "react-dom": "19.2.3",
     "react-icons": "^5.5.0",
     "react-quill-new": "^3.8.3",
+    "sanitize-html": "2.17.7",
     "socket.io-client": "^4.8.3"
   },
   "devDependencies": {

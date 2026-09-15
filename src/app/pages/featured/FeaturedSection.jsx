@@ -11,7 +11,8 @@ import { useAuth } from "../../context/AuthContext";
 import LoginAlertModal from "../../components/LoginAlertModal";
 import CartSuccessModal from "../../components/CartSuccessModal";
 
-export default function ClientFeaturedContent({ initialProducts }) {
+export default function ClientFeaturedContent({ initialProducts, standalone = false }) {
+  const Heading = standalone ? "h1" : "h2";
   const [activeTag, setActiveTag] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(initialProducts);
@@ -61,10 +62,10 @@ export default function ClientFeaturedContent({ initialProducts }) {
         <div className="max-w-xl w-full lg:w-auto text-center lg:text-left">
           <div className="flex items-center justify-center lg:justify-start gap-2 mb-3">
             <Sparkles size={20} className="text-yellow-500 shrink-0" />
-            <h2 className="text-xl md:text-2xl font-black text-foreground leading-tight italic uppercase tracking-tighter">
+            <Heading className="text-xl md:text-2xl font-black text-foreground leading-tight italic uppercase tracking-tighter">
               The most downloaded UEFN templates this week{" "}
               <span className="text-purple-500">WITH</span>
-            </h2>
+            </Heading>
           </div>
           <p className="text-muted-foreground text-[10px] md:text-xs font-black tracking-[0.2em] uppercase opacity-70">
             PURCHASE MAP • VERSE • 3D ASSET • THUMBNAIL
@@ -117,17 +118,17 @@ export default function ClientFeaturedContent({ initialProducts }) {
         <AnimatePresence mode="popLayout">
           {filteredProducts.slice(0, 12).map((product) => (
             <motion.div
-              layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
+              layout initial={false} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
               key={product._id}
               className="glass-card rounded-[2.5rem] overflow-hidden group border border-border-color hover:border-purple-500/50 transition-all duration-500 flex flex-col hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] hover:-translate-y-2"
             >
-              <Link href={`/pages/featured/${product._id}`} className="block h-56 relative overflow-hidden bg-gray-900">
+              <Link href={product.canonicalPath} className="block h-56 relative overflow-hidden bg-gray-900">
                 <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw" src={product.image?.url} alt={product.title || "UEFN map preview"} className="w-full h-full object-cover group-hover:scale-110 transition-duration-700" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center font-black text-[10px] uppercase text-white">View Details</div>
                 <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase border backdrop-blur-md bg-white/10 text-foreground">{product.featureTag}</span>
               </Link>
               <div className="p-6">
-                <Link href={`/pages/featured/${product._id}`}>
+                <Link href={product.canonicalPath}>
                   <h3 className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase">{product.title}</h3>
                 </Link>
                 <p className="text-forground text-xs mb-6 h-12 leading-relaxed">
@@ -148,7 +149,7 @@ export default function ClientFeaturedContent({ initialProducts }) {
                       )}
                     </div>
                   </div>
-                  <button onClick={() => handleAddToCart(product)} className={`p-4 rounded-2xl transition-all ${cart.find(i => i._id === product._id) ? "bg-green-600 shadow-green-600/20" : "bg-purple-600 shadow-purple-600/20"}`}>
+                  <button aria-label={`Add ${product.title} to cart`} onClick={() => handleAddToCart(product)} className={`p-4 rounded-2xl transition-all ${cart.find(i => i._id === product._id) ? "bg-green-600 shadow-green-600/20" : "bg-purple-600 shadow-purple-600/20"}`}>
                     <ShoppingCart size={20} className="text-white" />
                   </button>
                 </div>

@@ -59,7 +59,7 @@ export function productMetadata(product, canonical) {
   const description = productDescription(product);
   const image = publicImageUrl(product.image?.url);
   return {
-    title,
+    title: { absolute: `${title} | UEFNMAP` },
     description,
     alternates: { canonical },
     openGraph: {

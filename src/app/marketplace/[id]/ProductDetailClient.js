@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import {
@@ -174,6 +175,11 @@ export default function ProductDetail({ initialProduct = null }) {
         <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-200 h-full bg-purple-600/15 blur-[150px] rounded-full" />
       </div>
       <div className="max-w-7xl mx-auto">
+        <nav aria-label="Breadcrumb" className="relative z-10 mb-8 flex flex-wrap gap-2 text-sm text-muted-foreground">
+          <Link href="/" className="hover:text-purple-400">Home</Link><span aria-hidden="true">/</span>
+          <Link href="/marketplace" className="hover:text-purple-400">UEFN Marketplace</Link><span aria-hidden="true">/</span>
+          <span aria-current="page">{product.title}</span>
+        </nav>
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Side: Media (Gallery & YouTube) */}
@@ -183,7 +189,7 @@ export default function ProductDetail({ initialProduct = null }) {
               <img
                 src={activeImg}
                 className="w-full h-full object-cover transition-transform duration-700"
-                alt="Product Preview"
+                alt={`${product.title} preview`}
               />
               <div className="absolute top-4 left-4">
                 <span className="bg-purple-600 text-foreground px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">
@@ -201,7 +207,7 @@ export default function ProductDetail({ initialProduct = null }) {
                 <img
                   src={product.image?.url}
                   className="w-full h-full object-cover"
-                  alt="thumb"
+                  alt={`${product.title} screenshot`}
                 />
               </button>
 
@@ -214,7 +220,7 @@ export default function ProductDetail({ initialProduct = null }) {
                   <img
                     src={img.url}
                     className="w-full h-full object-cover"
-                    alt="thumb"
+                    alt={`${product.title} screenshot`}
                   />
                 </button>
               ))}

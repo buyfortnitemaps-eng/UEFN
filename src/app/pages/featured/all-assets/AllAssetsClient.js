@@ -1,78 +1,25 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Link from "next/link";
-import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ShoppingCart } from "lucide-react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductSkeleton from "../../../components/productSclekton";
+import SeoPagination from "../../../components/SeoPagination";
+import Image from "next/image";
 import { useCart } from "../../../lib/CartContext";
 import { useAuth } from "../../../context/AuthContext";
 import CartSuccessModal from "../../../components/CartSuccessModal";
 import LoginAlertModal from "../../../components/LoginAlertModal";
 
-export default function AllAssetsClient({
-  initialProducts,
-  initialTotalPages,
-}) {
-  const [products, setProducts] = useState(initialProducts);
-  const [filteredProducts, setFilteredProducts] = useState(initialProducts);
+export default function AllAssetsClient({ initialProducts: products, initialTotalPages: totalPages, currentPage }) {
   const [activeTag, setActiveTag] = useState("all");
-  const [loading, setLoading] = useState(false);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(initialTotalPages);
-  const limit = 12;
-
+  const filteredProducts = activeTag === "all" ? products : products.filter(product => product.featureTag === activeTag);
+  const loading = false;
   const { user } = useAuth();
   const { addToCart, cart } = useCart();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState("");
-
-  // পেজ বা ফিল্টার চেঞ্জ হলে ডেটা ফেচ করার ফাংশন
-  const fetchPageData = async (page) => {
-    // যদি ১নং পেজ এবং 'all' ট্যাগ থাকে, তবে সরাসরি ISR ডাটা ব্যবহার করব
-    if (page === 1 && activeTag === "all") {
-      setProducts(initialProducts);
-      setTotalPages(initialTotalPages);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const res = await fetch(
-        `https://uefn-maps-server.vercel.app/api/v1/products/featured?page=${page}&limit=${limit}`,
-      );
-      const data = await res.json();
-      if (data.success) {
-        setProducts(data.data || []);
-        setTotalPages(data.meta.totalPages || 1);
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    } finally {
-      setLoading(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  // পেজ চেঞ্জ হ্যান্ডলার
-  useEffect(() => {
-    // শুধুমাত্র যখন ইউজার প্রথমবার পেজে আসে তখন ফেচ হবে না (ISR হ্যান্ডেল করবে)
-    // কিন্তু এরপর যেকোনো পেজ চেঞ্জ বা ফিল্টার চেঞ্জে এটি কাজ করবে
-    fetchPageData(currentPage);
-  }, [currentPage]);
-
-  // ট্যাগ ফিল্টারিং লজিক (Client Side)
-  useEffect(() => {
-    if (activeTag === "all") {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(products.filter((p) => p.featureTag === activeTag));
-    }
-  }, [activeTag, products]);
 
   const handleAddToCart = (product) => {
     if (!user) {
@@ -123,7 +70,6 @@ export default function AllAssetsClient({
                   key={tag.id}
                   onClick={() => {
                     setActiveTag(tag.id);
-                    setCurrentPage(1);
                   }}
                   className={`flex-1 md:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap active:scale-95 ${
                     activeTag === tag.id
@@ -147,17 +93,17 @@ export default function AllAssetsClient({
               {filteredProducts.map((product) => (
                 <motion.div
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={false}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   key={product._id}
                   className="glass-card rounded-[2.5rem] overflow-hidden group border border-border-color hover:border-purple-500/50 transition-all duration-300 flex flex-col hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] hover:-translate-y-2"
                 >
                   <Link
-                    href={`/pages/featured/${product._id}`}
+                    href={product.canonicalPath}
                     className="block h-60 relative overflow-hidden bg-gray-900"
                   >
-                    <img
+                    <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
                       src={product.image?.url}
                       alt={product.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -168,7 +114,7 @@ export default function AllAssetsClient({
                   </Link>
 
                   <div className="p-6 flex flex-col grow">
-                    <Link href={`/pages/featured/${product._id}`}>
+                    <Link href={product.canonicalPath}>
                       <h3 className="text-xl font-black text-foreground group-hover:text-purple-400 transition-colors mb-2 line-clamp-1 italic uppercase tracking-tighter">
                         {product.title}
                       </h3>
@@ -199,6 +145,7 @@ export default function AllAssetsClient({
                         </div>
                       </div>
                       <button
+                        aria-label={`Add ${product.title} to cart`}
                         onClick={() => handleAddToCart(product)}
                         className={`p-4 rounded-2xl transition-all active:scale-90 ${cart.find((i) => i._id === product._id) ? "bg-green-600 shadow-green-600/20" : "bg-purple-600 hover:bg-purple-500 shadow-purple-600/20"}`}
                       >
@@ -212,42 +159,7 @@ export default function AllAssetsClient({
           )}
         </div>
 
-        {/* --- PAGINATION CONTROLS (FIXED PREVIOUS ISSUE) --- */}
-        {!loading && totalPages > 1 && (
-          <div className="mt-20 flex justify-center items-center gap-3">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              disabled={currentPage === 1}
-              className="p-4 rounded-2xl bg-card-bg/40 border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            <div className="flex gap-2">
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentPage(i + 1)}
-                  className={`w-12 h-12 rounded-2xl font-black text-xs transition-all ${
-                    currentPage === i + 1
-                      ? "bg-purple-600 text-white shadow-lg shadow-purple-600/30"
-                      : "bg-card-bg/40 border border-border-color text-gray-500 hover:border-purple-500/50"
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="p-4 rounded-2xl bg-card-bg/40 border border-border-color text-foreground disabled:opacity-20 hover:bg-purple-600/10 transition-all active:scale-90"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        )}
+        <SeoPagination path="/pages/featured/all-assets" page={currentPage} totalPages={totalPages} />
       </div>
 
       <CartSuccessModal
