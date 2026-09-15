@@ -214,9 +214,9 @@ const HomePage = () => {
               className="space-y-8"
             >
               <div>
-                <h1 className="text-5xl font-black uppercase tracking-tighter mb-4">
+                <h2 className="text-5xl font-black uppercase tracking-tighter mb-4">
                   Get in <span className="text-purple-500">Touch</span>
-                </h1>
+                </h2>
                 <p className="text-gray-500 text-lg">
                   Have a project in mind or need help with UEFN? Drop a message!
                 </p>

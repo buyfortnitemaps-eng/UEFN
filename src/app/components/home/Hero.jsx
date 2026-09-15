@@ -1,8 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
+ 
 "use client";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ShoppingCart, ShieldCheck, Sparkles, Zap, Download, Users } from "lucide-react";
 
 export default function Hero() {
@@ -10,22 +11,22 @@ export default function Hero() {
     <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-background transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/5 bg-card-bg text-sm text-muted-foreground mb-6"
         >
           <Sparkles size={16} className="text-purple-500" />
           Trusted by 2,100+ Fortnite UEFN Map Creators
         </motion.div>
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+        <motion.p
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 text-foreground"
+          className="text-2xl md:text-4xl font-extrabold tracking-tight leading-tight mb-6 text-foreground"
         >
-          Premium UEFN Map Templates for Fortnite <br />
+          Build your next Fortnite island <br />
 
-        </motion.h1>
+        </motion.p>
       </div>
 
 
@@ -34,18 +35,18 @@ export default function Hero() {
         {/* LEFT CONTENT */}
         <div >
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
             className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 text-foreground"
           >
             <span className="bg-linear-to-r from-purple-500 to-fuchsia-500 bg-clip-text text-transparent">
-              Build & Publish Maps 10x Faster
+              UEFN Map Templates for Fortnite
             </span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="text-muted-foreground text-lg md:text-xl max-w-xl mb-8 leading-relaxed"
@@ -57,7 +58,7 @@ export default function Hero() {
 
           {/* CTA */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
             className="flex flex-col sm:flex-row gap-4 mb-10"
@@ -99,7 +100,7 @@ export default function Hero() {
 
         {/* RIGHT SIDE Shope PREVIEW */}
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          initial={false}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.25, duration: 0.6 }}
           className="relative hidden lg:block"
@@ -122,7 +123,7 @@ export default function Hero() {
             <div className="grid grid-cols-2 gap-4">
               {/* CARD 1 - MAP */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all ">
-                <img
+                <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
                   src="/uefn-map-template.png"
                   className="h-28 w-full group-hover:scale-105 transition duration-500"
                   alt="UEFN Map Template - Complete Fortnite Creative Map for Unreal Editor"
@@ -139,7 +140,7 @@ export default function Hero() {
 
               {/* CARD 2 - VERSE */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all overflow-hidden">
-                <img
+                <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
                   src="/UEFN Maps.jpeg"
                   className="h-28 w-full group-hover:scale-105 transition duration-500"
                   alt="UEFN Verse System - Plug and Play Scripts for Fortnite Maps"
@@ -156,7 +157,7 @@ export default function Hero() {
 
               {/* CARD 3 - PROPS */}
               <div className="group rounded-xl border border-white/5 bg-background hover:bg-purple-500/5 transition-all overflow-hidden col-span-2">
-                <img
+                <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
                   src="/fortnitetycoon.jpeg"
                   className="h-32 w-full group-hover:scale-105 transition duration-500"
                   alt="Custom Editable Fortnite Map - Tycoon Game Mode Template for UEFN"

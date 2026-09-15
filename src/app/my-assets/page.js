@@ -10,6 +10,8 @@ import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import AdminOnly from "../components/admin/OnlyAdmin";
 
+import { trackDiagnostic } from "../lib/analytics.mjs";
+
 export default function MyAssetsPage() {
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,6 +55,7 @@ export default function MyAssetsPage() {
   }, []);
 
   const handleDownload = async (asset) => {
+    trackDiagnostic("download_started", { productId: asset._id });
     try {
       const user = auth.currentUser;
       const token = await user?.getIdToken();
@@ -74,11 +77,14 @@ export default function MyAssetsPage() {
 
       const data = await response.json();
       if (data.success && data.downloadUrl) {
+        trackDiagnostic("download_link_ready", { productId: asset._id });
         window.location.href = data.downloadUrl; // সরাসরি ডাউনলোড শুরু হবে
       } else {
+        trackDiagnostic("download_failure", { productId: asset._id, reason: "download_link", status: response.status });
         alert(data.message || "Download failed");
       }
     } catch (error) {
+      trackDiagnostic("download_failure", { productId: asset._id, reason: "network" });
       console.error("Download error:", error);
     }
   };

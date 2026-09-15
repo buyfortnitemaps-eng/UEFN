@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @next/next/no-img-element */
+ 
 
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -19,6 +19,7 @@ import { useAuth } from "../context/AuthContext";
 import LoginAlertModal from "../components/LoginAlertModal";
 import CartSuccessModal from "../components/CartSuccessModal";
 import Link from "next/link";
+import Image from "next/image";
 
 const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
   const [products, setProducts] = useState(initialProducts);
@@ -125,7 +126,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
             <div className="flex items-center gap-2 mb-2">
               <LayoutGrid size={24} className="text-purple-500" />
               <h1 className="text-4xl font-black uppercase tracking-tighter">
-                Shope
+                Shop
               </h1>
             </div>
             <p className="text-gray-500 text-sm italic">
@@ -218,7 +219,7 @@ const ShopeClient = ({ initialProducts, initialTotal, initialCategories }) => {
                               href={`marketplace/${product._id}`}
                               className="relative z-10 block w-full h-full"
                             >
-                              <img
+                              <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
                                 src={product.image.url}
                                 alt={product.title}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"

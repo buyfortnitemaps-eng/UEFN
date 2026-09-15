@@ -4,6 +4,8 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "../../../firebase";
 import { useAuth } from "../context/AuthContext";
 
+import { trackCommerce } from "./analytics.mjs";
+
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -53,6 +55,7 @@ export const CartProvider = ({ children }) => {
       const newCart = [...cart, product];
       setCart(newCart);
       syncWithDB(newCart);
+      trackCommerce("add_to_cart", [product]);
       return true;
     }
     return false;
@@ -60,7 +63,9 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = (id) => {
     // ১. কার্ট থেকে ওই নির্দিষ্ট আইডি বাদ দিয়ে নতুন অ্যারে তৈরি করা
+    const removedItem = cart.find((item) => item._id === id);
     const updatedCart = cart.filter((item) => item._id !== id);
+    if (removedItem) trackCommerce("remove_from_cart", [removedItem]);
     
     // ২. লোকাল স্টেট আপডেট করা (এতে UI সাথে সাথে আপডেট হবে)
     setCart(updatedCart);

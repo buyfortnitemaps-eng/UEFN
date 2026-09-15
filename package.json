@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "sitemap": "node scripts/generate-sitemap.js",
-    "build": "node scripts/generate-sitemap.js && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node tests/run.mjs"
   },
   "dependencies": {
     "@paddle/paddle-js": "^1.6.2",

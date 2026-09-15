@@ -1,10 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
+ 
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Search, Sparkles } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "../../lib/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import LoginAlertModal from "../../components/LoginAlertModal";
@@ -121,7 +122,7 @@ export default function ClientFeaturedContent({ initialProducts }) {
               className="glass-card rounded-[2.5rem] overflow-hidden group border border-border-color hover:border-purple-500/50 transition-all duration-500 flex flex-col hover:shadow-[0_20px_50px_-15px_rgba(147,51,234,0.3)] hover:-translate-y-2"
             >
               <Link href={`/pages/featured/${product._id}`} className="block h-56 relative overflow-hidden bg-gray-900">
-                <img src={product.image?.url} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-duration-700" />
+                <Image width={1280} height={720} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw" src={product.image?.url} alt={product.title || "UEFN map preview"} className="w-full h-full object-cover group-hover:scale-110 transition-duration-700" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center font-black text-[10px] uppercase text-white">View Details</div>
                 <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase border backdrop-blur-md bg-white/10 text-foreground">{product.featureTag}</span>
               </Link>

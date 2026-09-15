@@ -10,6 +10,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { initializePaddle } from "@paddle/paddle-js";
 
+import { trackCommerce, trackDiagnostic, trackPurchase } from "../lib/analytics.mjs";
+// Existing checkout environment; sandbox completions must not count as sales.
+const CHECKOUT_ENVIRONMENT = "sandbox";
+
 export default function CartPage() {
     const { cart, removeFromCart, setCart } = useCart();
     const [loading, setLoading] = useState(false);
@@ -25,7 +29,7 @@ export default function CartPage() {
     // ১. Paddle ইনিশিয়ালাইজ করা
     useEffect(() => {
         initializePaddle({
-            environment: 'sandbox',
+            environment: CHECKOUT_ENVIRONMENT,
             token: "test_1a4ec1f9df524f5570405eeb210",
             eventCallback: async (event) => {
                 // পেমেন্ট সফল হওয়ার সাথে সাথে
@@ -46,7 +50,8 @@ export default function CartPage() {
                     setLoading(true);
                     try {
                         // ৩. ডাটাবেসে সেভ এবং কার্ট ক্লিয়ার লজিক
-                        await handleOrderDatabaseStore(event.data);
+                        const confirmedOrder = await handleOrderDatabaseStore(event.data);
+                        trackPurchase(event.data, cart, { environment: CHECKOUT_ENVIRONMENT, confirmed: confirmedOrder === true });
 
                         const currentUser = auth.currentUser;
                         const token = await currentUser?.getIdToken();
@@ -95,7 +100,7 @@ export default function CartPage() {
                 priceId: item.paddlePriceId || "manual_p_id"
             }));
 
-            await fetch("https://uefn-maps-server.vercel.app/api/v1/orders/checkout", {
+            const orderResponse = await fetch("https://uefn-maps-server.vercel.app/api/v1/orders/checkout", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -106,7 +111,12 @@ export default function CartPage() {
                     transactionId: paymentData.id,
                 })
             });
+            const orderResult = await orderResponse.json().catch(() => null);
+            const confirmed = orderResponse.ok && orderResult?.success === true;
+            if (!confirmed) trackDiagnostic("checkout_error", { reason: "order_confirmation", status: orderResponse.status });
+            return confirmed;
         } catch (err) {
+            trackDiagnostic("checkout_error", { reason: "order_confirmation" });
             console.error("Order store error:", err);
         }
     };
@@ -120,6 +130,7 @@ export default function CartPage() {
         }
 
         if (!paddle) {
+            trackDiagnostic("checkout_error", { reason: "checkout_unavailable" });
             alert("Paddle is still loading. Please wait a moment.");
             return;
         }
@@ -156,8 +167,10 @@ export default function CartPage() {
                     locale: "en"
                 }
             });
+            trackCommerce("begin_checkout", cart);
 
         } catch (error) {
+            trackDiagnostic("checkout_error", { reason: "transaction_request" });
             console.error("Full Checkout Error:", error);
             alert(error.message || "An error occurred during checkout.");
         } finally {
