@@ -103,13 +103,16 @@ const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, i
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
               />
             </div>
-            <form className="relative w-full md:w-80" role="search" onSubmit={(event) => { event.preventDefault(); setFilters({ search }); }}>
+            <form className="relative w-full md:w-80" role="search" action="/marketplace" method="get" onSubmit={(event) => { event.preventDefault(); setFilters({ search }); }}>
+              <input type="hidden" name="category" value={activeCategory} />
+              <input type="hidden" name="sort" value={sortBy} />
               <Search
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+                className="absolute left-4 top-6 -translate-y-1/2 text-gray-500"
                 size={18}
               />
               <input
                 type="search"
+                name="search"
                 aria-label="Search assets"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
