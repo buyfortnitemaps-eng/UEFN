@@ -6,7 +6,7 @@ Every product CTA uses `DiscordButton` and `DISCORD_INVITE_URL` from `src/app/li
 
 Public prices, discounts, price-sort controls, cart icons, add-to-cart buttons, checkout UI and payment-provider promotional text were removed. The Paddle SDK, cart provider and unused purchase modals were removed from the frontend. Existing accounts, downloads and historical orders remain available; their database records were not modified.
 
-Legacy `/cart` and `/checkout` routes redirect to the same invite. Server redirects intentionally discard incoming query parameters instead of forwarding them to Discord. Public catalog URLs, metadata, canonicals, structured data and sitemap behavior remain in place.
+Legacy `/cart` and `/checkout` routes return HTTP 307 redirects to the same invite through route handlers, before any page rendering. These redirects intentionally discard incoming query parameters instead of forwarding them to Discord. Public catalog URLs, metadata, canonicals, structured data and sitemap behavior remain in place.
 
 The old commerce event helpers are dormant; only the existing catalog view tracking can still be called. Google Analytics remains disabled. This file supersedes earlier documentation describing an active on-site cart or checkout.
 
