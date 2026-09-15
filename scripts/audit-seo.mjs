@@ -6,6 +6,7 @@ const base = (process.argv[2] || "https://uefnmap.com").replace(/\/$/, "");
 const canonicalOrigin = "https://uefnmap.com";
 const results = [], failures = [];
 function check(condition, message) { if (!condition) failures.push(message); }
+function absoluteUrl(value) { try { return new URL(value).href; } catch { return null; } }
 function attrs(tag) {
   return Object.fromEntries([...tag.matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g)].map(match => [match[1].toLowerCase(), plainText(match[2] ?? match[3])]));
 }
@@ -37,10 +38,10 @@ await Promise.all(Array.from({ length: 3 }, async () => {
       check(response.status === 200, `${url}: status ${response.status}`);
       check(title && title.includes("UEFNMAP"), `${url}: missing branded title`);
       check(description?.length > 20, `${url}: missing description`);
-      check(canonical.length === 1 && canonical[0].href === url, `${url}: canonical mismatch`);
+      check(canonical.length === 1 && absoluteUrl(canonical[0].href) === url, `${url}: canonical mismatch`);
       check(h1.length === 1 && !!h1[0], `${url}: expected one nonempty H1, found ${h1.length}`);
       check(!robots.includes("noindex"), `${url}: noindex page in sitemap`);
-      check(meta(html, "og:url") === url, `${url}: social URL mismatch`);
+      check(absoluteUrl(meta(html, "og:url")) === url, `${url}: social URL mismatch`);
       check(!!meta(html, "og:image") && !!meta(html, "twitter:card"), `${url}: missing social preview`);
       check(!html.includes("s3Key"), `${url}: private storage field in response HTML`);
       if (parsed.pathname.startsWith("/marketplace/")) check(graph.some(item => item["@graph"]?.some(node => node["@type"] === "Product")), `${url}: missing product schema`);
