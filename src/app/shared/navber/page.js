@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
   X,
-  ShoppingBag,
   LogOut,
   LayoutDashboard,
   Wallet,
@@ -19,7 +18,8 @@ import {
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../lib/CartContext";
+import { DISCORD_INVITE_URL } from "../../lib/community.mjs";
+import { BsDiscord } from "react-icons/bs";
 import { logOut } from "../../lib/firebaseActions";
 import ThemeToggle from "../../utils/them-toggle";
 import { HiMiniShoppingBag } from "react-icons/hi2";
@@ -34,7 +34,6 @@ const Navbar = () => {
   const searchRef = useRef(null);
 
   const { user, mongoUser } = useAuth();
-  const { cart, setCart } = useCart();
 
   // Search Logic
   useEffect(() => {
@@ -77,8 +76,6 @@ const Navbar = () => {
   const handleNavbarSignOut = async () => {
     try {
       await logOut();
-      localStorage.removeItem("uefn_cart");
-      if (setCart) setCart([]);
       router.push("/auth/login");
     } catch (err) {
       console.error(err);
@@ -87,7 +84,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/", icon: <Home size={20} /> },
-    { name: "Shop", href: "/marketplace", icon: <Store size={20} /> },
+    { name: "Maps", href: "/marketplace", icon: <Store size={20} /> },
     { name: "About", href: "/portfolio", icon: <UserCircle size={20} /> },
   ];
 
@@ -168,9 +165,6 @@ const Navbar = () => {
                               {item.title}
                             </h4>
                             <div className="flex items-center gap-3 mt-1">
-                              <span className="text-xs md:text-sm text-purple-400 font-black">
-                                ${item.price}
-                              </span>
                               {item.featureTag && (
                                 <span className="text-[9px] py-0.5 px-2 bg-purple-600 text-white rounded-md uppercase font-black shadow-lg">
                                   {item.featureTag}
@@ -234,17 +228,9 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-4 border-l border-border-color pl-6">
-            <Link
-              href="/cart"
-              className="relative p-2 text-muted-foreground hover:text-foreground"
-            >
-              <ShoppingBag size={22} />
-              {cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-purple-600 text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-background animate-bounce">
-                  {cart.length}
-                </span>
-              )}
-            </Link>
+            <a href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer" aria-label="Join our Discord community (opens in a new tab)" className="p-2 text-purple-400 hover:text-purple-300">
+              <BsDiscord size={24} aria-hidden="true" />
+            </a>
             <ThemeToggle />
 
             {user ? (
@@ -275,14 +261,9 @@ const Navbar = () => {
 
         {/* Mobile Controls */}
         <div className="md:hidden flex items-center gap-2 relative z-130">
-          <Link href="/cart" className="relative p-2 text-muted-foreground">
-            <ShoppingBag size={24} />
-            {cart.length > 0 && (
-              <span className="absolute top-1 right-1 w-4 h-4 bg-purple-600 rounded-full text-[9px] flex items-center justify-center text-white font-black">
-                {cart.length}
-              </span>
-            )}
-          </Link>
+          <a href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer" aria-label="Join our Discord community (opens in a new tab)" className="p-2 text-purple-400 hover:text-purple-300">
+              <BsDiscord size={24} aria-hidden="true" />
+            </a>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 text-foreground bg-card-bg rounded-lg border border-border-color"

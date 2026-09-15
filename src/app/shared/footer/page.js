@@ -1,6 +1,7 @@
 import { Gamepad2, Twitter, Youtube, Mail } from "lucide-react";
 import Link from "next/link";
 import { BsDiscord } from "react-icons/bs";
+import { DISCORD_INVITE_URL } from "../../lib/community.mjs";
 
 const Footer = () => {
   return (
@@ -41,7 +42,7 @@ const Footer = () => {
                   href="/marketplace"
                   className="hover:text-purple-500 transition-colors"
                 >
-                  Shop
+                  Maps
                 </Link>
               </li>
               <li>
@@ -104,7 +105,7 @@ const Footer = () => {
 
               <a
                 aria-label="Join the UEFNMAP Discord"
-                href="https://discord.gg/Wv7GhuKTG3"
+                href={DISCORD_INVITE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-background rounded-lg flex items-center justify-center text-forground hover:bg-purple-600 hover:text-foreground transition-all"
@@ -172,16 +173,9 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Payment Partners */}
-          <div className="flex items-center gap-6">
-            {/* <img
-              src="/paddle-secure.png"
-              alt="Paddle Secured"
-              className="h-5 opacity-40 grayscale hover:grayscale-0 transition-all cursor-pointer"
-              title="Payments secured by Paddle"
-            /> */}
-            <p>Payments secured by Paddle</p>
-          </div>
+          <a href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-purple-400 hover:text-purple-300">
+            <BsDiscord size={20} aria-hidden="true" /> Join our Discord community
+          </a>
         </div>
       </div>
     </footer>

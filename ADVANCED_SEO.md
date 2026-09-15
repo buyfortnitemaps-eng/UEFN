@@ -1,3 +1,5 @@
+> Update: Public purchases now use the Discord contact flow. See DISCORD_FLOW.md; earlier references to an active on-site cart or checkout are historical.
+
 # Technical SEO maintenance
 
 The public catalog, portfolio and policy pages render content on the server. Titles, descriptions, canonical URLs and social cards come from shared helpers. Confirmed featured copies redirect permanently to their marketplace product; standalone featured products retain their own URLs.

@@ -10,7 +10,7 @@ function readQuery(search) {
   const page = pageNumber(search.page);
   if (!page) notFound();
   const category = typeof search.category === "string" && /^[a-f\d]{24}$/i.test(search.category) ? search.category : "All";
-  const query = { category, search: typeof search.search === "string" ? search.search.trim().slice(0, 100) : "", sort: ["lowToHigh", "highToLow"].includes(search.sort) ? search.sort : "newest" };
+  const query = { category, search: typeof search.search === "string" ? search.search.trim().slice(0, 100) : "", sort: "newest" };
   return { page, query };
 }
 const getData = cache(async (page, category, search, sort) => {

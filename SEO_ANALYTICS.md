@@ -1,3 +1,5 @@
+> Update: Public purchases now use the Discord contact flow. See DISCORD_FLOW.md; earlier references to an active on-site cart or checkout are historical.
+
 # SEO and performance release
 
 This release starts from the currently deployed site and includes SEO, responsive images, and optional measurement hooks. The separate older login/payment/admin rewrite in the owner's Downloads folder is not included.

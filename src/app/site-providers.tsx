@@ -2,7 +2,6 @@
 import Navbar from "./shared/navber/page";
 import Footer from "./shared/footer/page";
 import { AuthProvider } from "../app/context/AuthContext";
-import { CartProvider } from "./lib/CartContext";
 import ChatWidget from "./components/ChatWidget";
 import { ThemeProvider } from "next-themes";
 import Analytics from "./components/Analytics";
@@ -15,7 +14,6 @@ export default function SiteProviders({
   return (
     <>
         <AuthProvider>
-          <CartProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
@@ -27,7 +25,6 @@ export default function SiteProviders({
               <ChatWidget />
               <Footer />
             </ThemeProvider>
-          </CartProvider>
         </AuthProvider>
     </>
   );

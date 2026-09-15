@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async headers() {
-    return ["/admin/:path*", "/auth/:path*", "/cart/:path*", "/my-assets/:path*"].map(source => ({
+    return ["/admin/:path*", "/auth/:path*", "/cart/:path*", "/checkout/:path*", "/my-assets/:path*"].map(source => ({
       source, headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
     }));
   },

@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, ShieldCheck, Sparkles, Zap, Download, Users } from "lucide-react";
+import { Layers, ShieldCheck, Sparkles, Zap, Download, Users } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -51,8 +51,8 @@ export default function Hero() {
             transition={{ delay: 0.1 }}
             className="text-muted-foreground text-lg md:text-xl max-w-xl mb-8 leading-relaxed"
           >
-            Download <strong>ready-to-use UEFN map templates</strong>, <strong>Fortnite Creative prefabs</strong>, and complete map systems designed for Unreal Editor for Fortnite.
-            Get <strong>instant delivery</strong> of professionally-built maps with <strong>Verse scripts included</strong>, optimized performance, and full documentation.
+            Explore <strong>ready-to-use UEFN map templates</strong>, <strong>Fortnite Creative prefabs</strong>, and complete map systems designed for Unreal Editor for Fortnite.
+            Join our <strong>Discord community</strong> to ask about templates, <strong>Verse scripts</strong>, and custom map development.
             Join <strong>2,100+ Fortnite creators</strong> who save time and publish better maps faster.
           </motion.p>
 
@@ -65,7 +65,7 @@ export default function Hero() {
           >
             <Link href={"/marketplace"}>
               <button className="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-semibold transition-all shadow-xl shadow-purple-500/25 flex items-center justify-center gap-2 active:scale-95">
-                <ShoppingCart size={20} />
+                <Layers size={20} />
                 Browse UEFN Map Templates
               </button>
             </Link>
@@ -81,11 +81,11 @@ export default function Hero() {
           <div className="flex flex-wrap gap-6 text-sm text-muted-foreground font-medium">
             <div className="flex items-center gap-2">
               <ShieldCheck className="text-green-500" size={18} />
-              Secure Payment & 24/7 Support
+              Community & Project Support
             </div>
             <div className="flex items-center gap-2">
               <Zap className="text-yellow-500" size={18} />
-              Instant Digital Delivery
+              Connect on Discord
             </div>
             <div className="flex items-center gap-2">
               <Download className="text-blue-500" size={18} />
@@ -115,7 +115,7 @@ export default function Hero() {
                 <div className="w-3 h-3 rounded-full bg-green-500/70" />
               </div>
               <div className="text-xs text-muted-foreground font-bold uppercase tracking-widest">
-                UEFN Template Shop Preview
+                UEFN Template Preview
               </div>
             </div>
 

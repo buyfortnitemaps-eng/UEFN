@@ -58,10 +58,10 @@ const HomePage = () => {
             <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6">
               <Zap size={32} />
             </div>
-            <h4 className="text-xl font-bold mb-2">Instant Delivery</h4>
+            <h4 className="text-xl font-bold mb-2">Connect on Discord</h4>
             <p className="text-gray-500">
-              Get your download link on your dashboard immediately after
-              checkout.
+              Open our Discord community to ask about a template and discuss
+              what you need for your project.
             </p>
           </div>
           <div className="flex flex-col items-center">
@@ -80,9 +80,9 @@ const HomePage = () => {
             <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center text-green-500 mb-6">
               <ShieldCheck size={32} />
             </div>
-            <h4 className="text-xl font-bold mb-2">Paddle Secured</h4>
+            <h4 className="text-xl font-bold mb-2">Talk to Our Team</h4>
             <p className="text-gray-500">
-              International payments handled safely with full tax compliance.
+              Discuss map details, Verse programming and project support with our team.
             </p>
           </div>
         </div>

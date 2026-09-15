@@ -8,10 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node tests/run.mjs",
-    "seo:audit": "node scripts/audit-seo.mjs"
+    "seo:audit": "node scripts/audit-seo.mjs",
+    "discord:audit": "node scripts/audit-discord.mjs"
   },
   "dependencies": {
-    "@paddle/paddle-js": "^1.6.2",
     "axios": "^1.13.6",
     "browser-image-compression": "^2.0.2",
     "cloudinary": "^2.9.0",

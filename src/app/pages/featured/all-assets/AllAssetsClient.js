@@ -1,35 +1,17 @@
 "use client";
+import DiscordButton from "../../../components/DiscordButton";
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductSkeleton from "../../../components/productSclekton";
 import SeoPagination from "../../../components/SeoPagination";
 import Image from "next/image";
-import { useCart } from "../../../lib/CartContext";
-import { useAuth } from "../../../context/AuthContext";
-import CartSuccessModal from "../../../components/CartSuccessModal";
-import LoginAlertModal from "../../../components/LoginAlertModal";
 
 export default function AllAssetsClient({ initialProducts: products, initialTotalPages: totalPages, currentPage }) {
   const [activeTag, setActiveTag] = useState("all");
   const filteredProducts = activeTag === "all" ? products : products.filter(product => product.featureTag === activeTag);
   const loading = false;
-  const { user } = useAuth();
-  const { addToCart, cart } = useCart();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [lastAddedItem, setLastAddedItem] = useState("");
 
-  const handleAddToCart = (product) => {
-    if (!user) {
-      setShowLoginModal(true);
-      return;
-    }
-    addToCart(product);
-    setLastAddedItem(product.title);
-    setShowSuccessModal(true);
-  };
 
   const tags = [
     { id: "all", label: "All Assets" },
@@ -124,33 +106,8 @@ export default function AllAssetsClient({ initialProducts: products, initialTota
                         ? `${product.description.slice(0, 120)}...`
                         : product.description}
                     </p>
-                    <div className="flex items-center justify-between border-t border-border-color pt-5 mt-auto">
-                      <div>
-                        <p className="text-gray-500 text-[9px] uppercase font-black tracking-widest mb-1">
-                          Price
-                        </p>
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl font-black text-foreground">
-                            $
-                            {product.isDiscount
-                              ? product.discountPrice
-                              : product.price}
-                          </span>
-
-                          {product.isDiscount && (
-                            <span className="text-sm text-green-500 line-through font-medium">
-                              ${product.price}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <button
-                        aria-label={`Add ${product.title} to cart`}
-                        onClick={() => handleAddToCart(product)}
-                        className={`p-4 rounded-2xl transition-all active:scale-90 ${cart.find((i) => i._id === product._id) ? "bg-green-600 shadow-green-600/20" : "bg-purple-600 hover:bg-purple-500 shadow-purple-600/20"}`}
-                      >
-                        <ShoppingCart size={20} className="text-white" />
-                      </button>
+                    <div className="border-t border-border-color pt-5 mt-auto">
+                      <DiscordButton productName={product.title} className="w-full" />
                     </div>
                   </div>
                 </motion.div>
@@ -162,14 +119,6 @@ export default function AllAssetsClient({ initialProducts: products, initialTota
         <SeoPagination path="/pages/featured/all-assets" page={currentPage} totalPages={totalPages} />
       </div>
 
-      <CartSuccessModal
-        isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-        productName={lastAddedItem}
-      />
-      {showLoginModal && (
-        <LoginAlertModal onClose={() => setShowLoginModal(false)} />
-      )}
     </div>
   );
 }

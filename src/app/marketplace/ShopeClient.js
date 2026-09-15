@@ -1,18 +1,12 @@
 "use client";
+import DiscordButton from "../components/DiscordButton";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
   Filter,
-  ShoppingCart,
-  ChevronDown,
   LayoutGrid,
-  CheckCircle2,
 } from "lucide-react";
-import { useCart } from "../lib/CartContext";
-import { useAuth } from "../context/AuthContext";
-import LoginAlertModal from "../components/LoginAlertModal";
-import CartSuccessModal from "../components/CartSuccessModal";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -22,26 +16,14 @@ import { listingUrl } from "../lib/catalog-seo.mjs";
 const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, initialCategories, query, currentPage }) => {
   const categories = [{ name: "All", _id: "All" }, ...initialCategories];
   const activeCategory = query.category;
-  const sortBy = query.sort;
   const [search, setSearch] = useState(query.search);
   const router = useRouter();
   const loading = false;
   const limit = 12;
   const setFilters = (changes) => router.push(listingUrl("/marketplace", 1, { ...query, ...changes }));
-  const { user } = useAuth();
-  const { addToCart, cart } = useCart();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [lastAddedItem, setLastAddedItem] = useState("");
 
   const totalPages = Math.ceil(totalProducts / limit);
 
-  const handleAddToCart = (item) => {
-    if (!user) return setShowLoginModal(true);
-    addToCart(item);
-    setLastAddedItem(item.title);
-    setShowSuccessModal(true);
-  };
 
   const ProductSkeleton = () => (
     <div className="bg-background border border-white/5 rounded-3xl h-80 animate-pulse">
@@ -87,25 +69,10 @@ const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, i
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            <div className="relative group min-w-45">
-              <select
-                value={sortBy}
-                aria-label="Sort assets"
-                onChange={(e) => setFilters({ sort: e.target.value })}
-                className="w-full bg-background border border-white/5 rounded-xl py-3 px-4 appearance-none focus:border-purple-500 outline-none transition-all cursor-pointer text-sm font-bold uppercase tracking-wider"
-              >
-                <option value="newest">Newest First</option>
-                <option value="lowToHigh">Price: Low to High</option>
-                <option value="highToLow">Price: High to Low</option>
-              </select>
-              <ChevronDown
-                size={16}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
-              />
-            </div>
+            
             <form className="relative w-full md:w-80" role="search" action="/marketplace" method="get" onSubmit={(event) => { event.preventDefault(); setFilters({ search }); }}>
               <input type="hidden" name="category" value={activeCategory} />
-              <input type="hidden" name="sort" value={sortBy} />
+              <input type="hidden" name="sort" value="newest" />
               <Search
                 className="absolute left-4 top-6 -translate-y-1/2 text-gray-500"
                 size={18}
@@ -161,9 +128,6 @@ const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, i
                   ? [...Array(6)].map((_, i) => <ProductSkeleton key={i} />)
                   : products.map((product) => {
                       const pId = product._id?.$oid || product._id;
-                      const isInCart = cart.some(
-                        (i) => (i._id?.$oid || i._id) === pId,
-                      );
                       return (
                         <motion.div
                           layout
@@ -197,36 +161,8 @@ const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, i
                             <p className="text-gray-500 text-xs line-clamp-2 leading-relaxed mb-6">
                               {product.description}
                             </p>
-                            <div className="flex items-center justify-between pt-6 border-t border-border-color mt-auto">
-                              <div className="flex flex-col">
-                                <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1">
-                                  Price
-                                </span>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-2xl font-black text-foreground">
-                                    $
-                                    {product.isDiscount
-                                      ? product.discountPrice
-                                      : product.price}
-                                  </span>
-                                  {product.isDiscount && (
-                                    <span className="text-sm text-green-500 line-through">
-                                      ${product.price}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                              <button
-                                aria-label={`Add ${product.title} to cart`}
-                                onClick={() => handleAddToCart(product)}
-                                className={`p-4 rounded-2xl transition-all active:scale-90 ${isInCart ? "bg-green-600 text-white shadow-green-500/20" : "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-500/30"}`}
-                              >
-                                {isInCart ? (
-                                  <CheckCircle2 size={22} />
-                                ) : (
-                                  <ShoppingCart size={22} />
-                                )}
-                              </button>
+                            <div className="pt-6 border-t border-border-color mt-auto">
+                              <DiscordButton productName={product.title} className="w-full" />
                             </div>
                           </div>
                         </motion.div>
@@ -242,14 +178,6 @@ const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, i
         </div>
       </main>
 
-      <CartSuccessModal
-        isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-        productName={lastAddedItem}
-      />
-      {showLoginModal && (
-        <LoginAlertModal onClose={() => setShowLoginModal(false)} />
-      )}
     </div>
   );
 };

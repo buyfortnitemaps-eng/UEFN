@@ -1,34 +1,15 @@
 "use client";
-import { useState } from "react";
+import DiscordButton from "../../../components/DiscordButton";
 import Link from "next/link";
 import {
-  ShoppingCart,
   ArrowLeft,
   Ghost,
 } from "lucide-react";
 import SeoPagination from "../../../components/SeoPagination";
 import Image from "next/image";
-import { useCart } from "../../../lib/CartContext";
-import { useAuth } from "../../../context/AuthContext";
-import CartSuccessModal from "../../../components/CartSuccessModal";
-import LoginAlertModal from "../../../components/LoginAlertModal";
 
 export default function GameModeDetail({ id, modeName, products, currentPage, totalPages }) {
-  const { user } = useAuth();
-  const { addToCart, cart } = useCart();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [lastAddedItem, setLastAddedItem] = useState("");
 
-  const handleAddToCart = (product) => {
-    if (!user) {
-      setShowLoginModal(true);
-      return;
-    }
-    addToCart(product);
-    setLastAddedItem(product.title);
-    setShowSuccessModal(true);
-  };
 
   return (
     <div className="min-h-screen relative">
@@ -94,20 +75,8 @@ export default function GameModeDetail({ id, modeName, products, currentPage, to
                       {product.description || "Premium UEFN template."}
                     </p>
 
-                    <div className="flex justify-between items-center border-t border-border-color/50 pt-6 mt-auto">
-                      <div className="text-2xl font-black text-foreground">
-                        $
-                        {product.isDiscount
-                          ? product.discountPrice
-                          : product.price}
-                      </div>
-                      <button
-                        aria-label={`Add ${product.title} to cart`}
-                        onClick={() => handleAddToCart(product)}
-                        className={`p-4 rounded-2xl transition-all active:scale-90 shadow-lg ${cart.find((i) => i._id === product._id) ? "bg-green-600" : "bg-purple-600 hover:bg-purple-500"}`}
-                      >
-                        <ShoppingCart size={22} className="text-white" />
-                      </button>
+                    <div className="border-t border-border-color/50 pt-6 mt-auto">
+                      <DiscordButton productName={product.title} className="w-full" />
                     </div>
                   </div>
                 </div>
@@ -130,14 +99,6 @@ export default function GameModeDetail({ id, modeName, products, currentPage, to
         </div>
       </div>
 
-      <CartSuccessModal
-        isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-        productName={lastAddedItem}
-      />
-      {showLoginModal && (
-        <LoginAlertModal onClose={() => setShowLoginModal(false)} />
-      )}
     </div>
   );
 }

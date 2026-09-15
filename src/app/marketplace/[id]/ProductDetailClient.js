@@ -1,23 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import DiscordButton from "../../components/DiscordButton";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import {
-  ShoppingCart,
   User,
   Calendar,
-  CheckCircle,
   PlayCircle,
   MessageCircle,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../lib/CartContext";
 
-import LoginAlertModal from "../../components/LoginAlertModal";
-import CartSuccessModal from "../../components/CartSuccessModal";
 
 import { trackCommerce } from "../../lib/analytics.mjs";
 
@@ -39,12 +34,7 @@ export default function ProductDetail({ initialProduct = null }) {
 
   const [openFaq, setOpenFaq] = useState(null); // FAQ ওপেন/ক্লোজ স্টেট
 
-  const { user } = useAuth();
-  const { addToCart, cart } = useCart();
 
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [lastAddedItem, setLastAddedItem] = useState("");
 
   useEffect(() => {
     if (initialProduct) return;
@@ -65,15 +55,6 @@ export default function ProductDetail({ initialProduct = null }) {
     if (id) fetchProduct();
   }, [id, initialProduct]);
 
-  const handleAddToCart = (product) => {
-    if (!user) {
-      setShowLoginModal(true);
-      return;
-    }
-    addToCart(product);
-    setLastAddedItem(product.title);
-    setShowSuccessModal(true);
-  };
 
   if (!product) {
     return (
@@ -112,7 +93,7 @@ export default function ProductDetail({ initialProduct = null }) {
               <div className="w-2/3 h-12 bg-white/5 rounded-xl" />
             </div>
 
-            {/* Price Skeleton */}
+            {/* Details Skeleton */}
             <div className="py-2 space-y-2">
               <div className="w-12 h-3 bg-white/5 rounded-md" />
               <div className="w-32 h-14 bg-white/10 rounded-xl" />
@@ -258,31 +239,7 @@ export default function ProductDetail({ initialProduct = null }) {
                 {product.title}
               </h1>
 
-              <div className="flex items-center gap-4 py-2">
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-gray-500 uppercase font-black">
-                    Price
-                  </span>
-                  <div className="flex items-baseline gap-3">
-                    <span className="text-5xl font-black text-foreground italic">
-                      $
-                      {product.isDiscount
-                        ? product.discountPrice
-                        : product.price}
-                    </span>
-                    {product.isDiscount && (
-                      <span className="text-xl text-green-500 line-through font-bold">
-                        ${product.price}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                {product.isDiscount && (
-                  <span className="bg-green-500 text-black px-3 py-1 rounded-md text-[10px] font-black uppercase animate-pulse">
-                    Save ${product.price - product.discountPrice}
-                  </span>
-                )}
-              </div>
+              
             </div>
 
             <p className="text-forground text-sm md:text-base leading-relaxed bg-background p-6 rounded-3xl border border-white/5">
@@ -319,30 +276,8 @@ export default function ProductDetail({ initialProduct = null }) {
 
             {/* Action Buttons */}
             <div className="pt-6 space-y-4">
-              {cart.find((i) => i._id === product._id) ? (
-                <button className="w-full bg-green-600 cursor-default py-5 rounded-2xl font-black text-xl italic tracking-tighter flex items-center justify-center gap-3 shadow-2xl shadow-green-500/20">
-                  ALREADY IN CART
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleAddToCart(product)}
-                  className="w-full bg-purple-600 hover:bg-purple-500 py-5 rounded-2xl font-black text-xl italic tracking-tighter transition-all shadow-2xl shadow-purple-500/20 active:scale-95 flex items-center justify-center gap-3"
-                >
-                  <ShoppingCart size={24} />
-                  ADD TO CART
-                </button>
-              )}
-
-              <div className="flex items-center justify-center gap-6 text-gray-500 text-[10px] font-black uppercase tracking-widest">
-                <span className="flex items-center gap-1">
-                  <CheckCircle size={12} className="text-green-500" /> Instant
-                  Access
-                </span>
-                <span className="flex items-center gap-1">
-                  <CheckCircle size={12} className="text-green-500" /> Verified
-                  Files
-                </span>
-              </div>
+              <DiscordButton productName={product.title} className="w-full py-5 text-lg" />
+              <p className="text-center text-sm text-muted-foreground">Open our Discord community and ask about this template.</p>
             </div>
           </div>
         </div>
@@ -398,14 +333,6 @@ export default function ProductDetail({ initialProduct = null }) {
         )}
       </div>
 
-      <CartSuccessModal
-        isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-        productName={lastAddedItem}
-      />
-      {showLoginModal && (
-        <LoginAlertModal onClose={() => setShowLoginModal(false)} />
-      )}
     </div>
   );
 }
