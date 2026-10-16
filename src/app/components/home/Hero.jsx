@@ -51,8 +51,8 @@ export default function Hero() {
             transition={{ delay: 0.1 }}
             className="text-muted-foreground text-lg md:text-xl max-w-xl mb-8 leading-relaxed"
           >
-            Explore <strong>ready-to-use UEFN map templates</strong>, <strong>Fortnite Creative prefabs</strong>, and complete map systems designed for Unreal Editor for Fortnite.
-            Join our <strong>Discord community</strong> to ask about templates, <strong>Verse scripts</strong>, and custom map development.
+            Explore <strong>ready-to-use UEFN map templates</strong>, from <strong>Fortnite tycoon</strong> projects to <strong>Zone Wars map</strong> systems.
+            Join our <strong>Discord community</strong> to ask about <strong>Verse scripts</strong> or discuss a <strong>custom tycoon map</strong>.
             Join <strong>2,100+ Fortnite creators</strong> who save time and publish better maps faster.
           </motion.p>
 

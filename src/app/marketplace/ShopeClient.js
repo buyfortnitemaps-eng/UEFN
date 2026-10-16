@@ -66,7 +66,7 @@ const ShopeClient = ({ initialCatalog, initialProducts: products, initialTotal: 
               </h1>
             </div>
             <p className="text-gray-500 text-sm italic">
-              High-end UEFN templates, scripts and more.
+              Browse UEFN tycoon and Zone Wars map templates, Verse scripts, and more Fortnite creative assets.
             </p>
           </div>
 

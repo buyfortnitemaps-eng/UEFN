@@ -26,7 +26,7 @@ const getData = cache(async (page, category, search, sort) => {
 });
 export async function generateMetadata({ searchParams }) {
   const { page, query } = readQuery(await searchParams);
-  return pageMetadata({ title: `UEFN Map Templates & Fortnite Assets${page > 1 ? ` — Page ${page}` : ""}`, description: "Browse Fortnite UEFN map templates, Verse scripts and creative assets. Compare screenshots, previews and product details for your next island.", path: listingUrl("/marketplace", page, query), noindex: !!query.search || query.category !== "All" || query.sort !== "newest" });
+  return pageMetadata({ title: `UEFN Tycoon & Zone Wars Map Templates${page > 1 ? ` — Page ${page}` : ""}`, description: "Browse UEFN tycoon and Zone Wars map templates alongside Fortnite assets and Verse scripts. Compare screenshots, previews and project details.", path: listingUrl("/marketplace", page, query), noindex: !!query.search || query.category !== "All" || query.sort !== "newest" });
 }
 export default async function Page({ searchParams }) {
   const { page, query } = readQuery(await searchParams);

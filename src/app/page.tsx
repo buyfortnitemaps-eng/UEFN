@@ -7,8 +7,8 @@ import JsonLd from "./components/JsonLd";
 import { SITE_ORIGIN } from "./lib/runtime-config";
 
 export const metadata = pageMetadata({
-  title: "UEFN Map Templates, Verse Scripts & Custom Maps",
-  description: "Explore UEFN map templates, Verse scripts and custom Fortnite map services. Compare projects and find assets for your next Fortnite Creative island.",
+  title: "UEFN Map Templates: Fortnite Tycoon & Zone Wars",
+  description: "Explore Fortnite tycoon and Zone Wars map templates, Verse scripts and UEFN assets. Discuss a custom tycoon map with our team.",
   path: "/",
 });
 
