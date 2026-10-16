@@ -1,6 +1,6 @@
-// This is the project's original API host. Keep credentialed admin requests
+// This is the project's owned Vercel API host. Keep credentialed admin requests
 // independent of public-catalog and customer-checkout configuration.
-export const ADMIN_API_ORIGIN = "https://uefn-maps-server.onrender.com";
+export const ADMIN_API_ORIGIN = "https://uefn-server.vercel.app";
 
 export function adminApiUrl(path = "", query) {
   const url = new URL(`${ADMIN_API_ORIGIN}/api/v1/${path.replace(/^\/+/, "")}`);

@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { adminApiUrl, validateAccountProfile } from "../src/app/lib/admin-api.mjs";
 
-test("admin credential destination stays on the original trusted API host", () => {
-  assert.equal(adminApiUrl("products/create-product"), "https://uefn-maps-server.onrender.com/api/v1/products/create-product");
-  assert.equal(new URL(adminApiUrl("//attacker.example/path")).origin, "https://uefn-maps-server.onrender.com");
+test("admin credential destination stays on the owned trusted API host", () => {
+  assert.equal(adminApiUrl("products/create-product"), "https://uefn-server.vercel.app/api/v1/products/create-product");
+  assert.equal(new URL(adminApiUrl("//attacker.example/path")).origin, "https://uefn-server.vercel.app");
   assert.throws(() => adminApiUrl("../../elsewhere"), /Invalid admin API path/);
   assert.throws(() => adminApiUrl("%2e%2e/%2e%2e/elsewhere"), /Invalid admin API path/);
 });
