@@ -9,3 +9,5 @@ await import("./catalog-resilience.test.mjs");
 await import("./catalog-snapshot-refresh.test.mjs");
 
 await import("./catalog-pagination-outage.test.mjs");
+
+await import("./catalog-live.test.mjs");

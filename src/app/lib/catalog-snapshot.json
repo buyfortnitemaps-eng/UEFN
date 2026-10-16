@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "capturedAt": "2026-09-15T00:18:30.000Z",
-  "sourceOrigin": "https://uefn-maps-server.vercel.app",
+  "capturedAt": "2026-10-16T11:45:46.401Z",
+  "sourceOrigin": "https://uefn-maps-server.onrender.com",
   "capturedDates": {
-    "products": "2026-09-15T00:11:33.000Z",
-    "featured": "2026-09-15T00:11:33.000Z",
-    "categories": "2026-09-15T00:18:30.000Z",
-    "gameTypes": "2026-09-15T00:18:30.000Z",
-    "legals": "2026-09-15T00:16:33.000Z",
-    "portfolios": "2026-10-16T11:24:01.239Z"
+    "products": "2026-10-16T11:45:43.476Z",
+    "featured": "2026-10-16T11:45:44.471Z",
+    "categories": "2026-10-16T11:45:44.957Z",
+    "gameTypes": "2026-10-16T11:45:45.440Z",
+    "legals": "2026-10-16T11:45:45.920Z",
+    "portfolios": "2026-10-16T11:45:46.401Z"
   },
   "products": [
     {
@@ -870,6 +870,8 @@
   "portfolios": [
     {
       "_id": "699be45ac96ed79d3b674c95",
+      "createdAt": "2026-02-23T05:23:38.595Z",
+      "updatedAt": "2026-03-12T23:57:35.414Z",
       "title": "UEFN Project + Verse Logic",
       "type": "Map",
       "youtubeId": "pxSiPkWvjN0",

@@ -11,7 +11,7 @@ import {
 
 // Run after the public backend is healthy: node scripts/refresh-catalog-snapshot.mjs
 // A failed, incomplete, or malformed response leaves the existing snapshot intact.
-const DEFAULT_ORIGIN = "https://uefn-maps-server.vercel.app";
+import { CATALOG_API_ORIGIN } from "../src/app/lib/catalog-origin.mjs";
 const SNAPSHOT_PATH = fileURLToPath(
   new URL("../src/app/lib/catalog-snapshot.json", import.meta.url),
 );
@@ -49,7 +49,7 @@ function validateRows(collection, data) {
 }
 
 export async function collectCatalogSnapshot({
-  origin = process.env.NEXT_PUBLIC_API_ORIGIN || DEFAULT_ORIGIN,
+  origin = CATALOG_API_ORIGIN,
   fetchImpl = fetch,
 } = {}) {
   const sourceOrigin = validateOrigin(origin);
