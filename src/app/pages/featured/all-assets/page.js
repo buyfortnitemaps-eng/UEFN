@@ -12,10 +12,13 @@ export default async function Page({ searchParams }) {
   const page = pageNumber((await searchParams).page); if (!page) notFound();
   const result = await catalogRequest("products/featured", { page, limit: 12 });
   const totalPages = Math.max(1, result.meta?.totalPages || 1);
-  if (page > totalPages) notFound();
+  if (page > totalPages) {
+    if (result.catalog?.source === "saved") throw new Error("Catalog page temporarily unavailable");
+    notFound();
+  }
   const products = await publicListing(result.data, true);
   return <>
     <JsonLd data={collectionStructuredData("Featured UEFN Assets", listingUrl("/pages/featured/all-assets", page), products, SITE_ORIGIN, page)} />
-    <AllAssetsClient key={page} initialProducts={products} initialTotalPages={totalPages} currentPage={page} />
+    <AllAssetsClient key={page} initialCatalog={result.catalog} initialProducts={products} initialTotalPages={totalPages} currentPage={page} />
   </>;
 }

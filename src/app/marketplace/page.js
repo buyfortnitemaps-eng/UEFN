@@ -18,8 +18,11 @@ const getData = cache(async (page, category, search, sort) => {
     catalogRequest("products/client", { page, limit: 12, category, search, sort }), catalogRequest("categories"),
   ]);
   const total = result.meta?.total ?? result.data.length;
-  if (page > Math.max(1, Math.ceil(total / 12))) notFound();
-  return { products: await publicListing(result.data), total, categories: categories.data.map(({ _id, name }) => ({ _id, name })) };
+  if (page > Math.max(1, Math.ceil(total / 12))) {
+    if (result.catalog?.source === "saved") throw new Error("Catalog page temporarily unavailable");
+    notFound();
+  }
+  return { products: await publicListing(result.data), total, catalog: result.catalog, categories: categories.data.map(({ _id, name }) => ({ _id, name })) };
 });
 export async function generateMetadata({ searchParams }) {
   const { page, query } = readQuery(await searchParams);
@@ -30,6 +33,6 @@ export default async function Page({ searchParams }) {
   const data = await getData(page, query.category, query.search, query.sort);
   return <>
     <JsonLd data={collectionStructuredData("UEFN Marketplace", listingUrl("/marketplace", page, query), data.products, SITE_ORIGIN, page)} />
-    <ShopeClient key={listingUrl("/marketplace", page, query)} initialProducts={data.products} initialTotal={data.total} initialCategories={data.categories} query={query} currentPage={page} />
+    <ShopeClient key={listingUrl("/marketplace", page, query)} initialCatalog={data.catalog} initialProducts={data.products} initialTotal={data.total} initialCategories={data.categories} query={query} currentPage={page} />
   </>;
 }

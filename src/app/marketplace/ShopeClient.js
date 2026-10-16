@@ -1,4 +1,5 @@
 "use client";
+import CatalogNotice from "../components/CatalogNotice";
 import DiscordButton from "../components/DiscordButton";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +14,7 @@ import { useRouter } from "next/navigation";
 import SeoPagination from "../components/SeoPagination";
 import { listingUrl } from "../lib/catalog-seo.mjs";
 
-const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, initialCategories, query, currentPage }) => {
+const ShopeClient = ({ initialCatalog, initialProducts: products, initialTotal: totalProducts, initialCategories, query, currentPage }) => {
   const categories = [{ name: "All", _id: "All" }, ...initialCategories];
   const activeCategory = query.category;
   const [search, setSearch] = useState(query.search);
@@ -54,6 +55,7 @@ const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, i
       </div>
 
       <main className="max-w-7xl mx-auto relative z-10">
+        <CatalogNotice catalog={initialCatalog} className="mb-6" />
         {/* Header Section (Same as before) */}
         <section className="grid grid-cols-1 md:grid-cols-2 my-3 items-end gap-6">
           <div>
@@ -69,7 +71,7 @@ const ShopeClient = ({ initialProducts: products, initialTotal: totalProducts, i
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            
+
             <form className="relative w-full md:w-80" role="search" action="/marketplace" method="get" onSubmit={(event) => { event.preventDefault(); setFilters({ search }); }}>
               <input type="hidden" name="category" value={activeCategory} />
               <input type="hidden" name="sort" value="newest" />

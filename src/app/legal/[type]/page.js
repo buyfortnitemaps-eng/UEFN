@@ -1,3 +1,4 @@
+import CatalogNotice from "../../components/CatalogNotice";
 import { notFound } from "next/navigation";
 import LegalClient from "./LegalClient";
 import { getLegal } from "../../lib/catalog-data";
@@ -14,5 +15,8 @@ export default async function Page({ params }) {
   const { type } = await params;
   const data = await getLegal(type);
   if (!data) notFound();
-  return <LegalClient data={{ type: data.type }} cleanHTML={sanitizeContent(data.content)} />;
+  return <>
+    <CatalogNotice catalog={data.catalog} className="relative z-10 mt-24 mx-6" />
+    <LegalClient data={{ type: data.type }} cleanHTML={sanitizeContent(data.content)} />
+  </>;
 }

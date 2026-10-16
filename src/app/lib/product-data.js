@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { apiUrl } from "./runtime-config";
+import { readPublicCatalog } from "./catalog-service";
 import { classifyProductResponse } from "./product-response.mjs";
 import { canonicalProductPath, originalProductId, productMetadata, productPath } from "./seo-utils.mjs";
 
@@ -9,12 +9,8 @@ export const getProduct = cache(async (id, kind = "marketplace") => {
   }
   try {
     const endpoint = kind === "featured" ? `products/featured/${id}` : `products/${id}`;
-    const response = await fetch(apiUrl(endpoint), {
-      next: { revalidate: 300 },
-      signal: AbortSignal.timeout(10000),
-    });
-    const result = await response.json().catch(() => null);
-    return classifyProductResponse(response.status, result, id);
+    const { status, payload } = await readPublicCatalog(endpoint);
+    return { ...classifyProductResponse(status, payload, id), catalog: payload.catalog };
   } catch {
     // A temporary API outage is not proof that a product has been deleted.
     return { available: false, product: null };

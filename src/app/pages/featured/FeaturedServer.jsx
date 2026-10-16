@@ -1,3 +1,4 @@
+import CatalogNotice from "../../components/CatalogNotice";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ClientFeaturedContent from "./FeaturedSection";
@@ -7,7 +8,7 @@ export default async function FeaturedServer({ standalone = false }) {
   const initialProducts = await publicListing([...result.data].reverse(), true);
   return (
     <div className=" pt-32 pb-24 px-6 transition-colors duration-300 bg-background">
-      
+
     <section className="max-w-7xl mx-auto relative z-10">
       {/* --- FIXED BACKGROUND ELEMENTS (SCROLL FIXED) --- */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -23,9 +24,10 @@ export default async function FeaturedServer({ standalone = false }) {
       </div>
 
 
-      {/* Filtering, Searching এবং Grid-এর জন্য আমরা একটি ক্লায়েন্ট কম্পোনেন্ট ব্যবহার করব 
+      {/* Filtering, Searching এবং Grid-এর জন্য আমরা একটি ক্লায়েন্ট কম্পোনেন্ট ব্যবহার করব
           যাতে ISR-এর ডেটা পাস করে দেওয়া হবে।
       */}
+      <CatalogNotice catalog={result.catalog} className="relative z-10 mb-6" />
       <ClientFeaturedContent initialProducts={initialProducts} standalone={standalone} />
 
       <div className="mt-16 text-center relative z-10">

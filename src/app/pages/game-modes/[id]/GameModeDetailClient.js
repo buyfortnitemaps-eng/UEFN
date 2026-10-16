@@ -1,4 +1,5 @@
 "use client";
+import CatalogNotice from "../../../components/CatalogNotice";
 import DiscordButton from "../../../components/DiscordButton";
 import Link from "next/link";
 import {
@@ -8,7 +9,7 @@ import {
 import SeoPagination from "../../../components/SeoPagination";
 import Image from "next/image";
 
-export default function GameModeDetail({ id, modeName, products, currentPage, totalPages }) {
+export default function GameModeDetail({ catalog, id, modeName, products, currentPage, totalPages }) {
 
 
   return (
@@ -26,6 +27,7 @@ export default function GameModeDetail({ id, modeName, products, currentPage, to
 
       <div className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
+          <CatalogNotice catalog={catalog} className="mb-6" />
           <div className="mb-12">
             <Link
               href="/pages/game-modes"

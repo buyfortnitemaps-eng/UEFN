@@ -12,9 +12,12 @@ const getData = cache(async (id, page) => {
   if (!mode) notFound();
   const result = await catalogRequest(`products/by-gametype/${id}`, { page, limit: 12 });
   const totalPages = Math.max(1, result.meta?.totalPages || Math.ceil((result.meta?.total || result.data.length) / 12));
-  if (page > totalPages) notFound();
+  if (page > totalPages) {
+    if (result.catalog?.source === "saved") throw new Error("Catalog page temporarily unavailable");
+    notFound();
+  }
   const products = await publicListing(result.data);
-  return { mode, products, totalPages };
+  return { mode, products, totalPages, catalog: result.catalog };
 });
 export async function generateMetadata({ params, searchParams }) {
   const { id } = await params; const page = pageNumber((await searchParams).page);
@@ -23,9 +26,9 @@ export async function generateMetadata({ params, searchParams }) {
 }
 export default async function Page({ params, searchParams }) {
   const { id } = await params; const page = pageNumber((await searchParams).page);
-  const { mode, products, totalPages } = await getData(id, page);
+  const { mode, products, totalPages, catalog } = await getData(id, page);
   return <>
     <JsonLd data={collectionStructuredData(`${mode.name} UEFN Assets`, listingUrl(`/pages/game-modes/${id}`, page), products, SITE_ORIGIN, page)} />
-    <GameModeDetailClient id={id} modeName={mode.name} products={products} currentPage={page} totalPages={totalPages} />
+    <GameModeDetailClient catalog={catalog} id={id} modeName={mode.name} products={products} currentPage={page} totalPages={totalPages} />
   </>;
 }

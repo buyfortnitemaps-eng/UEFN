@@ -1,4 +1,5 @@
 "use client";
+import CatalogNotice from "../../../components/CatalogNotice";
 import DiscordButton from "../../../components/DiscordButton";
 import Link from "next/link";
 import { useState } from "react";
@@ -7,7 +8,7 @@ import ProductSkeleton from "../../../components/productSclekton";
 import SeoPagination from "../../../components/SeoPagination";
 import Image from "next/image";
 
-export default function AllAssetsClient({ initialProducts: products, initialTotalPages: totalPages, currentPage }) {
+export default function AllAssetsClient({ initialCatalog, initialProducts: products, initialTotalPages: totalPages, currentPage }) {
   const [activeTag, setActiveTag] = useState("all");
   const filteredProducts = activeTag === "all" ? products : products.filter(product => product.featureTag === activeTag);
   const loading = false;
@@ -36,6 +37,7 @@ export default function AllAssetsClient({ initialProducts: products, initialTota
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
+        <CatalogNotice catalog={initialCatalog} className="mb-6" />
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
           {/* Title Section */}
           <div className="w-full md:w-auto">

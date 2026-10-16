@@ -1,0 +1,890 @@
+{
+  "version": 1,
+  "capturedAt": "2026-09-15T00:18:30.000Z",
+  "sourceOrigin": "https://uefn-maps-server.vercel.app",
+  "capturedDates": {
+    "products": "2026-09-15T00:11:33.000Z",
+    "featured": "2026-09-15T00:11:33.000Z",
+    "categories": "2026-09-15T00:18:30.000Z",
+    "gameTypes": "2026-09-15T00:18:30.000Z",
+    "legals": "2026-09-15T00:16:33.000Z",
+    "portfolios": "2026-10-16T11:24:01.239Z"
+  },
+  "products": [
+    {
+      "_id": "69adf1f258e23909e835cb30",
+      "title": "SOLO CUP ZONE WARS [ENDGAME]",
+      "description": "Cup Zone Wars is the most realistic Fortnite late game experience. Play Solo Endgames with 32 Players, original zones, competitive lootpool, and the exact scoring system from real tournaments.\nCup Zone Wars is 100% accurate to real Fortnite endgames, providing the perfect practice for competitive players.\n\n👥Up to 32 Players\n🌀1:1 Zones like the real late game\n🏆 Cup Point System\n❤️ Real Siphon\n🎯Competitive Loot Pool\nand much more!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T22:02:26.811Z",
+      "updatedAt": "2026-03-08T22:02:26.811Z",
+      "price": 100,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7qj72nrre7mm5cemecbh0f",
+      "paddleProductId": "pro_01kk7qj6z7gtcde3mcdy42byva",
+      "category": {
+        "_id": "69a379664febe91319a61013",
+        "name": "Zone Wars"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773007345/cpqtgtqmxag2l18j3bxj.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf1922d10c26fa06a80e8",
+      "title": "MECHANICS TRAINING V5 🎯",
+      "description": "Welcome to the best practice map 📈\nElevate your skill level and improve in every category!\n\n✅ Aim\n✅ Piece Control\n✅ Editing\n✅ Peeks\n✅ Box-Fighting\n✅ ...and more!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T22:00:50.924Z",
+      "updatedAt": "2026-03-08T22:00:50.924Z",
+      "price": 120,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7qf9dxsg8hg7k2g92wg5d3",
+      "paddleProductId": "pro_01kk7qf9bc8yyjbfvg486c0q5b",
+      "category": {
+        "_id": "69a2c0c8af583aeaaa5a2878",
+        "name": "1v1"
+      },
+      "gameType": {
+        "_id": "69a2c6d05dfe2cea46924231",
+        "name": "Lego Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773007249/xmtcspvgfktaifji6ggo.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf10158e23909e835cb02",
+      "title": "THE PILLARS",
+      "description": "👥 12 Players Free For All\n❓ Random Item Every 6 Seconds\n💥 Build Or Launch Yourself To Enemy Pillars!\n🛡️ Strategize To Knock Your Opponents Off\n🌀 Don't Fall!\n👑 Last Player Standing Wins\n\nRank System!\n\nMADE IN UEFN / CREATIVE 2.0\n\nAlways Updated!\n\nReceive A Random Item Every 6 Seconds.\nKnock Enemies Off Their Pillars.\nLast Player Standing Wins!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:58:25.427Z",
+      "updatedAt": "2026-03-08T21:58:25.427Z",
+      "price": 50,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7qavb8jp2gnddwy201gcjf",
+      "paddleProductId": "pro_01kk7qav7m222zeqd64me0gny8",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a216ff68bc882ff9a28a36",
+        "name": "TWDU Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773007103/he5agcdjyyqgagcrrjbs.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf08b58e23909e835caec",
+      "title": "1v1 Realistics Free for All",
+      "description": "THE ORIGINAL 12 Player Endless Free For All with Popular Weapons.\n\n✅ Good Solo, Duo, Trio and Squads Practice\n\n✅ Build Fight, Box Fight, Piece Control and Edit Practice\n\n✅ 200 Siphon and Instant Reload after Elim\n\n✅ Popular Loot Pool\n\n✅ Instant Respawns and Infinite Round\n\n✅ Saved Gold, Elims and Rank\n\nSpawn with Random Loadout\nEliminate other Players and Earn Gold\nBuild Fight within the Zone",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:56:27.594Z",
+      "updatedAt": "2026-03-08T21:56:27.594Z",
+      "price": 50,
+      "discountPrice": 30,
+      "isDiscount": true,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7q789a5f4b6aveame0fntq",
+      "paddleProductId": "pro_01kk7q786x06e4ccaj038bd31p",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a2c6c35dfe2cea4692422b",
+        "name": "Fall Guys Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006986/fchmwtmhv6pfxqxjrmg5.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf001c37806856417bc52",
+      "title": "1v1 Build Fight",
+      "description": "The 1v1 Build Fight Map that has everything you need\n\n✔ Optimized & Simplistic\n✔ Always Updated Weapons\n✔ Customizable Health Options\n✔ Customizable Environment Settings\n\n🤖 Freebuild Bot System (Solo Mode)\n\nCreated by Heavyblue\n\n👥 Play against Friends or random Opponents through Matchmaking\n🏆 Practice all your Mechanics: Building, Piece Control, Editing, Aim, Awareness\n",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:54:09.521Z",
+      "updatedAt": "2026-03-08T21:54:09.521Z",
+      "price": 33,
+      "discountPrice": 25,
+      "isDiscount": true,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7q31e7n75v0czdtbwftapq",
+      "paddleProductId": "pro_01kk7q31bhv3dq4aa0pm11kf4w",
+      "category": {
+        "_id": "69a2c0c8af583aeaaa5a2878",
+        "name": "1v1"
+      },
+      "gameType": {
+        "_id": "69a2175168bc882ff9a28a62",
+        "name": "Squid Game Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006848/eabamw5emp83ye9tyrlo.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adef9658e23909e835cab4",
+      "title": "🐐 GO GOATED! Zone Wars 🌀",
+      "description": "🐐 4 Teams Battle 🐐\n🌀 Classic Zone Wars Game 🌀\n👥Select Your Team👥\n💾 Eliminations Save 💾\n\n4 Teams battle in a Classic Zone Wars game!\nSAVE LOADOUT; RESPAWN DISABLED",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:52:22.636Z",
+      "updatedAt": "2026-03-08T21:52:22.636Z",
+      "price": 50,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7pzs2ft4denk2zd38vabbd",
+      "paddleProductId": "pro_01kk7pzs0rqf9sjd2trgz9g60t",
+      "category": {
+        "_id": "69a379664febe91319a61013",
+        "name": "Zone Wars"
+      },
+      "gameType": {
+        "_id": "69a216e668bc882ff9a28a32",
+        "name": "TMNT Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006741/j09wt3epmioimndydofc.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adef072d10c26fa06a80d4",
+      "title": "MEGA GUN GAME ⭐️",
+      "description": "Gun Game One Shot en Tilted Towers!\n- Armas NUEVAS cada semana! ⚡️\n- ⁠Revive INSTANTÁNEAMENTE 🔄\n- ⁠Desbloquea MEJORAS 🔥\n\nConsigue Oro para desbloquear MEJORAS 👑\n⁠Completa todas las Armas para una Sorpresa 🎁\nDale Favorito al mapa si te gusta ❤️",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:49:59.200Z",
+      "updatedAt": "2026-03-08T21:49:59.200Z",
+      "price": 50,
+      "discountPrice": 33,
+      "isDiscount": true,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7pvd05k4ffzmqtaty2dg8s",
+      "paddleProductId": "pro_01kk7pvcy33sg5wqh6beenm2ey",
+      "category": {
+        "_id": "69a37976fd0dabf3e26f666b",
+        "name": "Gun Game"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006597/artcjkzfwjpuueb3eiap.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adee2f58e23909e835caa0",
+      "title": "1V1 WITH EVERY GUN",
+      "description": "Welcome to 1v1 With Every Gun! Fight in a free-for-all sandbox with every weapon in Fortnite. Choose your loadout, jump into the arena, and 1v1 other players.\n\n🔫 OG guns, mythics, exotics, vehicles, OP & vaulted items!\n♾️ Infinite respawns!\n🚨 NEW WEAPONS! Check them out!\n⚡️ Instant reload & 200 siphon on elimination!\n🤫 Discover secret guns hidden around the map!\n🎉 Attend live events to unlock limiteds.\n✅ Updated weekly!\n💾 Your eliminations and unlocked items are saved!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:46:23.017Z",
+      "updatedAt": "2026-03-08T21:46:23.017Z",
+      "price": 80,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7pmsvkj3nf7644rph2jwgj",
+      "paddleProductId": "pro_01kk7pmssszzqbyg00mrrd3kax",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a2175168bc882ff9a28a62",
+        "name": "Squid Game Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006381/lt2yrloduehfymznncr8.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69aded5f2d10c26fa06a8099",
+      "title": "ESCAPE TSUNAMI FOR THE BRAINROTS",
+      "description": "🆕 Tons of event !\n💸 Collect and Level Up your Brainrots and get more money !\n🌊 Dodge the waves to discover rarer brainrots !\n👽 Fill in your index to earn extra rewards !\n🔥 Rebirth to gain even more cash !\n🏃 Improve your speed and flex on your friends !\n👥 Play with friends !",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:42:55.523Z",
+      "updatedAt": "2026-03-08T21:42:55.523Z",
+      "price": 350,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7pef7sg0ygebqbf8r1q5h4",
+      "paddleProductId": "pro_01kk7pef4gmxv614cssz2x0ca5",
+      "category": {
+        "_id": "69a379eefd0dabf3e26f6687",
+        "name": "Tycoon"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006174/z0cikz3kfbuykrmqjjny.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adeceb58e23909e835ca7a",
+      "title": "STEAL THE BRAINROT",
+      "description": "🆕 New Void event!\n🧠 Steal Brainrots from other players!\n👽 Buy Brainrots to generate cash!\n🌀 LIVE EVENTS! 10X Chance To Get Void BRAINROTS!\n💸 Earn money offline!\n🔥 Rebirth to gain perks and flex on your friends!\n👀 Collect ultra-rare Brainrot! if you're lucky enough to find them...\n👥 Play with friends!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:40:59.009Z",
+      "updatedAt": "2026-03-08T21:40:59.009Z",
+      "price": 180,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kk7paxerx1vp6p2ketr89t1s",
+      "paddleProductId": "pro_01kk7pax9yxces0qpvb5c2xcf0",
+      "category": {
+        "_id": "69a379eefd0dabf3e26f6687",
+        "name": "Tycoon"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006057/fysjd8tmtqghllsvuxct.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69a45a813e7a524a0dc9aa46",
+      "title": "The Pit Fortnite Map",
+      "description": "its a creative 2.0 map ",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-01T15:25:53.979Z",
+      "updatedAt": "2026-03-01T15:25:53.979Z",
+      "price": 70,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "paddlePriceId": "pri_01kjn032vz7w0hfqzda2p6teq1",
+      "paddleProductId": "pro_01kjn032s4qs7c8y0wm8vvkp2c",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1772378752/nexcrkndnhno8wzrpzb6.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    }
+  ],
+  "featured": [
+    {
+      "_id": "69adf1f258e23909e835cb30",
+      "title": "SOLO CUP ZONE WARS [ENDGAME]",
+      "description": "Cup Zone Wars is the most realistic Fortnite late game experience. Play Solo Endgames with 32 Players, original zones, competitive lootpool, and the exact scoring system from real tournaments.\nCup Zone Wars is 100% accurate to real Fortnite endgames, providing the perfect practice for competitive players.\n\n👥Up to 32 Players\n🌀1:1 Zones like the real late game\n🏆 Cup Point System\n❤️ Real Siphon\n🎯Competitive Loot Pool\nand much more!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T22:02:26.811Z",
+      "updatedAt": "2026-03-08T22:02:50.870Z",
+      "price": 100,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "premium",
+      "paddlePriceId": "pri_01kk7qj72nrre7mm5cemecbh0f",
+      "paddleProductId": "pro_01kk7qj6z7gtcde3mcdy42byva",
+      "originalProductId": "69adf1f258e23909e835cb30",
+      "category": {
+        "_id": "69a379664febe91319a61013",
+        "name": "Zone Wars"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773007345/cpqtgtqmxag2l18j3bxj.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf1922d10c26fa06a80e8",
+      "title": "MECHANICS TRAINING V5 🎯",
+      "description": "Welcome to the best practice map 📈\nElevate your skill level and improve in every category!\n\n✅ Aim\n✅ Piece Control\n✅ Editing\n✅ Peeks\n✅ Box-Fighting\n✅ ...and more!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T22:00:50.924Z",
+      "updatedAt": "2026-03-08T22:00:50.924Z",
+      "price": 120,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "featured",
+      "paddlePriceId": "pri_01kk7qf9dxsg8hg7k2g92wg5d3",
+      "paddleProductId": "pro_01kk7qf9bc8yyjbfvg486c0q5b",
+      "originalProductId": "69adf1922d10c26fa06a80e8",
+      "category": {
+        "_id": "69a2c0c8af583aeaaa5a2878",
+        "name": "1v1"
+      },
+      "gameType": {
+        "_id": "69a2c6d05dfe2cea46924231",
+        "name": "Lego Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773007249/xmtcspvgfktaifji6ggo.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf10158e23909e835cb02",
+      "title": "THE PILLARS",
+      "description": "👥 12 Players Free For All\n❓ Random Item Every 6 Seconds\n💥 Build Or Launch Yourself To Enemy Pillars!\n🛡️ Strategize To Knock Your Opponents Off\n🌀 Don't Fall!\n👑 Last Player Standing Wins\n\nRank System!\n\nMADE IN UEFN / CREATIVE 2.0\n\nAlways Updated!\n\nReceive A Random Item Every 6 Seconds.\nKnock Enemies Off Their Pillars.\nLast Player Standing Wins!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:58:25.427Z",
+      "updatedAt": "2026-03-08T21:58:25.427Z",
+      "price": 50,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "featured",
+      "paddlePriceId": "pri_01kk7qavb8jp2gnddwy201gcjf",
+      "paddleProductId": "pro_01kk7qav7m222zeqd64me0gny8",
+      "originalProductId": "69adf10158e23909e835cb02",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a216ff68bc882ff9a28a36",
+        "name": "TWDU Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773007103/he5agcdjyyqgagcrrjbs.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf08b58e23909e835caec",
+      "title": "1v1 Realistics Free for All",
+      "description": "THE ORIGINAL 12 Player Endless Free For All with Popular Weapons.\n\n✅ Good Solo, Duo, Trio and Squads Practice\n\n✅ Build Fight, Box Fight, Piece Control and Edit Practice\n\n✅ 200 Siphon and Instant Reload after Elim\n\n✅ Popular Loot Pool\n\n✅ Instant Respawns and Infinite Round\n\n✅ Saved Gold, Elims and Rank\n\nSpawn with Random Loadout\nEliminate other Players and Earn Gold\nBuild Fight within the Zone",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:56:27.594Z",
+      "updatedAt": "2026-03-08T21:56:27.594Z",
+      "price": 50,
+      "discountPrice": 30,
+      "isDiscount": true,
+      "youtubeId": "",
+      "featureTag": "featured",
+      "paddlePriceId": "pri_01kk7q789a5f4b6aveame0fntq",
+      "paddleProductId": "pro_01kk7q786x06e4ccaj038bd31p",
+      "originalProductId": "69adf08b58e23909e835caec",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a2c6c35dfe2cea4692422b",
+        "name": "Fall Guys Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006986/fchmwtmhv6pfxqxjrmg5.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adf001c37806856417bc52",
+      "title": "1v1 Build Fight",
+      "description": "The 1v1 Build Fight Map that has everything you need\n\n✔ Optimized & Simplistic\n✔ Always Updated Weapons\n✔ Customizable Health Options\n✔ Customizable Environment Settings\n\n🤖 Freebuild Bot System (Solo Mode)\n\nCreated by Heavyblue\n\n👥 Play against Friends or random Opponents through Matchmaking\n🏆 Practice all your Mechanics: Building, Piece Control, Editing, Aim, Awareness\n",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:54:09.521Z",
+      "updatedAt": "2026-03-08T21:54:09.521Z",
+      "price": 33,
+      "discountPrice": 25,
+      "isDiscount": true,
+      "youtubeId": "",
+      "featureTag": "featured",
+      "paddlePriceId": "pri_01kk7q31e7n75v0czdtbwftapq",
+      "paddleProductId": "pro_01kk7q31bhv3dq4aa0pm11kf4w",
+      "originalProductId": "69adf001c37806856417bc52",
+      "category": {
+        "_id": "69a2c0c8af583aeaaa5a2878",
+        "name": "1v1"
+      },
+      "gameType": {
+        "_id": "69a2175168bc882ff9a28a62",
+        "name": "Squid Game Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006848/eabamw5emp83ye9tyrlo.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adef9658e23909e835cab4",
+      "title": "🐐 GO GOATED! Zone Wars 🌀",
+      "description": "🐐 4 Teams Battle 🐐\n🌀 Classic Zone Wars Game 🌀\n👥Select Your Team👥\n💾 Eliminations Save 💾\n\n4 Teams battle in a Classic Zone Wars game!\nSAVE LOADOUT; RESPAWN DISABLED",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:52:22.636Z",
+      "updatedAt": "2026-03-08T21:52:22.636Z",
+      "price": 50,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "featured",
+      "paddlePriceId": "pri_01kk7pzs2ft4denk2zd38vabbd",
+      "paddleProductId": "pro_01kk7pzs0rqf9sjd2trgz9g60t",
+      "originalProductId": "69adef9658e23909e835cab4",
+      "category": {
+        "_id": "69a379664febe91319a61013",
+        "name": "Zone Wars"
+      },
+      "gameType": {
+        "_id": "69a216e668bc882ff9a28a32",
+        "name": "TMNT Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006741/j09wt3epmioimndydofc.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adef072d10c26fa06a80d4",
+      "title": "MEGA GUN GAME ⭐️",
+      "description": "Gun Game One Shot en Tilted Towers!\n- Armas NUEVAS cada semana! ⚡️\n- ⁠Revive INSTANTÁNEAMENTE 🔄\n- ⁠Desbloquea MEJORAS 🔥\n\nConsigue Oro para desbloquear MEJORAS 👑\n⁠Completa todas las Armas para una Sorpresa 🎁\nDale Favorito al mapa si te gusta ❤️",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:49:59.200Z",
+      "updatedAt": "2026-03-08T21:50:29.167Z",
+      "price": 50,
+      "discountPrice": 33,
+      "isDiscount": true,
+      "youtubeId": "",
+      "featureTag": "bundle",
+      "paddlePriceId": "pri_01kk7pvd05k4ffzmqtaty2dg8s",
+      "paddleProductId": "pro_01kk7pvcy33sg5wqh6beenm2ey",
+      "originalProductId": "69adef072d10c26fa06a80d4",
+      "category": {
+        "_id": "69a37976fd0dabf3e26f666b",
+        "name": "Gun Game"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006597/artcjkzfwjpuueb3eiap.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adee2f58e23909e835caa0",
+      "title": "1V1 WITH EVERY GUN",
+      "description": "Welcome to 1v1 With Every Gun! Fight in a free-for-all sandbox with every weapon in Fortnite. Choose your loadout, jump into the arena, and 1v1 other players.\n\n🔫 OG guns, mythics, exotics, vehicles, OP & vaulted items!\n♾️ Infinite respawns!\n🚨 NEW WEAPONS! Check them out!\n⚡️ Instant reload & 200 siphon on elimination!\n🤫 Discover secret guns hidden around the map!\n🎉 Attend live events to unlock limiteds.\n✅ Updated weekly!\n💾 Your eliminations and unlocked items are saved!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:46:23.017Z",
+      "updatedAt": "2026-03-08T21:47:23.891Z",
+      "price": 80,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "premium",
+      "paddlePriceId": "pri_01kk7pmsvkj3nf7644rph2jwgj",
+      "paddleProductId": "pro_01kk7pmssszzqbyg00mrrd3kax",
+      "originalProductId": "69adee2f58e23909e835caa0",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a2175168bc882ff9a28a62",
+        "name": "Squid Game Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006381/lt2yrloduehfymznncr8.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69aded5f2d10c26fa06a8099",
+      "title": "ESCAPE TSUNAMI FOR THE BRAINROTS",
+      "description": "🆕 Tons of event !\n💸 Collect and Level Up your Brainrots and get more money !\n🌊 Dodge the waves to discover rarer brainrots !\n👽 Fill in your index to earn extra rewards !\n🔥 Rebirth to gain even more cash !\n🏃 Improve your speed and flex on your friends !\n👥 Play with friends !",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:42:55.523Z",
+      "updatedAt": "2026-03-08T21:43:56.280Z",
+      "price": 350,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "premium",
+      "paddlePriceId": "pri_01kk7pef7sg0ygebqbf8r1q5h4",
+      "paddleProductId": "pro_01kk7pef4gmxv614cssz2x0ca5",
+      "originalProductId": "69aded5f2d10c26fa06a8099",
+      "category": {
+        "_id": "69a379eefd0dabf3e26f6687",
+        "name": "Tycoon"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006174/z0cikz3kfbuykrmqjjny.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69adeceb58e23909e835ca7a",
+      "title": "STEAL THE BRAINROT",
+      "description": "🆕 New Void event!\n🧠 Steal Brainrots from other players!\n👽 Buy Brainrots to generate cash!\n🌀 LIVE EVENTS! 10X Chance To Get Void BRAINROTS!\n💸 Earn money offline!\n🔥 Rebirth to gain perks and flex on your friends!\n👀 Collect ultra-rare Brainrot! if you're lucky enough to find them...\n👥 Play with friends!",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-08T21:40:59.009Z",
+      "updatedAt": "2026-03-08T21:40:59.009Z",
+      "price": 180,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "featured",
+      "paddlePriceId": "pri_01kk7paxerx1vp6p2ketr89t1s",
+      "paddleProductId": "pro_01kk7pax9yxces0qpvb5c2xcf0",
+      "originalProductId": "69adeceb58e23909e835ca7a",
+      "category": {
+        "_id": "69a379eefd0dabf3e26f6687",
+        "name": "Tycoon"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773006057/fysjd8tmtqghllsvuxct.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    },
+    {
+      "_id": "69a45a813e7a524a0dc9aa46",
+      "title": "The Pit Fortnite Map",
+      "description": "its a creative 2.0 map ",
+      "seller": {
+        "name": "Magril"
+      },
+      "createdAt": "2026-03-01T15:25:53.979Z",
+      "updatedAt": "2026-03-01T15:26:41.448Z",
+      "price": 70,
+      "discountPrice": 0,
+      "isDiscount": false,
+      "youtubeId": "",
+      "featureTag": "featured",
+      "paddlePriceId": "pri_01kjn032vz7w0hfqzda2p6teq1",
+      "paddleProductId": "pro_01kjn032s4qs7c8y0wm8vvkp2c",
+      "originalProductId": "69a45a813e7a524a0dc9aa46",
+      "category": {
+        "_id": "69a379604febe91319a6100f",
+        "name": "Free For All -FFA"
+      },
+      "gameType": {
+        "_id": "69a2171f7decab0b1fdab310",
+        "name": "Creative 2.0 Maps"
+      },
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1772378752/nexcrkndnhno8wzrpzb6.jpg"
+      },
+      "gallery": [],
+      "faqs": []
+    }
+  ],
+  "categories": [
+    {
+      "_id": "69a2c0c8af583aeaaa5a2878",
+      "createdAt": "2026-02-28T10:17:44.420Z",
+      "updatedAt": "2026-03-08T22:00:51.112Z",
+      "name": "1v1",
+      "slug": "1v1",
+      "totalProduct": 3
+    },
+    {
+      "_id": "69a3792d4febe91319a61007",
+      "createdAt": "2026-02-28T23:24:29.439Z",
+      "updatedAt": "2026-02-28T23:24:29.439Z",
+      "name": "Team Deathmatch",
+      "slug": "team-deathmatch",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a3794f4febe91319a6100b",
+      "createdAt": "2026-02-28T23:25:03.680Z",
+      "updatedAt": "2026-03-25T15:41:18.420Z",
+      "name": "Escape",
+      "slug": "escape",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a379604febe91319a6100f",
+      "createdAt": "2026-02-28T23:25:20.559Z",
+      "updatedAt": "2026-03-08T21:58:25.630Z",
+      "name": "Free For All -FFA",
+      "slug": "free-for-all--ffa",
+      "totalProduct": 4
+    },
+    {
+      "_id": "69a379664febe91319a61013",
+      "createdAt": "2026-02-28T23:25:26.209Z",
+      "updatedAt": "2026-03-08T22:02:27.007Z",
+      "name": "Zone Wars",
+      "slug": "zone-wars",
+      "totalProduct": 2
+    },
+    {
+      "_id": "69a37976fd0dabf3e26f666b",
+      "createdAt": "2026-02-28T23:25:42.039Z",
+      "updatedAt": "2026-03-08T21:49:59.397Z",
+      "name": "Gun Game",
+      "slug": "gun-game",
+      "totalProduct": 1
+    },
+    {
+      "_id": "69a37984fd0dabf3e26f666f",
+      "createdAt": "2026-02-28T23:25:56.384Z",
+      "updatedAt": "2026-02-28T23:25:56.384Z",
+      "name": "Open World",
+      "slug": "open-world",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a379a0fd0dabf3e26f6673",
+      "createdAt": "2026-02-28T23:26:24.338Z",
+      "updatedAt": "2026-02-28T23:26:24.338Z",
+      "name": "ROGUELIKE",
+      "slug": "roguelike",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a379aefd0dabf3e26f6677",
+      "createdAt": "2026-02-28T23:26:38.337Z",
+      "updatedAt": "2026-02-28T23:26:38.337Z",
+      "name": "Prop Hunt",
+      "slug": "prop-hunt",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a379bbfd0dabf3e26f667b",
+      "createdAt": "2026-02-28T23:26:51.474Z",
+      "updatedAt": "2026-02-28T23:26:51.474Z",
+      "name": "Driving-Cars",
+      "slug": "driving-cars",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a379c9fd0dabf3e26f6683",
+      "createdAt": "2026-02-28T23:27:05.261Z",
+      "updatedAt": "2026-02-28T23:27:05.261Z",
+      "name": "PIT",
+      "slug": "pit",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a379eefd0dabf3e26f6687",
+      "createdAt": "2026-02-28T23:27:42.670Z",
+      "updatedAt": "2026-03-08T21:42:55.716Z",
+      "name": "Tycoon",
+      "slug": "tycoon",
+      "totalProduct": 2
+    }
+  ],
+  "gameTypes": [
+    {
+      "_id": "69a216e668bc882ff9a28a32",
+      "createdAt": "2026-02-27T22:12:54.636Z",
+      "updatedAt": "2026-03-08T21:52:23.023Z",
+      "name": "TMNT Maps",
+      "slug": "tmnt-maps",
+      "totalProduct": 1
+    },
+    {
+      "_id": "69a216ff68bc882ff9a28a36",
+      "createdAt": "2026-02-27T22:13:19.002Z",
+      "updatedAt": "2026-03-08T21:58:25.820Z",
+      "name": "TWDU Maps",
+      "slug": "twdu-maps",
+      "totalProduct": 1
+    },
+    {
+      "_id": "69a2171f7decab0b1fdab310",
+      "createdAt": "2026-02-27T22:13:51.566Z",
+      "updatedAt": "2026-03-26T00:50:06.671Z",
+      "name": "Creative 2.0 Maps",
+      "slug": "creative-2.0-maps",
+      "totalProduct": 1
+    },
+    {
+      "_id": "69a2175168bc882ff9a28a62",
+      "createdAt": "2026-02-27T22:14:41.858Z",
+      "updatedAt": "2026-03-08T21:54:09.918Z",
+      "name": "Squid Game Maps",
+      "slug": "squid-game-maps",
+      "totalProduct": 2
+    },
+    {
+      "_id": "69a2176d68bc882ff9a28a84",
+      "createdAt": "2026-02-27T22:15:09.250Z",
+      "updatedAt": "2026-02-27T22:15:09.250Z",
+      "name": "KPDH Maps",
+      "slug": "kpdh-maps",
+      "totalProduct": 0
+    },
+    {
+      "_id": "69a2c6c35dfe2cea4692422b",
+      "createdAt": "2026-02-28T10:43:15.984Z",
+      "updatedAt": "2026-03-08T21:56:27.999Z",
+      "name": "Fall Guys Maps",
+      "slug": "fall-guys-maps",
+      "totalProduct": 1
+    },
+    {
+      "_id": "69a2c6d05dfe2cea46924231",
+      "createdAt": "2026-02-28T10:43:28.846Z",
+      "updatedAt": "2026-03-08T22:00:51.300Z",
+      "name": "Lego Maps",
+      "slug": "lego-maps",
+      "totalProduct": 1
+    }
+  ],
+  "legals": [
+    {
+      "_id": "699bd12c1091cde7e0d518fe",
+      "createdAt": "2026-02-23T04:01:48.213Z",
+      "updatedAt": "2026-03-14T08:20:46.576Z",
+      "type": "Terms of Service",
+      "content": "<h1>Terms&nbsp;of&nbsp;Service</h1><h1></h1><p><strong>Last&nbsp;Updated:&nbsp;March&nbsp;2026</strong></p><p></p><p>These&nbsp;Terms&nbsp;of&nbsp;Service&nbsp;(&quot;Terms&quot;)&nbsp;govern&nbsp;your&nbsp;use&nbsp;of&nbsp;the&nbsp;website&nbsp;<strong><a href=\"https://uefnmap.com\" rel=\"noopener noreferrer\" target=\"_blank\">https://uefnmap.com</a></strong>,&nbsp;operated&nbsp;by&nbsp;<strong>uefnmap</strong>&nbsp;</p><p>By&nbsp;accessing&nbsp;or&nbsp;using&nbsp;our&nbsp;website,&nbsp;purchasing&nbsp;products,&nbsp;or&nbsp;using&nbsp;our&nbsp;services,&nbsp;you&nbsp;agree&nbsp;to&nbsp;be&nbsp;bound&nbsp;by&nbsp;these&nbsp;Terms.</p><p></p><h2>Services</h2><p>uefnmap&nbsp;provides&nbsp;digital&nbsp;products&nbsp;and&nbsp;services&nbsp;for&nbsp;creators&nbsp;using&nbsp;Unreal&nbsp;Editor&nbsp;for&nbsp;Fortnite&nbsp;(UEFN),&nbsp;including:</p><ul><li>Pre-made&nbsp;UEFN&nbsp;map&nbsp;templates</li><li>Verse&nbsp;logic&nbsp;systems</li><li>Custom&nbsp;map&nbsp;development&nbsp;services</li><li>Bug&nbsp;fixing&nbsp;and&nbsp;optimization</li><li>Digital&nbsp;assets&nbsp;and&nbsp;development&nbsp;resources</li></ul><p>All&nbsp;products&nbsp;are&nbsp;delivered&nbsp;digitally&nbsp;after&nbsp;purchase.</p><p></p><h2>Accounts</h2><p>You&nbsp;are&nbsp;responsible&nbsp;for&nbsp;maintaining&nbsp;the&nbsp;security&nbsp;of&nbsp;your&nbsp;account&nbsp;credentials.</p><p>You&nbsp;agree&nbsp;not&nbsp;to&nbsp;share&nbsp;your&nbsp;account&nbsp;access&nbsp;with&nbsp;others.&nbsp;Any&nbsp;activity&nbsp;performed&nbsp;under&nbsp;your&nbsp;account&nbsp;is&nbsp;your&nbsp;responsibility.</p><p></p><h2>License</h2><p>Purchasing&nbsp;a&nbsp;product&nbsp;from&nbsp;uefnmap&nbsp;grants&nbsp;you&nbsp;a&nbsp;<strong>non-transferable&nbsp;license</strong>&nbsp;to&nbsp;use&nbsp;the&nbsp;purchased&nbsp;content&nbsp;in&nbsp;your&nbsp;own&nbsp;UEFN&nbsp;projects.</p><p>You&nbsp;may&nbsp;not:</p><ul><li>Resell&nbsp;or&nbsp;redistribute&nbsp;our&nbsp;products</li><li>Share&nbsp;purchased&nbsp;files&nbsp;publicly</li><li>Claim&nbsp;our&nbsp;work&nbsp;as&nbsp;your&nbsp;own&nbsp;original&nbsp;creation</li></ul><p></p><h2>Payments</h2><p>All&nbsp;payments&nbsp;are&nbsp;processed&nbsp;securely&nbsp;by&nbsp;<strong>Paddle</strong>,&nbsp;which&nbsp;acts&nbsp;as&nbsp;the&nbsp;merchant&nbsp;of&nbsp;record&nbsp;for&nbsp;transactions&nbsp;on&nbsp;this&nbsp;website.</p><p>We&nbsp;do&nbsp;not&nbsp;collect&nbsp;or&nbsp;store&nbsp;payment&nbsp;card&nbsp;information.</p><p></p><p></p><h2>Refunds</h2><p>Refunds&nbsp;are&nbsp;handled&nbsp;in&nbsp;accordance&nbsp;with&nbsp;our&nbsp;<strong>Refund&nbsp;Policy</strong>&nbsp;available&nbsp;on&nbsp;this&nbsp;website.</p><p></p><p></p><h2>Prohibited&nbsp;Use</h2><p>You&nbsp;agree&nbsp;not&nbsp;to:</p><ul><li>Resell&nbsp;our&nbsp;digital&nbsp;products</li><li>Share&nbsp;or&nbsp;distribute&nbsp;purchased&nbsp;files&nbsp;publicly</li><li>Abuse&nbsp;or&nbsp;attempt&nbsp;to&nbsp;exploit&nbsp;the&nbsp;platform</li><li>Attempt&nbsp;to&nbsp;bypass&nbsp;platform&nbsp;security&nbsp;or&nbsp;licensing&nbsp;systems</li></ul><p>Violation&nbsp;of&nbsp;these&nbsp;rules&nbsp;may&nbsp;result&nbsp;in&nbsp;account&nbsp;suspension&nbsp;or&nbsp;termination&nbsp;without&nbsp;refund.</p><p></p><p></p><h2>Contact</h2><p>If&nbsp;you&nbsp;have&nbsp;questions&nbsp;about&nbsp;these&nbsp;Terms,&nbsp;please&nbsp;contact:</p><p></p><p><strong>uefnmap</strong></p><p>&nbsp;Email:&nbsp;webuefnmap@gmail.com</p>"
+    },
+    {
+      "_id": "699bd3011091cde7e0d51d0d",
+      "createdAt": "2026-02-23T04:09:37.731Z",
+      "updatedAt": "2026-03-01T15:01:37.627Z",
+      "type": "FAQs",
+      "content": "<p><strong>What&nbsp;do&nbsp;WE&nbsp;sell?</strong></p><p>&nbsp;We&nbsp;sell&nbsp;pre-made&nbsp;UEFN&nbsp;maps,&nbsp;Verse&nbsp;logic&nbsp;systems,&nbsp;custom&nbsp;Fortnite&nbsp;map&nbsp;development,&nbsp;premium&nbsp;Map,&nbsp;digital&nbsp;assets.&nbsp;Custom&nbsp;Verse&nbsp;.</p><p></p><p><strong>How&nbsp;do&nbsp;I&nbsp;receive&nbsp;my&nbsp;files?</strong></p><p>&nbsp;After&nbsp;purchase,&nbsp;files&nbsp;are&nbsp;instantly&nbsp;available&nbsp;in&nbsp;your&nbsp;user&nbsp;dashboard&nbsp;for&nbsp;download&nbsp;and&nbsp;future&nbsp;re-downloads.</p><p></p><p><strong>Can&nbsp;I&nbsp;download&nbsp;again&nbsp;later?</strong></p><p>&nbsp;Yes!&nbsp;All&nbsp;purchases&nbsp;are&nbsp;saved&nbsp;to&nbsp;your&nbsp;account&nbsp;for&nbsp;future&nbsp;access.</p><p></p><p><strong>Are&nbsp;refunds&nbsp;available?</strong></p><p>&nbsp;Refunds&nbsp;are&nbsp;limited&nbsp;due&nbsp;to&nbsp;instant&nbsp;digital&nbsp;delivery.&nbsp;See&nbsp;our&nbsp;Refund&nbsp;Policy&nbsp;for&nbsp;details.</p><p></p><p><strong>Do&nbsp;you&nbsp;offer&nbsp;custom&nbsp;maps&nbsp;or&nbsp;Verse&nbsp;scripting?</strong></p><p>&nbsp;Yes!&nbsp;You&nbsp;can&nbsp;request&nbsp;custom&nbsp;maps,&nbsp;game&nbsp;modes,&nbsp;Verse&nbsp;logic,&nbsp;and&nbsp;bug&nbsp;fixes.</p><p></p><p><strong>What&nbsp;is&nbsp;Premium&nbsp;Map</strong></p><p>Premium&nbsp;map&nbsp;is&nbsp;a&nbsp;map&nbsp;that&nbsp;only&nbsp;you&nbsp;will&nbsp;get&nbsp;the&nbsp;access&nbsp;of&nbsp;it.&nbsp;After&nbsp;you&nbsp;purchase&nbsp;a&nbsp;premium&nbsp;map&nbsp;we&nbsp;will&nbsp;transfer&nbsp;the&nbsp;owner&nbsp;shop&nbsp;of&nbsp;the&nbsp;map&nbsp;</p><p>(Team&nbsp;invite&nbsp;require)</p><p></p><p><strong>Is&nbsp;support&nbsp;available&nbsp;24/7?</strong></p><p>&nbsp;Support&nbsp;is&nbsp;available&nbsp;24/7&nbsp;or&nbsp;during&nbsp;business&nbsp;hours&nbsp;depending&nbsp;on&nbsp;workload.</p><p></p><p><strong>Is&nbsp;payment&nbsp;secure?</strong></p><p>&nbsp;Yes.&nbsp;All&nbsp;payments&nbsp;are&nbsp;processed&nbsp;securely&nbsp;via&nbsp;<strong>Paddle</strong>.</p><p></p><p><strong>Can&nbsp;I&nbsp;resell&nbsp;what&nbsp;I&nbsp;buy?</strong></p><p>&nbsp;No.&nbsp;All&nbsp;purchases&nbsp;are&nbsp;for&nbsp;personal&nbsp;or&nbsp;commercial&nbsp;use&nbsp;in&nbsp;your&nbsp;own&nbsp;Fortnite&nbsp;projects&nbsp;only.</p>"
+    },
+    {
+      "_id": "699bd34d1091cde7e0d51db6",
+      "createdAt": "2026-02-23T04:10:53.673Z",
+      "updatedAt": "2026-03-01T14:35:49.622Z",
+      "type": "Privacy Policy",
+      "content": "<p>Your&nbsp;privacy&nbsp;matters&nbsp;to&nbsp;us.&nbsp;This&nbsp;policy&nbsp;explains&nbsp;how&nbsp;uefnmap.com&nbsp;collects&nbsp;and&nbsp;uses&nbsp;your&nbsp;information.</p><h2>Information&nbsp;We&nbsp;Collect</h2><p>We&nbsp;may&nbsp;collect:</p><ul><li>Name</li><li>Email&nbsp;address</li><li>Purchase&nbsp;history</li><li>IP&nbsp;address&nbsp;&amp;&nbsp;basic&nbsp;analytics</li></ul><p>We&nbsp;<strong>do&nbsp;not&nbsp;store&nbsp;payment&nbsp;card&nbsp;details.</strong>&nbsp;All&nbsp;payments&nbsp;are&nbsp;handled&nbsp;by&nbsp;<strong>Paddle</strong>.</p><h2>How&nbsp;We&nbsp;Use&nbsp;Your&nbsp;Information</h2><p>We&nbsp;use&nbsp;your&nbsp;data&nbsp;to:</p><ul><li>Provide&nbsp;access&nbsp;to&nbsp;your&nbsp;downloads</li><li>Manage&nbsp;your&nbsp;account</li><li>Deliver&nbsp;customer&nbsp;support</li><li>Send&nbsp;important&nbsp;updates&nbsp;about&nbsp;your&nbsp;orders</li><li>Improve&nbsp;our&nbsp;website&nbsp;and&nbsp;services</li></ul><h2>Data&nbsp;Protection</h2><p>We&nbsp;take&nbsp;reasonable&nbsp;steps&nbsp;to&nbsp;protect&nbsp;your&nbsp;information&nbsp;from&nbsp;unauthorized&nbsp;access,&nbsp;misuse,&nbsp;or&nbsp;disclosure.</p><h2>Third-Party&nbsp;Services</h2><p>We&nbsp;may&nbsp;use&nbsp;third-party&nbsp;services&nbsp;for:</p><ul><li>Payments&nbsp;(Paddle)</li><li>Website&nbsp;analytics</li><li>Customer&nbsp;support&nbsp;tools</li></ul><p>These&nbsp;services&nbsp;only&nbsp;receive&nbsp;the&nbsp;minimum&nbsp;data&nbsp;required&nbsp;to&nbsp;operate.</p><h2>Your&nbsp;Rights</h2><p>You&nbsp;may&nbsp;request:</p><ul><li>Access&nbsp;to&nbsp;your&nbsp;data</li><li>Correction&nbsp;of&nbsp;your&nbsp;data</li><li>Deletion&nbsp;of&nbsp;your&nbsp;account</li></ul><p>Contact&nbsp;us&nbsp;at:&nbsp;webuefnmap@gmail.com</p>"
+    },
+    {
+      "_id": "699bd3621091cde7e0d51de3",
+      "createdAt": "2026-02-23T04:11:14.122Z",
+      "updatedAt": "2026-03-14T08:17:07.302Z",
+      "type": "Refund Policy",
+      "content": "<h1>Refund&nbsp;Policy</h1><h1></h1><p><strong>Last&nbsp;Updated:&nbsp;March&nbsp;2026</strong></p><p></p><p></p><p>At&nbsp;<strong>uefnmap.com</strong>,&nbsp;we&nbsp;sell&nbsp;digital&nbsp;products&nbsp;and&nbsp;services&nbsp;for&nbsp;creators&nbsp;working&nbsp;with&nbsp;Unreal&nbsp;Editor&nbsp;for&nbsp;Fortnite&nbsp;(UEFN).&nbsp;All&nbsp;purchases&nbsp;are&nbsp;processed&nbsp;securely&nbsp;through&nbsp;<strong>Paddle</strong>,&nbsp;which&nbsp;acts&nbsp;as&nbsp;the&nbsp;merchant&nbsp;of&nbsp;record&nbsp;for&nbsp;transactions&nbsp;on&nbsp;this&nbsp;website.</p><p>Because&nbsp;our&nbsp;products&nbsp;are&nbsp;delivered&nbsp;digitally&nbsp;and&nbsp;made&nbsp;available&nbsp;instantly&nbsp;after&nbsp;purchase,&nbsp;refunds&nbsp;are&nbsp;limited&nbsp;and&nbsp;handled&nbsp;according&nbsp;to&nbsp;the&nbsp;conditions&nbsp;below.</p><p></p><h2>Digital&nbsp;Products</h2><p>All&nbsp;products&nbsp;sold&nbsp;on&nbsp;uefnmap.com&nbsp;are&nbsp;<strong>digital&nbsp;downloads&nbsp;or&nbsp;digital&nbsp;content</strong>&nbsp;delivered&nbsp;through&nbsp;your&nbsp;user&nbsp;account&nbsp;dashboard.</p><p>By&nbsp;purchasing&nbsp;and&nbsp;downloading&nbsp;digital&nbsp;content&nbsp;from&nbsp;our&nbsp;website,&nbsp;you&nbsp;acknowledge&nbsp;and&nbsp;agree&nbsp;that:</p><ul><li>Delivery&nbsp;begins&nbsp;immediately&nbsp;after&nbsp;purchase.</li><li>Once&nbsp;the&nbsp;download&nbsp;or&nbsp;transmission&nbsp;of&nbsp;the&nbsp;digital&nbsp;product&nbsp;has&nbsp;started,&nbsp;the&nbsp;<strong>right&nbsp;of&nbsp;withdrawal&nbsp;is&nbsp;lost</strong>&nbsp;in&nbsp;accordance&nbsp;with&nbsp;applicable&nbsp;consumer&nbsp;laws&nbsp;for&nbsp;digital&nbsp;content.</li></ul><p></p><h2>When&nbsp;Refunds&nbsp;May&nbsp;Be&nbsp;Approved</h2><p>Refund&nbsp;requests&nbsp;may&nbsp;be&nbsp;considered&nbsp;under&nbsp;the&nbsp;following&nbsp;circumstances:</p><ul><li>The&nbsp;purchased&nbsp;file&nbsp;is&nbsp;<strong>corrupted&nbsp;or&nbsp;unusable</strong></li><li>The&nbsp;product&nbsp;is&nbsp;<strong>significantly&nbsp;different&nbsp;from&nbsp;its&nbsp;description</strong></li><li>A&nbsp;<strong>technical&nbsp;issue&nbsp;prevents&nbsp;delivery</strong>&nbsp;and&nbsp;we&nbsp;cannot&nbsp;provide&nbsp;access&nbsp;to&nbsp;the&nbsp;product</li><li>Duplicate&nbsp;payments&nbsp;were&nbsp;made&nbsp;in&nbsp;error</li></ul><p>In&nbsp;most&nbsp;cases,&nbsp;our&nbsp;team&nbsp;will&nbsp;first&nbsp;attempt&nbsp;to&nbsp;<strong>resolve&nbsp;the&nbsp;issue&nbsp;or&nbsp;provide&nbsp;a&nbsp;replacement&nbsp;file</strong>&nbsp;before&nbsp;issuing&nbsp;a&nbsp;refund.</p><p></p><p></p><h2>When&nbsp;Refunds&nbsp;Will&nbsp;Not&nbsp;Be&nbsp;Provided</h2><p>Refunds&nbsp;will&nbsp;generally&nbsp;not&nbsp;be&nbsp;granted&nbsp;if:</p><ul><li>The&nbsp;digital&nbsp;product&nbsp;has&nbsp;already&nbsp;been&nbsp;downloaded&nbsp;and&nbsp;works&nbsp;as&nbsp;described</li><li>You&nbsp;changed&nbsp;your&nbsp;mind&nbsp;after&nbsp;purchase</li><li>You&nbsp;no&nbsp;longer&nbsp;need&nbsp;the&nbsp;product</li><li>You&nbsp;do&nbsp;not&nbsp;have&nbsp;the&nbsp;required&nbsp;software&nbsp;or&nbsp;knowledge&nbsp;to&nbsp;use&nbsp;the&nbsp;product</li><li>The&nbsp;product&nbsp;was&nbsp;purchased&nbsp;by&nbsp;mistake&nbsp;but&nbsp;already&nbsp;accessed</li></ul><p></p><h2>Refund&nbsp;Requests</h2><p>If&nbsp;you&nbsp;experience&nbsp;a&nbsp;problem&nbsp;with&nbsp;your&nbsp;purchase,&nbsp;please&nbsp;contact&nbsp;our&nbsp;support&nbsp;team&nbsp;within&nbsp;<strong>14&nbsp;days&nbsp;of&nbsp;purchase</strong>.</p><p>📧&nbsp;<strong>Email:</strong>&nbsp;webuefnmap@gmail.com</p><p>Please&nbsp;include:</p><ul><li>Your&nbsp;order&nbsp;number</li><li>The&nbsp;email&nbsp;address&nbsp;used&nbsp;for&nbsp;the&nbsp;purchase</li><li>A&nbsp;description&nbsp;of&nbsp;the&nbsp;issue</li></ul><p></p><h2>Refund&nbsp;Processing</h2><p>Approved&nbsp;refunds&nbsp;will&nbsp;be&nbsp;processed&nbsp;through&nbsp;<strong>Paddle</strong>&nbsp;and&nbsp;returned&nbsp;to&nbsp;the&nbsp;original&nbsp;payment&nbsp;method&nbsp;used&nbsp;during&nbsp;checkout.</p><p>Refund&nbsp;processing&nbsp;times&nbsp;may&nbsp;vary&nbsp;depending&nbsp;on&nbsp;your&nbsp;payment&nbsp;provider&nbsp;or&nbsp;bank.</p><p></p><h2>Consumer&nbsp;Rights</h2><p>Nothing&nbsp;in&nbsp;this&nbsp;Refund&nbsp;Policy&nbsp;affects&nbsp;your&nbsp;statutory&nbsp;rights&nbsp;as&nbsp;a&nbsp;consumer.&nbsp;If&nbsp;a&nbsp;product&nbsp;is&nbsp;faulty,&nbsp;not&nbsp;as&nbsp;described,&nbsp;or&nbsp;not&nbsp;fit&nbsp;for&nbsp;purpose,&nbsp;you&nbsp;may&nbsp;be&nbsp;entitled&nbsp;to&nbsp;remedies&nbsp;under&nbsp;applicable&nbsp;consumer&nbsp;protection&nbsp;laws.</p><p></p><h2>Contact</h2><p>For&nbsp;refund&nbsp;requests&nbsp;or&nbsp;support&nbsp;inquiries,&nbsp;please&nbsp;contact:</p><p></p><p><strong>uefnmap.com</strong></p><p>&nbsp;📧&nbsp;webuefnmap@gmail.com</p>"
+    },
+    {
+      "_id": "699bd3751091cde7e0d51e0b",
+      "createdAt": "2026-02-23T04:11:33.081Z",
+      "updatedAt": "2026-03-01T15:01:54.499Z",
+      "type": "Contact Support",
+      "content": "<h3><strong>Need&nbsp;Expert&nbsp;Help?</strong></h3><p>Our&nbsp;team&nbsp;of&nbsp;UEFN&nbsp;developers&nbsp;and&nbsp;Verse&nbsp;specialists&nbsp;is&nbsp;ready&nbsp;to&nbsp;help&nbsp;you&nbsp;level&nbsp;up&nbsp;your&nbsp;game.</p><ul><li><strong>Live&nbsp;Chat:</strong>&nbsp;Click&nbsp;the&nbsp;purple&nbsp;chat&nbsp;bubble&nbsp;at&nbsp;the&nbsp;bottom&nbsp;right.</li><li><strong>Email:</strong>&nbsp;webuefnmap@gmail.com</li><li><strong>WhatsApp:</strong>&nbsp;+8801953558205</li><li><strong>Response&nbsp;Time:</strong>&nbsp;Usually&nbsp;within&nbsp;<strong>2-6&nbsp;hours</strong>.</li></ul><p></p><p><strong>Join&nbsp;our&nbsp;Discord&nbsp;community&nbsp;for&nbsp;real-time&nbsp;collaboration&nbsp;with&nbsp;other&nbsp;pro&nbsp;creators!</strong></p>"
+    }
+  ],
+  "portfolios": [
+    {
+      "_id": "699be45ac96ed79d3b674c95",
+      "title": "UEFN Project + Verse Logic",
+      "type": "Map",
+      "youtubeId": "pxSiPkWvjN0",
+      "description": "Get a fully structured UEFN project built with clean, optimized Verse logic. Perfect for creators who want a solid foundation for custom maps, game modes, and mechanics.\nIncludes modular systems, organized assets, and performance-friendly setup  ready to customize and publish.",
+      "image": {
+        "url": "https://res.cloudinary.com/domw8nflv/image/upload/v1773359853/iue3im290hypn6fagu0j.webp"
+      },
+      "tags": [
+        "Map",
+        "Fortnite"
+      ],
+      "stats": {
+        "players": "54k",
+        "rating": "4"
+      }
+    }
+  ]
+}
