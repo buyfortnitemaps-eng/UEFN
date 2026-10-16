@@ -1,36 +1,47 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { ImageIcon, Loader2, Tag, Percent, X, Youtube, Images, Plus, MessageCircle } from "lucide-react";
 import { uploadImageToCloudinary, uploadMultipleImagesToCloudinary } from "../../middleware/upload";
 import { useAuth } from "../../context/AuthContext";
 import AdminOnly from "../../components/admin/OnlyAdmin";
 import { auth } from "../../../../firebase";
+import { publicCatalogUrl } from "../../lib/catalog-client.mjs";
+import { adminApiUrl } from "../../lib/runtime-config";
+import { publishProductAsset, verifyPublishingAdmin } from "../../lib/product-publish.mjs";
+
+const emptyForm = () => ({
+  title: "", description: "", price: "", category: "", gameType: "",
+  youtubeId: "", s3Key: "", thumbnail: null, galleryImages: [],
+  isDiscount: false, discountPrice: "", faqs: []
+});
 
 const AddProduct = () => {
   const { user, mongoUser, loading: authLoading } = useAuth();
   const [categories, setCategories] = useState([]);
   const [gameTypes, setGameTypes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [optionsLoading, setOptionsLoading] = useState(true);
+  const [optionsError, setOptionsError] = useState("");
+  const [optionsAttempt, setOptionsAttempt] = useState(0);
+  const [saveStatus, setSaveStatus] = useState(null);
+  const submitting = useRef(false);
+  const formRef = useRef(null);
+  const statusPanelRef = useRef(null);
 
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [galleryPreviews, setGalleryPreviews] = useState([]);
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    price: "",
-    category: "",
-    gameType: "",
-    youtubeId: "",
-    s3Key: "",
-    thumbnail: null,
-    galleryImages: [],
-    isDiscount: false,
-    discountPrice: "",
-    faqs: []
-  });
+  const [formData, setFormData] = useState(emptyForm);
+
+  useEffect(() => {
+    if (saveStatus?.type === "error" || saveStatus?.type === "success") {
+      statusPanelRef.current?.focus({ preventScroll: true });
+      statusPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [saveStatus?.type]);
 
   // FAQ হ্যান্ডলিং ফাংশন
   const addFaq = () => {
@@ -52,14 +63,32 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    fetch("https://uefn-maps-server.vercel.app/api/v1/categories")
-      .then(res => res.json())
-      .then(data => setCategories(data.data));
-
-    fetch("https://uefn-maps-server.vercel.app/api/v1/game-types")
-      .then(res => res.json())
-      .then(data => setGameTypes(data.data));
-  }, []);
+    const controller = new AbortController();
+    const timeoutController = new AbortController();
+    const timeout = setTimeout(() => timeoutController.abort(), 15000);
+    const readOptions = async endpoint => {
+      const response = await fetch(publicCatalogUrl(endpoint), { signal: AbortSignal.any([controller.signal, timeoutController.signal]) });
+      const payload = await response.json();
+      if (!response.ok || payload?.success !== true || !Array.isArray(payload.data)) {
+        throw new Error("Categories and game types could not load. Please retry before saving.");
+      }
+      return payload.data;
+    };
+    Promise.all([readOptions("categories"), readOptions("game-types")])
+      .then(([nextCategories, nextGameTypes]) => {
+        if (controller.signal.aborted) return;
+        setCategories(nextCategories);
+        setGameTypes(nextGameTypes);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setOptionsError("Categories and game types could not load. Please retry before saving.");
+      })
+      .finally(() => {
+        clearTimeout(timeout);
+        if (!controller.signal.aborted) setOptionsLoading(false);
+      });
+    return () => { clearTimeout(timeout); controller.abort(); };
+  }, [optionsAttempt]);
 
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
@@ -99,58 +128,44 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.isDiscount && Number(formData.discountPrice) >= Number(formData.price)) {
-      return alert("Discount price must be lower than original!");
-    }
-
+    if (submitting.current || saveStatus?.productId) return;
+    if (optionsLoading || optionsError) return;
+    submitting.current = true;
     setLoading(true);
+    setSaveStatus({ type: "pending", message: "Checking asset details…" });
     try {
-      const thumbData = await uploadImageToCloudinary(formData.thumbnail);
-      let galleryData = [];
-      if (formData.galleryImages.length > 0) {
-        galleryData = await uploadMultipleImagesToCloudinary(formData.galleryImages);
-      }
-
-      const token = await auth.currentUser.getIdToken();
-
-      const payload = {
-        title: formData.title,
-        description: formData.description,
-        price: Number(formData.price),
-        category: formData.category,
-        gameType: formData.gameType,
-        youtubeId: formData.youtubeId,
-        s3Key: formData.s3Key,
-        isDiscount: formData.isDiscount,
-        discountPrice: formData.isDiscount ? Number(formData.discountPrice) : 0,
-        image: thumbData,
-        gallery: galleryData,
-        faqs: formData.faqs,
-        seller: {
-          name: mongoUser?.name || "Admin",
-          email: mongoUser?.email,
-          uid: user?.uid
-        }
-      };
-
-      const res = await fetch("https://uefn-maps-server.vercel.app/api/v1/products/create-product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+      const saved = await publishProductAsset({
+        form: { ...formData, galleryImages: [...formData.galleryImages], faqs: formData.faqs.map(faq => ({ ...faq })) },
+        session: { uid: user?.uid, role: mongoUser?.role, name: mongoUser?.name, email: mongoUser?.email },
+        getToken: async () => {
+          if (!auth.currentUser || auth.currentUser.uid !== user?.uid) {
+            throw new Error("Your session has expired. Sign in again before saving.");
+          }
+          const token = await auth.currentUser.getIdToken();
+          if (auth.currentUser?.uid !== user?.uid) throw new Error("Your signed-in account changed. Sign in again before saving.");
+          return token;
         },
-        body: JSON.stringify(payload),
+        verifyAdmin: (token, uid) => verifyPublishingAdmin({ token, uid, endpoint: adminApiUrl(`users/${encodeURIComponent(uid)}`) }),
+        endpoint: adminApiUrl("products/create-product"),
+        uploadImage: uploadImageToCloudinary,
+        uploadGallery: uploadMultipleImagesToCloudinary,
+        onProgress: message => setSaveStatus({ type: "pending", message })
       });
-
-      if (res.ok) {
-        alert("Asset Published Successfully! 🚀");
-        window.location.reload();
-      }
+      setSaveStatus({ type: "success", message: "Asset saved successfully. The public catalog may take up to a minute to refresh.", productId: saved.productId });
     } catch (err) {
-      alert("Error: " + err.message);
+      setSaveStatus({ type: "error", message: err?.message || "The asset could not be saved. Your entries have been kept." });
     } finally {
       setLoading(false);
+      submitting.current = false;
     }
+  };
+
+  const addAnotherAsset = () => {
+    formRef.current?.reset();
+    setFormData(emptyForm());
+    setThumbnailPreview(null);
+    setGalleryPreviews([]);
+    setSaveStatus(null);
   };
 
   if (authLoading) return <div className="min-h-screen flex items-center justify-center text-foreground">Loading Auth...</div>;
@@ -170,25 +185,45 @@ const AddProduct = () => {
         Add New <span className="text-purple-500 font-black">Asset</span>
       </h2>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      {optionsLoading && <p role="status" className="mb-6">Loading categories and game types…</p>}
+      {optionsError && (
+        <div role="alert" className="mb-6 rounded-2xl border border-red-500/40 bg-red-500/10 p-5">
+          <p>{optionsError}</p>
+          <button type="button" className="mt-3 underline font-bold" onClick={() => { setOptionsLoading(true); setOptionsError(""); setOptionsAttempt(value => value + 1); }}>Retry loading options</button>
+        </div>
+      )}
+      {saveStatus && (
+        <div ref={statusPanelRef} tabIndex={-1} role={saveStatus.type === "error" ? "alert" : "status"} className={`mb-6 rounded-2xl border p-5 ${saveStatus.type === "error" ? "border-red-500/40 bg-red-500/10" : "border-purple-500/40 bg-purple-500/10"}`}>
+          <p>{saveStatus.message}</p>
+          {saveStatus.type === "error" && <p className="mt-2 text-sm">Your form and selected images have been kept.</p>}
+          <div className="mt-3 flex flex-wrap gap-5 font-bold">
+            {saveStatus.productId && <Link className="underline" href={`/marketplace/${saveStatus.productId}`}>View asset</Link>}
+            {saveStatus.type !== "pending" && <Link className="underline" href="/admin/all-product">Manage Assets</Link>}
+            {saveStatus.productId && <button type="button" className="underline" onClick={addAnotherAsset}>Add another asset</button>}
+          </div>
+        </div>
+      )}
+
+      <form ref={formRef} onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <fieldset disabled={loading || !!saveStatus?.productId} className="contents">
         {/* Left Side: Logic & Info */}
         <div className="space-y-6 bg-background p-8 rounded-[2.5rem] border border-white/5 shadow-2xl h-fit">
           <div>
             <label className="text-xs font-black text-purple-400 uppercase tracking-widest">Asset Title</label>
-            <input required type="text" placeholder="Title" onChange={e => setFormData({ ...formData, title: e.target.value })} className={inputClasses} />
+            <input required type="text" placeholder="Title" value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className={inputClasses} />
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label className="text-xs font-black text-purple-400 uppercase tracking-widest">Category</label>
-              <select required onChange={e => setFormData({ ...formData, category: e.target.value })} className={inputClasses}>
+              <select required value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className={inputClasses}>
                 <option value="">Select Category</option>
                 {categories.map(cat => <option key={cat._id} value={cat._id} className="bg-card-bg">{cat.name}</option>)}
               </select>
             </div>
             <div>
               <label className="text-xs font-black text-purple-400 uppercase tracking-widest">Game Type</label>
-              <select required onChange={e => setFormData({ ...formData, gameType: e.target.value })} className={inputClasses}>
+              <select required value={formData.gameType} onChange={e => setFormData({ ...formData, gameType: e.target.value })} className={inputClasses}>
                 <option value="">Select Type</option>
                 {gameTypes.map(type => <option key={type._id} value={type._id} className="bg-card-bg">{type.name}</option>)}
               </select>
@@ -198,28 +233,28 @@ const AddProduct = () => {
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label className="text-xs font-black text-purple-400 uppercase tracking-widest flex items-center gap-2"><Tag size={14} /> Price ($)</label>
-              <input required type="number" placeholder="49.99" onChange={e => setFormData({ ...formData, price: e.target.value })} className={inputClasses} />
+              <input required type="number" min="0" step="0.01" placeholder="49.99" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} className={inputClasses} />
             </div>
             <div>
               <label className="text-xs font-black text-purple-400 uppercase tracking-widest">S3 File Key</label>
-              <input required type="text" placeholder="maps/file.zip" onChange={e => setFormData({ ...formData, s3Key: e.target.value })} className={inputClasses} />
+              <input required type="text" placeholder="maps/file.zip" value={formData.s3Key} onChange={e => setFormData({ ...formData, s3Key: e.target.value })} className={inputClasses} />
             </div>
           </div>
 
           <div>
             <label className="text-xs font-black text-purple-400 uppercase tracking-widest flex items-center gap-2"><Youtube size={14} /> YouTube ID</label>
-            <input type="text" placeholder="Video ID only" onChange={e => setFormData({ ...formData, youtubeId: e.target.value })} className={inputClasses} />
+            <input type="text" placeholder="Video ID only" value={formData.youtubeId} onChange={e => setFormData({ ...formData, youtubeId: e.target.value })} className={inputClasses} />
           </div>
 
           <div className="p-5 rounded-3xl bg-purple-500/5 border border-purple-500/20">
             <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" className="w-5 h-5 accent-purple-500" onChange={e => setFormData({ ...formData, isDiscount: e.target.checked })} />
+              <input type="checkbox" className="w-5 h-5 accent-purple-500" checked={formData.isDiscount} onChange={e => setFormData({ ...formData, isDiscount: e.target.checked })} />
               <span className="text-sm font-bold uppercase">Apply Discount?</span>
             </label>
             {formData.isDiscount && (
               <div className="mt-4">
                 <label className="text-[10px] font-black text-purple-400 uppercase tracking-widest flex items-center gap-2"><Percent size={12} /> Discounted Price</label>
-                <input required type="number" placeholder="Discount Price" onChange={e => setFormData({ ...formData, discountPrice: e.target.value })} className={inputClasses} />
+                <input required type="number" min="0" step="0.01" placeholder="Discount Price" value={formData.discountPrice} onChange={e => setFormData({ ...formData, discountPrice: e.target.value })} className={inputClasses} />
               </div>
             )}
           </div>
@@ -269,7 +304,7 @@ const AddProduct = () => {
 
             <div className="mt-6">
               <label className="text-xs font-black text-purple-400 uppercase tracking-widest">Asset Description</label>
-              <textarea rows={4} placeholder="Description..." onChange={e => setFormData({ ...formData, description: e.target.value })} className={inputClasses + " resize-none"} />
+              <textarea required rows={4} placeholder="Description..." value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className={inputClasses + " resize-none"} />
             </div>
           </div>
 
@@ -319,10 +354,11 @@ const AddProduct = () => {
             </div>
           </div>
 
-          <button type="submit" disabled={loading} className="w-full bg-linear-to-r from-purple-600 to-indigo-600 py-5 rounded-2xl font-black text-xl shadow-2xl transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 text-white">
-            {loading ? <Loader2 className="animate-spin" size={24} /> : "PUBLISH ASSET"}
+          <button type="submit" disabled={loading || optionsLoading || !!optionsError || !!saveStatus?.productId} className="w-full bg-linear-to-r from-purple-600 to-indigo-600 py-5 rounded-2xl font-black text-xl shadow-2xl transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 text-white">
+            {loading ? <><Loader2 className="animate-spin" size={24} /> Saving asset…</> : saveStatus?.productId ? "ASSET SAVED" : "PUBLISH ASSET"}
           </button>
         </div>
+        </fieldset>
       </form>
     </div>
   );

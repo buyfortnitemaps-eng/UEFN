@@ -11,3 +11,6 @@ await import("./catalog-snapshot-refresh.test.mjs");
 await import("./catalog-pagination-outage.test.mjs");
 
 await import("./catalog-live.test.mjs");
+
+await import("./admin-api.test.mjs");
+await import("./product-publish.test.mjs");

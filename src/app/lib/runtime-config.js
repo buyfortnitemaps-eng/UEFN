@@ -5,3 +5,5 @@ export function apiUrl(path = "", query) {
   if (query) for (const [key, value] of Object.entries(query)) url.searchParams.set(key, String(value));
   return url.href;
 }
+
+export { ADMIN_API_ORIGIN, adminApiUrl } from "./admin-api.mjs";

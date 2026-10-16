@@ -1,18 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Edit3, Trash2, Filter, Star } from "lucide-react";
 import { auth } from "../../../../firebase";
 import AdminOnly from "../../components/admin/OnlyAdmin";
 import { useAuth } from "../../context/AuthContext";
 import EditProductModal from "../../components/admin/EditProductModal";
+import { adminApiUrl } from "../../lib/runtime-config";
+import { publicCatalogUrl } from "../../lib/catalog-client.mjs";
 
 const AllProducts = () => {
-  const { user, mongoUser } = useAuth();
+  const { user, mongoUser, loading, profileLoading } = useAuth();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [productsOwner, setProductsOwner] = useState(null);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [productsError, setProductsError] = useState("");
+  const [categoriesError, setCategoriesError] = useState("");
+  const [refreshCount, setRefreshCount] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -52,40 +57,113 @@ const handleUpgrade = async () => {
     }
 };
 
-  const fetchProducts = async () => {
-    const res = await fetch(
-      "https://uefn-maps-server.vercel.app/api/v1/products/all-products",
-    );
-    const data = await res.json();
-    
-    console.log(data)
-    const sortedData = (data.data || []).reverse();
-    setProducts(sortedData);
-    setFilteredProducts(data.data);
-  };
-
-  const fetchCategories = async () => {
-    const res = await fetch(
-      "https://uefn-maps-server.vercel.app/api/v1/categories",
-    );
-    const data = await res.json();
-    setCategories(data.data);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-    fetchCategories();
+  const fetchProducts = useCallback(() => {
+    setRefreshCount((count) => count + 1);
   }, []);
 
   useEffect(() => {
-    if (selectedCategory === "all") {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter((p) => p.category._id === selectedCategory),
-      );
-    }
-  }, [selectedCategory, products]);
+    if (loading || profileLoading || !user || mongoUser?.role !== "admin") return;
+
+    const controller = new AbortController();
+    let cancelled = false;
+    let timedOut = false;
+    const uid = user.uid;
+    const isCurrentUser = () => !cancelled && auth.currentUser?.uid === uid;
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, 30000);
+
+    const loadProducts = async () => {
+      setProductsLoading(true);
+      setProductsError("");
+      try {
+        if (!isCurrentUser()) return;
+        let rejectTokenOnAbort;
+        const tokenAborted = new Promise((_, reject) => {
+          rejectTokenOnAbort = () => reject(new Error("Asset loading was cancelled."));
+          if (controller.signal.aborted) rejectTokenOnAbort();
+          else controller.signal.addEventListener("abort", rejectTokenOnAbort, { once: true });
+        });
+        let token;
+        try {
+          token = await Promise.race([
+            Promise.resolve().then(() => user.getIdToken()),
+            tokenAborted,
+          ]);
+        } finally {
+          controller.signal.removeEventListener("abort", rejectTokenOnAbort);
+        }
+        if (!isCurrentUser()) return;
+        const res = await fetch(adminApiUrl("products/all-products"), {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store",
+          signal: controller.signal,
+        });
+        if (!res.ok) {
+          if (res.status === 401) throw new Error("Your session expired. Sign in again to load your assets.");
+          if (res.status === 403) throw new Error("Your account does not have permission to load these assets.");
+          throw new Error(`Could not load assets (HTTP ${res.status}). Please try again.`);
+        }
+        const data = await res.json().catch(() => null);
+        if (data?.success !== true || !Array.isArray(data.data) ||
+          data.data.some((product) => !product || typeof product._id !== "string")) {
+          throw new Error("The server returned an invalid asset list. Please try again.");
+        }
+        if (!isCurrentUser()) return;
+        setProducts([...data.data].reverse());
+        setProductsOwner(uid);
+      } catch (error) {
+        if (!isCurrentUser()) return;
+        setProductsError(timedOut
+          ? "Loading assets timed out. Please try again."
+          : error.message || "Could not load assets. Please try again.");
+      } finally {
+        clearTimeout(timeout);
+        if (isCurrentUser()) setProductsLoading(false);
+      }
+    };
+    loadProducts();
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [user, mongoUser?.role, loading, profileLoading, refreshCount]);
+
+  useEffect(() => {
+    if (loading || profileLoading || !user || mongoUser?.role !== "admin") return;
+    const controller = new AbortController();
+    let cancelled = false;
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    const loadCategories = async () => {
+      setCategoriesError("");
+      try {
+        const res = await fetch(publicCatalogUrl("categories"), { signal: controller.signal });
+        if (!res.ok) throw new Error("Category filters are temporarily unavailable.");
+        const data = await res.json().catch(() => null);
+        if (!Array.isArray(data?.data)) throw new Error("Category filters are temporarily unavailable.");
+        if (!cancelled) setCategories(data.data);
+      } catch {
+        if (!cancelled) setCategoriesError("Category filters are temporarily unavailable. Refresh to try again.");
+      } finally {
+        clearTimeout(timeout);
+      }
+    };
+    loadCategories();
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [user, mongoUser?.role, loading, profileLoading, refreshCount]);
+
+  const filteredProducts = useMemo(() => {
+    if (productsOwner !== user?.uid) return [];
+    return selectedCategory === "all"
+      ? products
+      : products.filter((product) => product.category?._id === selectedCategory);
+  }, [products, productsOwner, user?.uid, selectedCategory]);
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure? Image will also be deleted!")) return;
@@ -100,7 +178,7 @@ const handleUpgrade = async () => {
     if (res.ok) fetchProducts();
   };
 
-  if (!user || mongoUser?.role !== "admin") return <AdminOnly />;
+  if (loading || profileLoading || !user || mongoUser?.role !== "admin") return <AdminOnly />;
 
   return (
     <div className="max-w-7xl mt-10 mx-auto p-4 md:p-6 text-foreground min-h-screen">
@@ -145,6 +223,31 @@ const handleUpgrade = async () => {
         </div>
       </div>
 
+      <div className="mb-6 space-y-3">
+        <button
+          type="button"
+          onClick={fetchProducts}
+          disabled={productsLoading}
+          className="rounded-xl border border-purple-500/30 px-4 py-2 text-sm font-bold disabled:opacity-50"
+        >
+          {productsLoading ? "Loading assets..." : "Refresh assets"}
+        </button>
+        {productsLoading && <p role="status">Loading the latest saved assets...</p>}
+        {productsError && (
+          <div role="alert" className="rounded-xl border border-red-500/30 bg-red-500/10 p-4">
+            <p>{productsError}</p>
+            {productsOwner === user.uid && products.length > 0 && (
+              <p className="mt-1 text-sm">The last loaded assets are shown below and may be out of date.</p>
+            )}
+            <button type="button" onClick={fetchProducts} className="mt-2 font-bold underline">Try again</button>
+          </div>
+        )}
+        {categoriesError && <p role="status" className="text-sm">{categoriesError}</p>}
+        {!productsLoading && !productsError && productsOwner === user.uid && filteredProducts.length === 0 && (
+          <p role="status">{selectedCategory === "all" ? "No assets have been saved yet." : "No assets match this category."}</p>
+        )}
+      </div>
+
       {/* Desktop Table View (Hidden on Mobile) */}
       <div className="hidden md:block border border-white/5 rounded-4xl overflow-hidden backdrop-blur-md overflow-x-auto">
         <table className="w-full text-left">
@@ -175,7 +278,7 @@ const handleUpgrade = async () => {
               >
                 <td className="p-6 flex items-center gap-4">
                   <img
-                    src={product.image.url}
+                    src={product.image?.url}
                     className="w-12 h-12 rounded-xl object-cover border border-white/5"
                     alt=""
                   />
@@ -233,7 +336,7 @@ const handleUpgrade = async () => {
           >
             <div className="flex items-center gap-4 mb-4">
               <img
-                src={product.image.url}
+                src={product.image?.url}
                 className="w-16 h-16 rounded-2xl object-cover border border-white/5 shadow-lg"
                 alt=""
               />
